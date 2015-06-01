@@ -6278,34 +6278,35 @@ label,
     clear:both;
 }
 
+@media (min-width: 1200px) {
+    #search {
+        margin-left: 850px;
+    }
 
-#search{
-    margin-left: 850px;
-}
+    .button {
+        color: #08233e;
+        font: 2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
+        font-size: 70%;
+        padding: 5px;
 
-.button  {
-    color:#08233e;
-    font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
-    font-size:70%;
-    padding:5px;
-    
-    background-color: #ffffff;
-    border:1px solid #000000;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:5px;
-    border-bottom:1px solid #9f9f9f;
-    -moz-box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
-    -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
-    cursor:pointer;
-    margin-left: 40px;
-    width:7%;
-}
-.button :hover {
-    background-color:#404040;
-}
+        background-color: #ffffff;
+        border: 1px solid #000000;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 5px;
+        border-bottom: 1px solid #9f9f9f;
+        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        margin-left: 40px;
+        width: 7%;
+    }
 
+    .button :hover {
+        background-color: #404040;
+    }
+}
 footer {
     position: absolute;
     bottom: 0;
@@ -6315,20 +6316,13 @@ footer {
     background-color: #404040;
 }
 
-footer ul li img{
-    float: left;
-    margin-left: -400px;
-}
-footer ul li {
-    display:inline-block;
-    text-decoration: none;
+#footerlogo{
+    margin-left: -160px;
+
 }
 
-footer ul li p  {
-    
-    color:white;
-    text-align: center;
+.col-md-4 ul li{
+
+    list-style: none;
+
 }
-
-
-

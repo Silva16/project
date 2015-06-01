@@ -30,7 +30,7 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-        return view('projects.show');
+        return view('welcome');
 	}
 
 
