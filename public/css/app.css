@@ -6267,6 +6267,10 @@ label,
 
 }
 
+ header ul li a:hover{
+     color:white;
+ }
+
 #logo{
     margin-left: 0.7%;
     float:left;
@@ -6306,7 +6310,7 @@ label,
 }
 
 .button:hover {
-        background-color: #404040;
+        background-color: #DCDCDC;
 }
 
 footer {
