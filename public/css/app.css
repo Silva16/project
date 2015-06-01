@@ -5,6 +5,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
+    width:100%;
   margin: 0;
 }
 article,
@@ -6234,12 +6235,12 @@ label,
 
 
 
-@media (min-width: 1200px) {
+
     .logo {
         width: 100%;
         margin-right: -500px;
     }
-}
+
 
  header ul{
     margin-bottom: -15px;
@@ -6278,12 +6279,12 @@ label,
     clear:both;
 }
 
-@media (min-width: 1200px) {
-    #search {
-        margin-left: 850px;
-    }
 
-    .button {
+#search {
+        margin-left: 850px;
+}
+
+.button {
         color: #08233e;
         font: 2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
         font-size: 70%;
@@ -6301,12 +6302,12 @@ label,
         cursor: pointer;
         margin-left: 40px;
         width: 7%;
-    }
-
-    .button :hover {
-        background-color: #404040;
-    }
 }
+
+.button:hover {
+        background-color: #404040;
+}
+
 footer {
     position: absolute;
     bottom: 0;
