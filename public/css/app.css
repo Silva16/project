@@ -1370,6 +1370,7 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+
 }
 @media (min-width: 768px) {
   .container {
@@ -6251,12 +6252,32 @@ label,
     list-style: none;
 
 }
+@media screen and (min-width: 670px) {
+    header ul li {
+        display: inline;
 
- header ul li{
-    display: inline;
+    }
 
+    .button {
+        color: #08233e;
+        font: 2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
+        font-size: 70%;
+        padding: 5px;
+
+        background-color: #ffffff;
+        border: 1px solid #000000;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 5px;
+        border-bottom: 1px solid #9f9f9f;
+        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        margin-left: 40px;
+        width: 7%;
+    }
 }
-
  header ul li a{
     padding: 2px 10px;
 
@@ -6285,11 +6306,14 @@ label,
 }
 
 
-#search {
-        margin-left: 62.2%;
-}
+@media screen and (max-width: 670px)   {
+   .header ul li{
+       display:  block;
 
-.button {
+   }
+
+
+    .button {
         color: #08233e;
         font: 2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
         font-size: 70%;
@@ -6305,30 +6329,260 @@ label,
         -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
         cursor: pointer;
-        margin-left: 40px;
-        width: 7%;
+        width: 25%;
+        margin-top: 3%;
+    }
+
+    #search {
+        margin-top: 3%;
+    }
+
 }
+
+
+@media screen and (min-width: 671px) and (max-width: 800px)  {
+    #search {
+        margin-left: 30%;
+    }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1000px){
+    #search {
+        margin-left: 40%;
+    }
+}
+
+
+@media screen and (min-width: 1001px) and (max-width: 1200px){
+    #search {
+        margin-left: 51%;
+    }
+}
+
+@media screen and (min-width: 1301px) and (max-width: 1500px){
+    #search {
+        margin-left: 60%;
+    }
+}
+
+
+@media screen and (min-width: 1501px) and (max-width: 1800px){
+    #search {
+        margin-left: 65%;
+    }
+}
+
+@media screen and (min-width: 1801px) {
+    #search {
+        margin-left: 70%;
+    }
+}
+
+
 
 .button:hover {
         background-color: #DCDCDC;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 100px;
-    background-color: #404040;
-}
 
 #footerlogo{
-    margin-left: -50%;
+float:left;
 
 }
 
-.col-md-4 ul li{
+@media screen and (max-width: 700px){
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 40%;
 
-    list-style: none;
+        background-color: #404040;
+        margin-bottom: -20%;
+    }
+
+
+
+    .col-md-4 ul li {
+
+        list-style: none;
+        color: white;
+        width: 100%;
+    }
+
+    .vcenter {
+        display: block;
+        vertical-align: middle;
+        float: none;
+        margin-top: 25%;
+    }
+
+    .endfooter{
+        padding: 1%;
+        background-color: #ffffff;
+        clear:both;
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 701px) and (max-width:991px) {
+    .col-md-4 ul li {
+        margin-top: 3.2%;
+        list-style: none;
+        color: white;
+
+
+    }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 20%;
+        background-color: #404040;
+    }
+
+    .content{
+        display: inline;
+    }
+
+    .vcenter{
+    float: left;
+        margin-left: -5%;
+        margin-top: 2%;
+
+    }
+
+    .align{
+        line-height: 1%;
+
+
+    }
+
+    .endfooter{
+        padding: 1%;
+        background-color: #ffffff;
+        clear:both;
+        text-align: center;
+    }
 
 }
+
+
+@media screen and (min-width: 992px) and (max-width:1200px) {
+    .col-md-4 ul li {
+        margin-top: 3.2%;
+        list-style: none;
+        color: white;
+        text-align: center;
+        width: 100%;
+
+    }
+
+    .content{
+
+        display: inline;
+    }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 14.3%;
+        background-color: #404040;
+    }
+
+    .footerinfo{
+    margin-left: 20%;
+    }
+
+    .endfooter{
+        padding: 1%;
+        background-color: #ffffff;
+        clear:both;
+        text-align: center;
+    }
+
+}
+
+@media screen and (min-width: 1201px) and (max-width:1500px) {
+    .col-md-4 ul li {
+        margin-top: 3.2%;
+        list-style: none;
+        color: white;
+        text-align: center;
+
+    }
+
+    .content{
+
+        display: inline;
+    }
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 14.3%;
+        background-color: #404040;
+    }
+
+    .footerinfo{
+
+        margin-right: -45% ;
+    }
+
+    .endfooter{
+        padding: 1%;
+        background-color: #ffffff;
+        clear:both;
+        text-align: center;
+    }
+
+}
+
+@media screen and (min-width: 1501px) {
+    .col-md-4 ul li {
+        margin-top: 3.2%;
+        list-style: none;
+        color: white;
+        text-align: center;
+
+    }
+
+.content{
+    display: inline;
+}
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 15%;
+        background-color: #404040;
+    }
+
+    .endfooter{
+        padding: 1%;
+        background-color: #ffffff;
+        clear:both;
+        text-align: center;
+    }
+
+    .footerinfo{
+
+        margin-right: -50%;
+    }
+}
+
+
+
+.bold{
+    color: #ffffff;
+    font-weight: 600;
+
+}
+
