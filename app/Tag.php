@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Project_tag extends Model {
+class Tags extends Model {
 
-	//
+    protected $table = 'tags';
 
 }

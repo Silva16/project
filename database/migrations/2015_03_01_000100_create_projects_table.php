@@ -33,13 +33,13 @@ class CreateProjectsTable extends Migration {
 			$table->integer('updated_by')->unsigned();
 			$table->foreign('updated_by')->references('id')->on('users');
 
-			$table->integer('approved_by')->unsigned();
+			$table->integer('approved_by')->unsigned()->nullable();
 			$table->foreign('approved_by')->references('id')->on('users');
 
 			$table->text('used_software')->nullable();
 			$table->text('used_hardware')->nullable();
-			$table->text('observations');
-			$table->date('featured_until');
+			$table->text('observations')->nullable();
+			$table->date('featured_until')->nullable();
 
 			$table->integer('replaces_id')->unsigned()->nullable(); // edited version of a comment
 			$table->foreign('replaces_id')->references('id')->on('projects');

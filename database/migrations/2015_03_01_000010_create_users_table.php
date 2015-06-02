@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration {
 
 			$table->string('position');
 
-			$table->integer('photo_url')->nullable();
+			$table->string('photo_url')->nullable();
 			$table->string('profile_url')->nullable();
 
 			$table->smallInteger('flags');

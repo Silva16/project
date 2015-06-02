@@ -92,8 +92,8 @@ t::get('date'),
     public function index()
     {
 
-        $imgs = MediaController::getImages();
-        return view('projects/list', compact('imgs'));
+        //$imgs = MediaController::getImages();
+        return view('app');
     }
 
     public function get_list()

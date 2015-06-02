@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 
 class Project extends Model {
 
+    protected $table = 'projects';
 
     private $id;
     private $name;
@@ -78,8 +79,16 @@ class Project extends Model {
     }
 
     //
-    public function user(){
-        return $this->belongsTo('App/User', 'local_key');
+    public function users(){
+        return $this->belongsToMany('App/User');
+    }
+
+    public function tags(){
+        return $this->belongsToMany('App/Tag');
+    }
+
+    public function comments(){
+        return $this->hasMany('App/Comment');
     }
 
 
