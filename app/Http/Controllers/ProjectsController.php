@@ -33,9 +33,6 @@ class ProjectsController extends Controller
         //$id = Project::add($project);
         //$input = $request->all();
         $date = new \DateTime();
-
-        $user = User::find(2);
-
         $project = new Project();
 
         $project->name = Input::get('name');
@@ -43,9 +40,8 @@ class ProjectsController extends Controller
         $project->theme = Input::get('theme');
         $project->description = Input::get('description');
         $project->started_at = Input::get('started_at');
-        $project->created_by = $user->id;
-        $project->updated_by = $user->id;
-        $project->approved_by = 2;
+        $project->created_by = Auth::user()->id;
+        $project->updated_by = Auth::user()->id;
         $project->featured_until = Input::get('featured_until');
         $project->state = Input::get('state');
         $project->created_at = $date->getTimestamp();

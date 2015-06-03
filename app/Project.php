@@ -80,15 +80,15 @@ class Project extends Model {
 
     //
     public function users(){
-        return $this->belongsToMany('App/User');
+        return $this->belongsToMany('App\User');
     }
 
     public function tags(){
-        return $this->belongsToMany('App/Tag');
+        return $this->belongsToMany('App\Tag');
     }
 
     public function comments(){
-        return $this->hasMany('App/Comment');
+        return $this->hasMany('App\Comment');
     }
 
 

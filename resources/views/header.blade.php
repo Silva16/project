@@ -1,5 +1,7 @@
 
 @extends('head')
+
+
 <body>
 <header>
     <ul>
@@ -10,7 +12,7 @@
             <input type="text" class="search-query" placeholder="Search">
         </li>
         <li>
-            <input type="button" class="button" value="Login" onclick="msg()">
+            <input type="button" class="button" value="Login" onclick="window.location='{{ url("auth/login") }}'">
         </li>
     </ul>
 

@@ -13,13 +13,24 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
 
 Route::get('projects', ['as' => 'author_projects', 'uses' => 'ProjectsController@list']);
 
 Route::get('projects/create', ['as' => 'create_project', 'uses' => 'ProjectsController@create']);
 
 Route::post('projects/store', ['as' => 'store_project', 'uses' => 'ProjectsController@store']);
+
+//Route::get('users/create', ['as' => 'create_user', 'uses' => 'UsersController@create']);
+
+//Route::post('users/store', ['as' => 'store_user', 'uses' => 'UsersController@store']);
+
+//Route::get('users/{id}/edit', ['as' => 'edit_user', 'uses' => 'UsersController@edit']);
+
+//Route::post('users/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
+
+Route::resource('users', 'UsersController');
+
+Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);
 
 Route::get('list', 'ProjectsController@index');
 

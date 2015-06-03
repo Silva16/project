@@ -7,7 +7,7 @@ class Media extends Model {
     protected $table = 'media';
 
     public function comments(){
-        return $this->belongsTo('App/Project');
+        return $this->belongsTo('App\Project');
     }
 
 }
