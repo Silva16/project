@@ -6,7 +6,7 @@
 
         <li ><a href="#">Página principal</a></li>
         <li><a href="resources/views/projects/list">Projectos</a></li>
-        <li id="search">
+        <li>
             <input type="text" class="search-query" placeholder="Search">
         </li>
         <li>
