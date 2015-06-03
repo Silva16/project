@@ -3,6 +3,8 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+    position: relative;
+    min-height: 100%;
 }
 html,body {
     max-width: 100%;
@@ -886,6 +888,7 @@ body {
   line-height: 1.42857143;
   color: #333333;
   background-color: #ffffff;
+    margin: 0 0 20%;
 }
 input,
 button,
@@ -1378,6 +1381,7 @@ pre code {
 }
 @media (min-width: 992px) {
   .container {
+
     width: 970px;
   }
 }
@@ -6584,4 +6588,5 @@ float:left;
     font-weight: 600;
 
 }
+
 

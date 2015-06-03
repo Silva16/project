@@ -20,15 +20,15 @@ Route::get('projects/create', ['as' => 'create_project', 'uses' => 'ProjectsCont
 
 Route::post('projects/store', ['as' => 'store_project', 'uses' => 'ProjectsController@store']);
 
-//Route::get('users/create', ['as' => 'create_user', 'uses' => 'UsersController@create']);
+Route::get('users/create', ['as' => 'create_user', 'uses' => 'UsersController@create']);
 
-//Route::post('users/store', ['as' => 'store_user', 'uses' => 'UsersController@store']);
+Route::post('users/store', ['as' => 'store_user', 'uses' => 'UsersController@store']);
 
-//Route::get('users/{id}/edit', ['as' => 'edit_user', 'uses' => 'UsersController@edit']);
+Route::get('users/{id}/edit', ['as' => 'edit_user', 'uses' => 'UsersController@edit']);
 
-//Route::post('users/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
+Route::post('users/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
 
-Route::resource('users', 'UsersController');
+//Route::resource('users', 'UsersController');
 
 Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);
 

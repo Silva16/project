@@ -1,3 +1,4 @@
+<div class="container">
 <div class="form-group @if ($errors->has('name')) has-error @endif">
     {!! Form::label('name', 'Nome: ') !!}</br>
     {!! Form::text('name') !!}
@@ -93,6 +94,29 @@
     @endif
 </div>
 
+<div class="form-group @if ($errors->has('photo_url')) has-error @endif">
+    {!! Form::label('photo_url', 'Foto: ') !!}</br>
+    {!! Form::text('photo_url') !!}
+    @if ($errors->has('photo_url'))
+    <span class="alert alert-danger">
+        {{ $errors->first('photo_url') }}
+    </span>
+
+    @endif
+</div>
+
+<div class="form-group @if ($errors->has('profile_url')) has-error @endif">
+    {!! Form::label('profile_url', 'Foto de Perfil: ') !!}</br>
+    {!! Form::text('profile_url') !!}
+    @if ($errors->has('profile_url'))
+    <span class="alert alert-danger">
+        {{ $errors->first('profile_url') }}
+    </span>
+
+    @endif
+</div>
+
 <div>
     {!! Form::submit($submitButton) !!}
+</div>
 </div>
