@@ -6332,7 +6332,7 @@ label,
         margin-top: 3%;
     }
 
-    #search {
+    .search-query {
         margin-top: 3%;
     }
 
@@ -6340,39 +6340,39 @@ label,
 
 
 @media screen and (min-width: 671px) and (max-width: 800px)  {
-    #search {
+    .search-query {
         margin-left: 30%;
     }
 }
 
 @media screen and (min-width: 801px) and (max-width: 1000px){
-    #search {
+    .search-query {
         margin-left: 40%;
     }
 }
 
 
 @media screen and (min-width: 1001px) and (max-width: 1200px){
-    #search {
+    .search-query {
         margin-left: 51%;
     }
 }
 
 @media screen and (min-width: 1301px) and (max-width: 1500px){
-    #search {
+    .search-query {
         margin-left: 60%;
     }
 }
 
 
 @media screen and (min-width: 1501px) and (max-width: 1800px){
-    #search {
+    .search-query {
         margin-left: 65%;
     }
 }
 
 @media screen and (min-width: 1801px) {
-    #search {
+    .search-query {
         margin-left: 70%;
     }
 }
