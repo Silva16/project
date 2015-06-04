@@ -44,4 +44,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsTo('App\Institution');
     }
 
+    public static function get_roles(){
+        return ['1' => 'Administrador', '2' => 'Editor', '3' => 'Autor'];
+    }
+
+    public static function get_status(){
+        return ['0' => 'Desactivo', '1' => 'Activo'];
+    }
+
 }

@@ -29,8 +29,10 @@ class UsersController extends Controller {
 	 */
 	public function create()
 	{
+        $roles = User::get_roles();
+        $status = User::get_status();
         $institutions = Institution::lists('name','id');
-        return view('users.create', compact('institutions'));
+        return view('users.create', compact('institutions', 'roles', 'status'));
 	}
 
 	/**
@@ -44,24 +46,33 @@ class UsersController extends Controller {
 
         $date = new \DateTime();
 
+
         $user->name = Input::get('name');
         $user->email = Input::get('email');
         $user->password = Input::get('password');
         $user->institution_id = Input::get('id');
         $user->position = Input::get('position');
         $user->role = Input::get('role');
+        $user->flags = Input::get('status');
         $user->created_at = $date->getTimestamp();
         $user->updated_at = $date->getTimestamp();
 
-        /*$fields = ['alt_email' => Input::get('acronym'), 'keywords' => Input::get('keywords'), 'used_software' => Input::get('used_software'), 'used_hardware' => Input::get('used_hardware'), 'observations' => Input::get('observations')];
+        /*$imageName = $request->file('photo_url')->getFilename();
+        $user->photo_url = $imageName;
+
+        $request->file('photo_url')->move(base_path() . '/storage/imgs/', $imageName);
+
+        /*$fields = ['alt_email' => Input::get('alt_email')];
 
         foreach ($fields as $key => $value){
             if (empty($value)){
                 $user->$key = null;
             } else{
-                $project->$key = $value;
+                $user->$key = $value;
             }
         }*/
+
+
 
         $user->save();
 
@@ -78,6 +89,7 @@ class UsersController extends Controller {
 	public function show()
 	{
         //$users = User::all();
+
 		$users = User::with(array('institution'))->get();
 
         return view('users.list', compact('users'));
@@ -91,9 +103,13 @@ class UsersController extends Controller {
 	 */
 	public function edit($id)
 	{
+
 		$user = User::find($id);
+
+        $roles = User::get_roles();
         $institutions = Institution::lists('name','id');
-        return view ('users.edit', compact('user', 'institutions'));
+        $status = User::get_status();
+        return view ('users.edit', compact('user', 'institutions', 'roles', 'status'));
 	}
 
 	/**
@@ -105,15 +121,19 @@ class UsersController extends Controller {
 	public function update($id, UserRequest $request)
 	{
         $user = User::find($id);
-
+        var_dump($user);
         $date = new \DateTime();
 
         $user->name = Input::get('name');
         $user->email = Input::get('email');
-        $user->password = Input::get('password');
-        $user->institution_id = 1;
+        $password = Input::get('password');
+        if (!empty($password)){
+            $user->password = $password;
+        }
+        $user->institution_id = Input::get('institution_id');
         $user->position = Input::get('position');
         $user->role = Input::get('role');
+        $user->flags = Input::get('status');
         $user->created_at = $date->getTimestamp();
         $user->updated_at = $date->getTimestamp();
 
@@ -131,8 +151,6 @@ class UsersController extends Controller {
 
 
         return redirect()->route('users/list');
-
-
 	}
 
 	/**

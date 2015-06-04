@@ -24,6 +24,8 @@ Route::get('users/create', ['as' => 'create_user', 'uses' => 'UsersController@cr
 
 Route::post('users/store', ['as' => 'store_user', 'uses' => 'UsersController@store']);
 
+Route::patch('users/{id}/update', ['as' => 'update_user', 'uses' => 'UsersController@update']);
+
 Route::get('users/{id}/edit', ['as' => 'edit_user', 'uses' => 'UsersController@edit']);
 
 Route::post('users/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
