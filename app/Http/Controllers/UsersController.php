@@ -57,10 +57,16 @@ class UsersController extends Controller {
         $user->created_at = $date->getTimestamp();
         $user->updated_at = $date->getTimestamp();
 
+        /*$image = storage_path() . '/app/profiles/' . 'filipe67.jpg';
+
+        $header =
+
+        $image = [img => action('MediaController@show', ] */
+
         $image = $request->file('photo_url');
 
         if ($image != null){
-            $request->file('photo_url')->move(base_path() . '/public/imgs/profiles/', $image->getClientOriginalName());
+            $request->file('photo_url')->move(storage_path() . 'app/profiles/', $image->getClientOriginalName());
         }
 
         $fields = ['alt_email' => Input::get('alt_email'), 'photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
@@ -88,10 +94,15 @@ class UsersController extends Controller {
 	{
         //$users = User::all();
 
+
+
 		$users = User::with(array('institution'))->get();
 
 
-        return view('users.list', compact('users'));
+
+        $image = action('MediaController@show', 'filipe67.jpg');
+
+        return view('users.list', compact('users', 'image'));
 	}
 
 	/**

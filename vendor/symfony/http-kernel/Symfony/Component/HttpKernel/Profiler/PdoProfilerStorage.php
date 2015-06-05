@@ -247,7 +247,7 @@ abstract class PdoProfilerStorage implements ProfilerStorageInterface
     /**
      * Returns whether data for the given token already exists in storage.
      *
-     * @param string $token The profile token
+     * @param string $token The profiles token
      *
      * @return string
      */

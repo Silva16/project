@@ -36,6 +36,8 @@ Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show'
 
 Route::get('list', 'ProjectsController@index');
 
+Route::resource('media', 'MediaController');
+
 Route::get(
     '/images/{file}',
     'MediaController@getImage'

@@ -83,9 +83,9 @@ class Profile
     }
 
     /**
-     * Returns the parent profile.
+     * Returns the parent profiles.
      *
-     * @return Profile The parent profile
+     * @return Profile The parent profiles
      */
     public function getParent()
     {
@@ -224,7 +224,7 @@ class Profile
     }
 
     /**
-     * Gets the Collectors associated with this profile.
+     * Gets the Collectors associated with this profiles.
      *
      * @return DataCollectorInterface[]
      */
@@ -234,7 +234,7 @@ class Profile
     }
 
     /**
-     * Sets the Collectors associated with this profile.
+     * Sets the Collectors associated with this profiles.
      *
      * @param DataCollectorInterface[] $collectors
      */

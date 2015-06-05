@@ -38,4 +38,4 @@ before_script:
 script:
    - bin/phpspec run --format=pretty
    - ./vendor/bin/phpunit --testdox
-   - ./vendor/bin/behat --format=pretty `if [ "$SMOKE" == "true" ]; then echo '--profile=smoke'; fi;` --tags '~@php-version'`php php_version_tags.php`
+   - ./vendor/bin/behat --format=pretty `if [ "$SMOKE" == "true" ]; then echo '--profiles=smoke'; fi;` --tags '~@php-version'`php php_version_tags.php`

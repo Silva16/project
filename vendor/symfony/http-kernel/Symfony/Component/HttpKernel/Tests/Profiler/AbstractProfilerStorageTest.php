@@ -91,9 +91,9 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
         $profile->setUrl('http://example.net/');
 
         $this->assertTrue($this->getStorage()->write($profile), '->write() returns true when the token is already present in the storage');
-        $this->assertEquals('http://example.net/', $this->getStorage()->read('token')->getUrl(), '->write() overwrites the current profile data');
+        $this->assertEquals('http://example.net/', $this->getStorage()->read('token')->getUrl(), '->write() overwrites the current profiles data');
 
-        $this->assertCount(1, $this->getStorage()->find('', '', 1000, ''), '->find() does not return the same profile twice');
+        $this->assertCount(1, $this->getStorage()->find('', '', 1000, ''), '->find() does not return the same profiles twice');
     }
 
     public function testRetrieveByIp()

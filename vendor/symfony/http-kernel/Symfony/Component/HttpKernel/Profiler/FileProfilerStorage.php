@@ -139,7 +139,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
             }
         }
 
-        // Store profile
+        // Store profiles
         $data = array(
             'token' => $profile->getToken(),
             'parent' => $profile->getParentToken(),
@@ -180,7 +180,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
      *
      * @param string $token
      *
-     * @return string The profile filename
+     * @return string The profiles filename
      */
     protected function getFilename($token)
     {

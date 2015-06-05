@@ -31,7 +31,7 @@
             <td>{{$user->alt_email}}</td>
             <td>{{$user->institution->name}}</td>
             <td>{{$user->position}}</td>
-            <td>{!! HTML::image('/imgs/profiles/' . $user->photo_url, 'profile', array( 'width' => '100', 'height' => '100')) !!}</td>
+            <td><img src={{$image}} height="100"></td>
             {{--<td><img alt="Foto de Perfil" src={{base_path() . '/storage/app/imgs/' . $user->photo_url}}</td>--}}
             <td>{{$user->profile_url}}</td>
             <td>{{$user->role}}</td>

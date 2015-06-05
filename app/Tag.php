@@ -7,7 +7,7 @@ class Tag extends Model {
     protected $table = 'tags';
 
     public function projects(){
-        return $this->belongsTo('App\Projects');
+        return $this->belongsToMany('App\Projects');
     }
 
 }

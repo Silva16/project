@@ -13,23 +13,20 @@ class MediaController extends Controller {
         $this->middleware('guest');
     }
 
-    public static function getImages(){
+    public function show($filename){
 
         /*$imgs = [Storage::get('/imgs/FindMyBurger.png')];
 
         return $imgs;*/
 
-        $path = storage_path() . '/app/imgs/FindMyBurger.png';//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+        $file = storage_path() . '/app/profiles/' . $filename;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
 
-        $file = new File\File($path);
+        $headers = [
+            'Content-Type' => 'image/jpg'
+        ];
 
-        $response = Response::make($file);
-
-        $type = $file->getMimeType();
-
-        $response->header('Content-type', $type);
-
-        return $response->he;
+        return response()->download($file, $filename, $headers, 'inline');
     }
+
 
 }
