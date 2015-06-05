@@ -1,6 +1,5 @@
-@extends('app')
+@extends('header')
 @section('content')
-
-Success!
-
+Sucess!!
 @endsection
+@extends('footer')

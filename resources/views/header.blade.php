@@ -26,8 +26,8 @@
     <ul>
 
         <li ><a href="#">Página principal</a></li>
-        <li><a href="resources/views/projects/list">Projectos</a></li>
-        <li>
+        <li><a href="{{url('projects')}}">Projectos</a></li>
+        <li>'
             <input type="text" class="search-query" placeholder="Search">
         </li>
         <li>
