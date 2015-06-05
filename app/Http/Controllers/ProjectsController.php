@@ -40,8 +40,8 @@ class ProjectsController extends Controller
         $project->theme = Input::get('theme');
         $project->description = Input::get('description');
         $project->started_at = Input::get('started_at');
-        $project->created_by = Auth::user()->id;
-        $project->updated_by = Auth::user()->id;
+        $project->created_by = 1;//Auth::user()->id;
+        $project->updated_by = 1;//Auth::user()->id;
         $project->featured_until = Input::get('featured_until');
         $project->state = Input::get('state');
         $project->created_at = $date->getTimestamp();
@@ -92,7 +92,7 @@ t::get('date'),
         return view('app');
     }
 
-    public function get_list()
+    public function show()
     {
         return view('projects.list');
     }

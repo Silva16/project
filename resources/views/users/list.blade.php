@@ -31,7 +31,8 @@
             <td>{{$user->alt_email}}</td>
             <td>{{$user->institution->name}}</td>
             <td>{{$user->position}}</td>
-            <td>{{$user->photo_url}}</td>
+            <td>{!! HTML::image('/imgs/profiles/' . $user->photo_url, 'profile', array( 'width' => '100', 'height' => '100')) !!}</td>
+            {{--<td><img alt="Foto de Perfil" src={{base_path() . '/storage/app/imgs/' . $user->photo_url}}</td>--}}
             <td>{{$user->profile_url}}</td>
             <td>{{$user->role}}</td>
             <td>
@@ -39,14 +40,16 @@
                 {!! Form::submit('Editar') !!}
                 {!! Form::close() !!}
             </td>
-            {{--<td>
-                {!! Form::open(array('route' => 'destroy_user', 'method' => 'POST' )) !!}
+            <td>
+                {!! Form::open(['method' => 'POST', 'action' => ['UsersController@destroy', $user->id]]) !!}
                 {!! Form::submit('Apagar') !!}
                 {!! Form::close() !!}
-            </td>--}}
+            </td>
         </tr>
     @endforeach
 </table>
+
+
 </div>
 
 @endsection

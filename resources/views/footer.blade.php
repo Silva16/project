@@ -2,7 +2,7 @@
         <div class="content">
         <div class="col-md-4 ">
 
-                <img id="footerlogo" src="css/imagens/logoipl.png" alt="logoipl" />
+                <img id="footerlogo" src="http:\\10.10.10.10\project\css\imagens\logoipl.png" alt="logoipl" />
         </div>
         <div class="col-md-4 vcenter ">
                 <ul><li class="footercenter">Rua General Norton de Matos,</li>

@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\Project;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use App\Institution;
@@ -46,10 +47,9 @@ class UsersController extends Controller {
 
         $date = new \DateTime();
 
-
         $user->name = Input::get('name');
         $user->email = Input::get('email');
-        $user->password = Input::get('password');
+        $user->password = Hash::make(Input::get('password'));
         $user->institution_id = Input::get('id');
         $user->position = Input::get('position');
         $user->role = Input::get('role');
@@ -57,12 +57,13 @@ class UsersController extends Controller {
         $user->created_at = $date->getTimestamp();
         $user->updated_at = $date->getTimestamp();
 
-        /*$imageName = $request->file('photo_url')->getFilename();
-        $user->photo_url = $imageName;
+        $image = $request->file('photo_url');
 
-        $request->file('photo_url')->move(base_path() . '/storage/imgs/', $imageName);
+        if ($image != null){
+            $request->file('photo_url')->move(base_path() . '/public/imgs/profiles/', $image->getClientOriginalName());
+        }
 
-        /*$fields = ['alt_email' => Input::get('alt_email')];
+        $fields = ['alt_email' => Input::get('alt_email'), 'photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
 
         foreach ($fields as $key => $value){
             if (empty($value)){
@@ -70,14 +71,11 @@ class UsersController extends Controller {
             } else{
                 $user->$key = $value;
             }
-        }*/
-
-
+        }
 
         $user->save();
 
-
-        return redirect()->route('/users/list');
+        return redirect()->route('list_users');
 	}
 
 	/**
@@ -91,6 +89,7 @@ class UsersController extends Controller {
         //$users = User::all();
 
 		$users = User::with(array('institution'))->get();
+
 
         return view('users.list', compact('users'));
 	}
@@ -128,29 +127,34 @@ class UsersController extends Controller {
         $user->email = Input::get('email');
         $password = Input::get('password');
         if (!empty($password)){
-            $user->password = $password;
+            $user->password = Hash::make($password);
         }
-        $user->institution_id = Input::get('institution_id');
+        $user->institution_id = Input::get('id');
         $user->position = Input::get('position');
         $user->role = Input::get('role');
         $user->flags = Input::get('status');
         $user->created_at = $date->getTimestamp();
         $user->updated_at = $date->getTimestamp();
 
-        /*$fields = ['alt_email' => Input::get('acronym'), 'keywords' => Input::get('keywords'), 'used_software' => Input::get('used_software'), 'used_hardware' => Input::get('used_hardware'), 'observations' => Input::get('observations')];
+        $image = $request->file('photo_url');
+        if ($image != null){
+            $request->file('photo_url')->move(base_path() . '/public/imgs/profiles/', $image->getClientOriginalName());
+        }
+
+        $fields = ['alt_email' => Input::get('alt_email'), 'photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
 
         foreach ($fields as $key => $value){
             if (empty($value)){
                 $user->$key = null;
             } else{
-                $project->$key = $value;
+                $user->$key = $value;
             }
-        }*/
+        }
 
         $user->save();
 
 
-        return redirect()->route('users/list');
+        return redirect()->route('list_users');
 	}
 
 	/**
@@ -161,7 +165,11 @@ class UsersController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect()->route('list_users');
 	}
 
 }

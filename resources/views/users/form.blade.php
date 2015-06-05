@@ -50,12 +50,12 @@
     {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
 </div>
 
-<div class="form-group @if ($errors->has('institution_id')) has-error @endif">
-    {!! Form::label('institution_id', 'Instituto:') !!}</br>
-    {!! Form::select('institution_id', array('default' => 'Seleccione uma opção') + $institutions, 'default', array('class' => 'form-control')) !!}
-    @if ($errors->has('institution_id'))
+<div class="form-group @if ($errors->has('id')) has-error @endif">
+    {!! Form::label('id', 'Instituto:') !!}</br>
+    {!! Form::select('id', array('default' => 'Seleccione uma opção') + $institutions, 'default', array('class' => 'form-control')) !!}
+    @if ($errors->has('id'))
     <span class="alert alert-danger">
-        {{ $errors->first('institution_id') }}
+        {{ $errors->first('id') }}
     </span>
 
     @endif

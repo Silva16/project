@@ -36,7 +36,7 @@
     </ul>
 
 <div class="logo">
-    <img  id="logo" alt="logo" src="css/imagens/logo.png" />
+    <img  id="logo" alt="logo" src="http:\\10.10.10.10\project\css\imagens\logo.png" />
 </div>
 <div id="barra">
 

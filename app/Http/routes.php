@@ -28,7 +28,7 @@ Route::patch('users/{id}/update', ['as' => 'update_user', 'uses' => 'UsersContro
 
 Route::get('users/{id}/edit', ['as' => 'edit_user', 'uses' => 'UsersController@edit']);
 
-Route::post('users/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
+Route::post('users/{id}/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
 
 //Route::resource('users', 'UsersController');
 
