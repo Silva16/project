@@ -6356,7 +6356,7 @@ label,
 }
 
 
-@media screen and (min-width: 1001px) and (max-width: 1200px){
+@media screen and (min-width: 1001px) and (max-width: 1300px){
     .search-query {
         margin-left: 51%;
     }
@@ -6399,14 +6399,17 @@ float:left;
         bottom: 0;
         width: 100%;
         /* Set the fixed height of the footer here */
-        height: 40%;
+        height: 39.2%;
 
         background-color: #404040;
-        margin-bottom: -20%;
+        margin-bottom: -15%;
     }
 
 
+    #footerlogo{
 
+        margin-bottom: -5%;
+    }
     .col-md-4 ul li {
 
         list-style: none;
@@ -6426,6 +6429,7 @@ float:left;
         background-color: #ffffff;
         clear:both;
         text-align: center;
+
     }
 }
 
@@ -6443,25 +6447,33 @@ float:left;
         bottom: 0;
         width: 100%;
         /* Set the fixed height of the footer here */
-        height: 20%;
+
         background-color: #404040;
     }
 
     .content{
         display: inline;
+
     }
 
     .vcenter{
-    float: left;
+        float: left;
         margin-left: -5%;
+        margin-right: -10%;
         margin-top: 2%;
 
     }
 
     .align{
-        line-height: 1%;
 
+        float: right;
+        padding-top: 1.8%;
 
+    }
+
+    .align ul {
+
+        line-height: 145%;
     }
 
     .endfooter{
@@ -6488,6 +6500,8 @@ float:left;
 
         display: inline;
     }
+    
+
 
     footer {
         position: absolute;
