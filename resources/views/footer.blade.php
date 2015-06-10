@@ -20,7 +20,7 @@
         </div>
         </div>
     <div class="endfooter">
-        <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria</a>
+        <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria mahala amhjala</a>
 
     </div>
 </footer>
