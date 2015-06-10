@@ -22,6 +22,7 @@
 
 
 <body>
+<div class="main">
 <header>
     <ul>
 
