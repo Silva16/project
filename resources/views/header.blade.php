@@ -26,8 +26,8 @@
     <ul>
 
         <li ><a href="#">Página principal</a></li>
-        <li><a href="{{url('projects')}}">Projectos</a></li>
-        <li>'
+        <li><a href="resources/views/projects/list">Projectos</a></li>
+        <li>
             <input type="text" class="search-query" placeholder="Search">
         </li>
         <li>
@@ -36,7 +36,7 @@
     </ul>
 
 <div class="logo">
-    <img  id="logo" alt="logo" src="http:\\10.10.10.10\project\css\imagens\logo.png" />
+    <img  id="logo" alt="logo" src="css/imagens/logo.png" />
 </div>
 <div id="barra">
 

@@ -109,6 +109,8 @@ class UsersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+
+
 	public function show()
 	{
         //$users = User::all();

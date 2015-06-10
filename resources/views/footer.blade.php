@@ -1,5 +1,6 @@
+
 <footer>
-        <div class="content">
+        <div class="content" style="background-color:#404040">
         <div class="col-md-4 ">
 
                 <img id="footerlogo" src="http:\\10.10.10.10\project\css\imagens\logoipl.png" alt="logoipl" />
@@ -18,14 +19,11 @@
                </ul>
         </div>
         </div>
+    <div class="endfooter">
+        <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria</a>
 
-        <div class="endfooter">
-            <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria</a>
-
-        </div>
-
-
-
+    </div>
 </footer>
+
 </body>
 </html>

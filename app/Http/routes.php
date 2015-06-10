@@ -13,17 +13,14 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::resource('projects', 'ProjectsController');
 
-/*Route::get('projects', ['as' => 'author_projects', 'uses' => 'ProjectsController@index']);
+Route::get('projects', ['as' => 'author_projects', 'uses' => 'ProjectsController@list']);
 
 Route::get('projects/create', ['as' => 'create_project', 'uses' => 'ProjectsController@create']);
 
 Route::post('projects/store', ['as' => 'store_project', 'uses' => 'ProjectsController@store']);
 
-Route::get('projects/{id}', ['as' => 'project', 'uses' => 'ProjectsController@show']);*/
-
-/*Route::get('users/create', ['as' => 'create_user', 'uses' => 'UsersController@create']);
+Route::get('users/create', ['as' => 'create_user', 'uses' => 'UsersController@create']);
 
 Route::post('users/store', ['as' => 'store_user', 'uses' => 'UsersController@store']);
 
@@ -31,17 +28,13 @@ Route::patch('users/{id}/update', ['as' => 'update_user', 'uses' => 'UsersContro
 
 Route::get('users/{id}/edit', ['as' => 'edit_user', 'uses' => 'UsersController@edit']);
 
-Route::post('users/{id}/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);*/
+Route::post('users/delete', ['as' => 'destroy_user', 'uses' => 'UsersController@destroy']);
 
-Route::resource('users', 'UsersController');
+//Route::resource('users', 'UsersController');
 
-//Route::post('users', 'UsersController@status');
-
-//Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);
+Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);
 
 Route::get('list', 'ProjectsController@index');
-
-Route::resource('media', 'MediaController');
 
 Route::get(
     '/images/{file}',
