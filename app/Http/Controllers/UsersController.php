@@ -13,10 +13,10 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller {
 
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('admin');
-    }
+    }*/
 
 	/**
 	 * Display a listing of the resource.
@@ -35,7 +35,7 @@ class UsersController extends Controller {
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
         foreach ($users as $user){
-            $image[$user->id] = action('MediaController@show', $user->photo_url);
+            $image[$user->id] = action('MediaController@profile', $user->photo_url);
 
         }
 
@@ -83,7 +83,7 @@ class UsersController extends Controller {
 
         if ($image != null){
             $filename = $image->getClientOriginalName();
-            $request->file('photo_url')->move(storage_path() . '/app/profiles/', $image->getClientOriginalName());
+            $image->move(storage_path() . '/app/profiles/', $filename);
             $fields['photo_url'] = $filename;
         }
 
@@ -164,11 +164,11 @@ class UsersController extends Controller {
         $image = $request->file('photo_url');
         if ($image != null){
             $filename = $image->getClientOriginalName();
-            $request->file('photo_url')->move(storage_path() . '/app/profiles/', $image->getClientOriginalName());
+            $image->move(storage_path() . '/app/profiles/', $filename);
             $fields['photo_url'] = $filename;
         }
 
-        $fields = ['photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
+        $fields['profile_url'] = Input::get('profile_url');
 
         foreach ($fields as $key => $value){
             if (empty($value)){

@@ -7,8 +7,8 @@
 {!! Form::close() !!}
 
 
-<div class="container">
-<table class="table-bordered">
+    <div class="table-responsive">
+    <table class="table">
     <thead>
         <tr>
             <th>Nome</th>
@@ -20,8 +20,8 @@
             <th>URL</th>
             <th>Função</th>
             <th>Estado</th>
-            <th></th>
-            <th></th>
+            <th>Editar</th>
+            <th>Apagar</th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,6 @@
             <td>{{$user->institution->name}}</td>
             <td>{{$user->position}}</td>
             <td><img src={{$image[$user->id]}} height="100"></td>
-            {{--<td><img alt="Foto de Perfil" src={{base_path() . '/storage/app/imgs/' . $user->photo_url}}</td>--}}
             <td>{{$user->profile_url}}</td>
             <td>{{$role[$user->role]}}</td>
             <td>

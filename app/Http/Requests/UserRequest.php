@@ -47,7 +47,7 @@ class UserRequest extends Request {
                     'alt_email' => 'email|unique:users,alt_email,'.$this->segment(2),
                     'password' => 'min:8|confirmed',
                     'id' => 'required|not_in:default',
-                    'photo_url' => 'min:mimes:png,jpeg,bmp,jpg',
+                    'photo_url' => 'mimes:png,jpeg,bmp,jpg',
                     'profile_url' => 'min:8',
                     'position' => 'required|min:3',
                     'status' => 'required|numeric',

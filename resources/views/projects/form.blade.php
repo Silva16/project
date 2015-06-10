@@ -80,10 +80,12 @@
         {!! Form::input('date', 'finished_at', null, array('class' => 'form-control')) !!}
     </div>
 
-    <p>
+
+
+    <div class="form-group">
         {!! Form::label('used_software', 'Software utilizado:') !!}</br>
         {!! Form::textarea('used_software', null, array('class' => 'form-control')) !!}
-    </p>
+    </div>
 
     <div class="form-group">
         {!! Form::label('used_hardware', 'Hardware utilizado:') !!}</br>

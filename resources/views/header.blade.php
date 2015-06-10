@@ -31,7 +31,7 @@
             <input type="text" class="search-query" placeholder="Search">
         </li>
         <li>
-            <input type="button" class="button" value="Login" onclick="window.location='{{ url("auth/login") }}'">
+            <input type="button" class="button1" value="Login" onclick="window.location='{{ url("auth/login") }}'">
         </li>
     </ul>
 

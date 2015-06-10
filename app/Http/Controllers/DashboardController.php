@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\User;
+use Auth;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -14,7 +16,17 @@ class DashboardController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		$user = Auth::user();
+
+
+        foreach ($user->projects as $project){
+            var_dump($project->int_file);
+            $image[$project->id] = action('MediaController@project', $project->int_file);
+
+        }
+
+        return view('dashboard.list', compact('user', 'image'));
+
 	}
 
 	/**

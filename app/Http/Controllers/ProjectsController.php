@@ -38,7 +38,6 @@ class ProjectsController extends Controller
         $project->created_by     = Auth::user()->id;
         $project->updated_by     = Auth::user()->id;
         $project->featured_until = Input::get('featured_until');
-        $project->state          = Input::get('state');
         $project->created_at     = $date->getTimestamp();
         $project->updated_at     = $date->getTimestamp();
 
@@ -47,6 +46,8 @@ class ProjectsController extends Controller
         } else {
             $project->state = 0;
         }
+
+
 
         $fields = ['acronym' => Input::get('acronym'), 'finished_at' => Input::get('finished_at'), 'keywords' => Input::get('keywords'),
             'used_software' => Input::get('used_software'), 'used_hardware' => Input::get('used_hardware'),
