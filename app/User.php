@@ -1,6 +1,8 @@
 <?php namespace App;
 
 use Illuminate\Auth\Authenticatable;
+
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -31,6 +33,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    public function isAdministrator(){
+
+        if (Auth::user()->role == 4){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isAuthorOrEditor(){
+
+        if (Auth::user()->role == 1 || Auth::user()->role == 2){
+            return true;
+        }
+
+        return false;
+    }
+
     public function projects(){
         return $this->belongsToMany('App\Project');
 
@@ -49,7 +69,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public static function get_roles(){
-        return ['1' => 'Administrador', '2' => 'Editor', '3' => 'Autor'];
+        return ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
     }
 
     public static function get_status(){

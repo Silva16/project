@@ -6,34 +6,27 @@ use App\Project;
 use App\User;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Redirect;
-
+use Auth;
 class ProjectsController extends Controller
 {
     public $restful = true;
 
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('author', ['except' => ['show', 'index']]);
     }
 
     public function create()
     {
 
-        $state = ['1' => 'Em desenvolvimento', '2' => 'Finalizado'];
 
-        return view('projects.create', compact('state'));
+        return view('projects.create');
     }
 
     public function store(ProjectRequest $request)
     {
-        //$imgs = MediaController::getImages();
-        //$project = new Project();
-        //$id = Project::add($project);
-        //$input = $request->all();
+
         $date    = new \DateTime();
         $project = new Project();
 
@@ -42,14 +35,20 @@ class ProjectsController extends Controller
         $project->theme          = Input::get('theme');
         $project->description    = Input::get('description');
         $project->started_at     = Input::get('started_at');
-        $project->created_by     = 1; //Auth::user()->id;
-        $project->updated_by     = 1; //Auth::user()->id;
+        $project->created_by     = Auth::user()->id;
+        $project->updated_by     = Auth::user()->id;
         $project->featured_until = Input::get('featured_until');
         $project->state          = Input::get('state');
         $project->created_at     = $date->getTimestamp();
         $project->updated_at     = $date->getTimestamp();
 
-        $fields = ['acronym' => Input::get('acronym'), 'keywords' => Input::get('keywords'),
+        if (Auth::user()->role == 2){
+            $project->state = 1;
+        } else {
+            $project->state = 0;
+        }
+
+        $fields = ['acronym' => Input::get('acronym'), 'finished_at' => Input::get('finished_at'), 'keywords' => Input::get('keywords'),
             'used_software' => Input::get('used_software'), 'used_hardware' => Input::get('used_hardware'),
             'observations' => Input::get('observations')];
 
@@ -61,31 +60,14 @@ class ProjectsController extends Controller
             }
         }
 
-        $project->save();
+        if ($project->save()) {
+            $user_id= Auth::user()->id;
+            $project->users()->sync(array($user_id));
+        }
 
 
 
-        return redirect()->route('author_projects');
-        //return redirect('author_projects');
-
-        /* Project::create(array(
-          'name' => Input::get('name'),
-          'description' => Input::get('description'),
-          'started_at' => Inpu
-          t::get('date'),
-          'created_by' => $user->id,
-          'updated_by' => 2,
-          'approved_by' => 2,
-          'observations' => Input::get('observations'),
-          'featured_until' => Input::get('featured_until'),
-          'state' => Input::get('state'),
-          'created_at' => $date->getTimestamp(),
-          'updated_at' => $date->getTimestamp()
-          )); */
-
-
-        //if($id != null){
-        //}
+        return redirect('projects');
     }
 
     public function index()
@@ -95,10 +77,13 @@ class ProjectsController extends Controller
 
     public function show($id)
     {
-            $project = Project::findOrFail($id);
-            $created_by = User::findOrFail($project->created_by);
-            $keywords = explode(',', $project->keywords);
-            return view('projects.show', compact('project', 'created_by', 'keywords'));
-            
+
+        $project = Project::findOrFail($id);
+
+        $keywords = explode(',', $project->keywords);
+        return view('projects.show', compact('project', 'keywords'));
+
     }
+
+
 }

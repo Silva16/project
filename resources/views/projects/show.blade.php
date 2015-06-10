@@ -12,9 +12,11 @@
             <p>Estado: {{($project->state == '1' ? 'Aprovado' : 'Reprovado')}}</p>
             <p>Criado por:</p>
             <ul>
-                <li>
-                    <p>{{$created_by->name}}</p>
-                </li>
+                @foreach ($project->users as $user)
+                    <li>
+                        {{$user->name}}
+                    </li>
+                @endforeach
             </ul>
         </div>
         <div style="float:right; width: 48%;">

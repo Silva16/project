@@ -31,7 +31,6 @@ class ProjectRequest extends Request {
             'started_at' => 'required|after:01 January 1987|before:now',
             'featured_until' => 'required|after:01 January 1987|before:now',
             'finished_at' => 'after:01 January 1987|before:now',
-            'state' => 'required|not_in:default',
             'used_software' => 'min:3',
             'used_hardware' => 'min:3',
             'observations' => 'min:10'

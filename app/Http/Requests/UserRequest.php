@@ -29,7 +29,7 @@ class UserRequest extends Request {
                 return [
                     'name' => array('required' , 'min:3', 'regex:/^[a-zA-Z ]+$/'),
                     'email' => 'required|email|unique:users,email',
-                    'alt_email' => 'email|unique:users, alt_email',
+                    'alt_email' => 'email|unique:users,alt_email',
                     'password' => 'required|min:8|confirmed',
                     'id' => 'required|not_in:default',
                     'photo_url' => 'mimes:png,jpeg,bmp,jpg',
@@ -44,7 +44,7 @@ class UserRequest extends Request {
                 return [
                     'name' => array('required' , 'min:3', 'regex:/^[a-zA-Z ]+$/'),
                     'email' => 'required|email|unique:users,email,'.$this->segment(2),
-                    'alt_email' => 'email|unique:users, alt_email'.$this->segment(2),
+                    'alt_email' => 'email|unique:users,alt_email,'.$this->segment(2),
                     'password' => 'min:8|confirmed',
                     'id' => 'required|not_in:default',
                     'photo_url' => 'min:mimes:png,jpeg,bmp,jpg',

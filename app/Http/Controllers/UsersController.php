@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -20,7 +25,21 @@ class UsersController extends Controller {
 	 */
 	public function index()
 	{
-		//
+        $users = User::with(array('institution'))->get();
+
+        $users = array_values(array_sort($users, function($value)
+        {
+            return $value['name'];
+        }));
+
+        $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
+
+        foreach ($users as $user){
+            $image[$user->id] = action('MediaController@show', $user->photo_url);
+
+        }
+
+        return view('users.list', compact('users', 'image', 'role'));
 	}
 
 	/**
@@ -30,6 +49,7 @@ class UsersController extends Controller {
 	 */
 	public function create()
 	{
+
         $roles = User::get_roles();
         $status = User::get_status();
         $institutions = Institution::lists('name','id');
@@ -43,6 +63,7 @@ class UsersController extends Controller {
 	 */
 	public function store(UserRequest $request)
 	{
+
         $user = new User();
 
         $date = new \DateTime();
@@ -57,22 +78,20 @@ class UsersController extends Controller {
         $user->created_at = $date->getTimestamp();
         $user->updated_at = $date->getTimestamp();
 
-        /*$image = storage_path() . '/app/profiles/' . 'filipe67.jpg';
-
-        $header =
-
-        $image = [img => action('MediaController@show', ] */
 
         $image = $request->file('photo_url');
 
         if ($image != null){
-            $request->file('photo_url')->move(storage_path() . 'app/profiles/', $image->getClientOriginalName());
+            $filename = $image->getClientOriginalName();
+            $request->file('photo_url')->move(storage_path() . '/app/profiles/', $image->getClientOriginalName());
+            $fields['photo_url'] = $filename;
         }
 
-        $fields = ['alt_email' => Input::get('alt_email'), 'photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
+
+        $fields = ['profile_url' => Input::get('profile_url'), 'alt_email' => Input::get('alt_email')];
 
         foreach ($fields as $key => $value){
-            if (empty($value)){
+            if (empty($value) || $value == null){
                 $user->$key = null;
             } else{
                 $user->$key = $value;
@@ -81,7 +100,7 @@ class UsersController extends Controller {
 
         $user->save();
 
-        return redirect()->route('list_users');
+        return redirect('users');
 	}
 
 	/**
@@ -96,13 +115,7 @@ class UsersController extends Controller {
 
 
 
-		$users = User::with(array('institution'))->get();
 
-
-
-        $image = action('MediaController@show', 'filipe67.jpg');
-
-        return view('users.list', compact('users', 'image'));
 	}
 
 	/**
@@ -131,7 +144,6 @@ class UsersController extends Controller {
 	public function update($id, UserRequest $request)
 	{
         $user = User::find($id);
-        var_dump($user);
         $date = new \DateTime();
 
         $user->name = Input::get('name');
@@ -149,10 +161,12 @@ class UsersController extends Controller {
 
         $image = $request->file('photo_url');
         if ($image != null){
-            $request->file('photo_url')->move(base_path() . '/public/imgs/profiles/', $image->getClientOriginalName());
+            $filename = $image->getClientOriginalName();
+            $request->file('photo_url')->move(storage_path() . '/app/profiles/', $image->getClientOriginalName());
+            $fields['photo_url'] = $filename;
         }
 
-        $fields = ['alt_email' => Input::get('alt_email'), 'photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
+        $fields = ['photo_url' => $image->getClientOriginalName(), 'profile_url' => Input::get('profile_url')];
 
         foreach ($fields as $key => $value){
             if (empty($value)){
@@ -165,7 +179,7 @@ class UsersController extends Controller {
         $user->save();
 
 
-        return redirect()->route('list_users');
+        return redirect('users');
 	}
 
 	/**
@@ -180,7 +194,15 @@ class UsersController extends Controller {
 
         $user->delete();
 
-        return redirect()->route('list_users');
+        return redirect('users');
 	}
+
+    public function status()
+    {
+
+
+    }
+
+
 
 }

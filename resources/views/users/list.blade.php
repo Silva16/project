@@ -17,8 +17,9 @@
             <th>Instituição</th>
             <th>Posição</th>
             <th>Foto</th>
-            <th>Perfil</th>
+            <th>URL</th>
             <th>Função</th>
+            <th>Estado</th>
             <th></th>
             <th></th>
         </tr>
@@ -31,17 +32,22 @@
             <td>{{$user->alt_email}}</td>
             <td>{{$user->institution->name}}</td>
             <td>{{$user->position}}</td>
-            <td><img src={{$image}} height="100"></td>
+            <td><img src={{$image[$user->id]}} height="100"></td>
             {{--<td><img alt="Foto de Perfil" src={{base_path() . '/storage/app/imgs/' . $user->photo_url}}</td>--}}
             <td>{{$user->profile_url}}</td>
-            <td>{{$user->role}}</td>
+            <td>{{$role[$user->role]}}</td>
+            <td>
+                {{--{!! Form::open(array('url' => ' ')) !!}
+                {!! Form::checkbox('Estado', $user->flags, false, ['onClick' => 'this.form.submit']) !!}
+                {!! Form::close() !!}--}}
+            </td>
             <td>
                 {!! Form::open(['method' => 'GET', 'action' => ['UsersController@edit', $user->id]]) !!}
                 {!! Form::submit('Editar') !!}
                 {!! Form::close() !!}
             </td>
             <td>
-                {!! Form::open(['method' => 'POST', 'action' => ['UsersController@destroy', $user->id]]) !!}
+                {!! Form::open(['method' => 'DELETE', 'action' => ['UsersController@destroy', $user->id]]) !!}
                 {!! Form::submit('Apagar') !!}
                 {!! Form::close() !!}
             </td>
