@@ -18,14 +18,7 @@ class DashboardController extends Controller {
 	{
 		$user = Auth::user();
 
-
-        foreach ($user->projects as $project){
-            var_dump($project->int_file);
-            $image[$project->id] = action('MediaController@project', $project->int_file);
-
-        }
-
-        return view('dashboard.list', compact('user', 'image'));
+        return view('dashboard.list', compact('user'));
 
 	}
 

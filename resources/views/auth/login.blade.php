@@ -1,4 +1,4 @@
-@extends('app')
+@extends('header')
 
 @section('content')
 <div class="container-fluid">
@@ -59,3 +59,5 @@
 	</div>
 </div>
 @endsection
+@extends('footer')
+

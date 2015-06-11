@@ -6248,7 +6248,7 @@ label,
 
  header ul{
     margin-bottom: -2%;
-    padding: 6px;
+    padding: 10px;
     margin: 0px;
     background-color: #404040;
     list-style: none;
@@ -6303,7 +6303,6 @@ label,
 
     color: #ffffff;
     /*visual do link*/
-    background-color: #404040;
     text-decoration: none;
 
 }
@@ -6323,6 +6322,7 @@ label,
     padding: 2px;
     background-color: #404040;
     clear:both;
+    margin-bottom: 20px;
 }
 
 
@@ -6362,39 +6362,39 @@ label,
 
 @media screen and (min-width: 671px) and (max-width: 800px)  {
     .search-query {
-        margin-left: 30%;
+
     }
 }
 
 @media screen and (min-width: 801px) and (max-width: 1000px){
     .search-query {
-        margin-left: 40%;
+
     }
 }
 
 
 @media screen and (min-width: 1001px) and (max-width: 1300px){
     .search-query {
-        margin-left: 51%;
+
     }
 }
 
 @media screen and (min-width: 1301px) and (max-width: 1500px){
     .search-query {
-        margin-left: 60%;
+
     }
 }
 
 
 @media screen and (min-width: 1501px) and (max-width: 1800px){
     .search-query {
-        margin-left: 65%;
+
     }
 }
 
 @media screen and (min-width: 1801px) {
     .search-query {
-        margin-left: 70%;
+
     }
 }
 

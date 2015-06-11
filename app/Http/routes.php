@@ -13,22 +13,24 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('dashboard', 'DashboardController@index');
+Route::resource('dashboard', 'DashboardController');
 
-Route::get('list', 'ProjectsController@index');
+Route::resource('projects', 'ProjectsController');
 
-Route::get('media', 'MediaController@create');
+//Route::get('projects', 'ProjectsController@index');
 
-Route::get('media/profile', 'MediaController@profile');
+/*Route::get('media/{id}', 'MediaController@index');
 
-Route::get('media/project', 'MediaController@project');
+Route::get('media/{id}', 'MediaController@profile');
+
+Route::get('media/', 'MediaController@project');
 
 Route::get('media/create', 'MediaController@create');
 
-Route::post('media/store/{id}', 'MediaController@store');
 
 
-Route::resource('projects', 'ProjectsController');
+
+
 
 /*Route::get('projects', ['as' => 'author_projects', 'uses' => 'ProjectsController@index']);
 
@@ -50,15 +52,28 @@ Route::post('users/{id}/delete', ['as' => 'destroy_user', 'uses' => 'UsersContro
 
 Route::resource('users', 'UsersController');
 
+Route::get('media/index/{id}', 'MediaController@index');
+
+Route::get('media/create/{id}', 'MediaController@create');
+
+Route::post('media/store/{id}', 'MediaController@store');
+
+Route::patch('media/update/{id}', 'MediaController@update');
+
+Route::get('media/edit/{id}', 'MediaController@edit');
+
+Route::get('media/{id}', 'MediaController@show');
+
+Route::post('media/delete/{id}', 'MediaController@destroy');
+
+//Route::resource('media', 'MediaController');
+
+
+
 //Route::post('users', 'UsersController@status');
 
 //Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);
 
-
-Route::get(
-    '/images/{file}',
-    'MediaController@getImage'
-);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -13,10 +13,10 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller {
 
-    /*public function __construct()
+    public function __construct()
     {
         $this->middleware('admin');
-    }*/
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -35,7 +35,7 @@ class UsersController extends Controller {
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
         foreach ($users as $user){
-            $image[$user->id] = action('MediaController@profile', $user->photo_url);
+            $image[$user->id] = action('MediaController@show', $user->photo_url);
 
         }
 

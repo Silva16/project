@@ -73,7 +73,13 @@ class ProjectsController extends Controller
 
     public function index()
     {
-        return view('projects.list');
+        $projects = Project::where('state', '=', '1')->get();
+
+        foreach($projects as $project){
+            $created_by[$project->id] = User::find($project->created_by)->name;
+        }
+
+        return view('projects.list', compact('projects', 'created_by'));
     }
 
     public function show($id)

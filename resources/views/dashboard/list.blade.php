@@ -35,7 +35,9 @@
                 <td>{{$project->theme}}</td>
                 <td>{{$project->description}}</td>
                 <td>
-                    <input type="button" class="button2" value="Ficheiros" onclick="window.location='{{ url("projects/media") }}'">
+                    {!! Form::open(['method' => 'GET', 'action' => ['MediaController@index', $project->id]]) !!}
+                    {!! Form::submit('Ficheiros') !!}
+                    {!! Form::close() !!}
                 </td>
                 <td>{{$project->keywords}}</td>
                 <td>{{$project->started_at}}</td>

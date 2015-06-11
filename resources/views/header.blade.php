@@ -22,27 +22,57 @@
 
 
 <body>
-<div class="main">
-<header>
-    <ul>
+    <div class="main">
+        <header>
+            <ul>
+                <li>
+                    <a href="http:\\10.10.10.10\project\">Página Principal</a>
+                </li>
+                <li>
+                    {!! HTML::linkRoute('projects.index', 'Projectos') !!}
+                </li>
+                <li>
+                    <a href="resources/views/projects/list">Autores</a>
+                </li>
+                {{--<li>
+                    <input type="button" class="button1" value="Login" onclick="window.location='{{ url("auth/login") }}'">
+                </li>--}}
+                @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
+                    <li >
+                        {!! HTML::linkRoute('dashboard.index', 'Dashboard') !!}
+                    </li>
+                @endif
+                @if (Auth::check() && Auth::user()->role == 4)
+                    <li >
+                        {!! HTML::linkRoute('users.index', 'Gestão de Utilizadores') !!}
+                    </li>
+                @endif
+                <div class="pull-right">
+                <li>
+                    <input type="text" style="margin-top: -4px" class="search-query" placeholder="Search">
+                </li>
+                @if (Auth::guest())
+                <li>
+                    <a href="{{ url('/auth/login') }}">Login</a>
+                </li>
+                @endif
+                @if (Auth::user())
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                @endif
+                </div>
+            </ul>
+            <div class="logo">
+                <img  id="logo" alt="logo" src="http:\\10.10.10.10\project\css\imagens\logo.png" />
+            </div>
+            <div id="barra">
 
-        <li ><a href="#">Página principal</a></li>
-        <li><a href="resources/views/projects/list">Projectos</a></li>
-        <li>
-            <input type="text" class="search-query" placeholder="Search">
-        </li>
-        <li>
-            <input type="button" class="button1" value="Login" onclick="window.location='{{ url("auth/login") }}'">
-        </li>
-    </ul>
-
-<div class="logo">
-    <img  id="logo" alt="logo" src="css/imagens/logo.png" />
-</div>
-<div id="barra">
-
-</div>
-</header>
+            </div>
+        </header>
 @yield('content')
 
 <!-- Scripts -->

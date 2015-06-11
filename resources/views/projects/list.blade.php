@@ -7,44 +7,32 @@
         document.getElementById("teste").src = "css/imagens/cleal.jpg";
     }
 </script>
-    <div class="container" >
-
-
-
-                <div id="artigo">
-
-                <figure class="imgproj">
-
-                    <img  id="teste" alt="" src="" width="350px" height="210px"/>
-
-                </figure>
-                <section id="projects">
-                    <h1>    Project Flips </h1>
-                    <h6>    11 Maio 2015  </h6>
-
-                    <article id="articles">
-                        <p >
-                            O Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão.
-                            O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500,
-                            quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos,
-                            mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada.
-                            Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset,
-                            que continham passagens com Lorem Ipsum, e mais recentemente com os programas
-                            de publicação como o Aldus PageMaker que incluem versões do Lorem Ipsum.
+    <div class="container">
+        @foreach($projects as $project)
+        <div id="artigo">
+            <section >
+                <article id="articles">
+                    <figure style="float:right; width: 48%" class="imgproj">
+                        <img id="teste" alt="" src="" width="350px" height="210px"/>
+                    </figure>
+                    <div style="width: 48%" id="projects">
+                        <h1>{{$project->name}}</h1>
+                        <h6>{{$project->started_at}}</h6>
+                        <p style="text-align: justify; text-justify: inter-word;  line-height: 1.5em; height: 9em; overflow: hidden;">
+                            {{$project->description}}
+                            {!! HTML::linkAction('ProjectsController@show', 'Ler mais', array($project->id)) !!}
                         </p>
+                        <p style="font-weight: bold;">{{$created_by[$project->id]}}</p>
+                        {{--@foreach($project->users as $user)
+                            <p style="font-weight: bold;">{{$user->name}}</p>
+                        @endforeach--}}
 
-                    </article>
-
-                    <p id="autor" > Jebazz </p>
-
-                </section>
                     </div>
-
-
-
-
+                </article>
+            </section>
+        </div>
+        @endforeach
     </div>
-
 
 @endsection
 @extends('footer')

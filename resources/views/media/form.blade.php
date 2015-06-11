@@ -48,5 +48,7 @@
             </span>
         @endif
     </div>
-
+    <div class="form-group">
+        {!! Form::submit($submitButton) !!}
+    </div>
 </div>
