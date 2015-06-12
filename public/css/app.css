@@ -888,7 +888,6 @@ body {
   line-height: 1.42857143;
   color: #333333;
   background-color: #ffffff;
-    margin: 0 0 20%;
 }
 input,
 button,
@@ -6412,14 +6411,12 @@ float:left;
 
 @media screen and (max-width: 700px){
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 39.2%;
 
         background-color: #404040;
-        margin-bottom: -15%;
     }
 
 
@@ -6460,8 +6457,7 @@ float:left;
     }
 
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
 
@@ -6521,8 +6517,7 @@ float:left;
 
 
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 14.3%;
@@ -6556,8 +6551,7 @@ float:left;
         display: inline;
     }
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 14.3%;
@@ -6591,8 +6585,7 @@ float:left;
     display: inline;
 }
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 15%;

@@ -74,22 +74,13 @@ class ProjectsController extends Controller
 
     public function index()
     {
-        $projects = Project::where('state', '=', '1')->paginate(5);
+        $array = $this->getProjects();
 
-        $filter = array('Autor','Editor','Administrador');
+        $projects = $array['projects'];
+        $created_by = $array['created_by'];
+        $image = $array['images'];
 
-        foreach($projects as $project){
-            $created_by[$project->id] = User::find($project->created_by)->name;
-            $media = $project->media->first();
-            $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
-        }
-
-        /*foreach ($project->media as $media){
-            $image[$project->id] = action('MediaController@show_project', $media->int_file->first());
-
-        }*/
-
-        return view('projects.list', compact('projects', 'created_by', 'filter', 'image'));
+        return view('projects.list', compact('projects', 'created_by','image'));
     }
 
     public function show($id)
@@ -104,10 +95,24 @@ class ProjectsController extends Controller
 
     }
 
-    public function filter($id)
+    public function filter()
     {
+        $filter = array('Author','Date','Project');
 
-        echo "lol";
+        $array = $this->getProjects();
+
+        $projects = $array['projects'];
+        $created_by = $array['created_by'];
+        $image = $array['images'];
+
+        switch (Input::get('filter')){
+            case $filter['Author'];
+            case $filter['Date'];
+            case $filter['Author'];
+        }
+
+        if(Input::get('filter'))
+        return view('projects.list', compact('projects', 'created_by','image'));
 
     }
     public function gallery($id)
@@ -127,12 +132,19 @@ class ProjectsController extends Controller
 
         return view('projects.gallery', compact('project', 'image'));
 
-
-
-
-
-
     }
 
+
+    private function getProjects(){
+        $projects = Project::where('state', '=', '1')->paginate(5);
+
+        foreach($projects as $project){
+            $created_by[$project->id] = User::find($project->created_by)->name;
+            $media = $project->media->first();
+            $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
+        }
+
+        return ['projects' => $projects, 'created_by' => $created_by, 'images' =>  $image];
+    }
 
 }

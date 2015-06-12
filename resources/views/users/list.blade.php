@@ -58,4 +58,3 @@
 </div>
 
 @endsection
-@extends('footer')

@@ -11,11 +11,13 @@
 
     <div class="container">
         <h5 style="color: #286090; font-weight: bold; margin-left: 2px">Ordenar por:</h5>
-        <select onchange="filter(this.value)" class="form-control" style="width: 200px">
-            <option>Autor</option>
-            <option>Data</option>
-            <option>Projecto</option>
+        {!! Form::open(['method' => 'POST', 'action' => ['ProjectsController@filter']]) !!}
+         <select name="filter" onchange="this.form.submit()" class="form-control" style="width: 200px">
+            <option value="Author">Autor</option>
+            <option value="Date">Data</option>
+            <option value="Project">Projeto</option>
         </select>
+        {!! Form::close() !!}
 
         @foreach($projects as $project)
         <div id="artigo">
@@ -32,6 +34,7 @@
                             {!! HTML::linkAction('ProjectsController@show', 'Ler mais', array($project->id)) !!}
                         </p>
                         <p style="font-weight: bold;">{{$created_by[$project->id]}}</p>
+                        </br>
                         {{--@foreach($project->users as $user)
                             <p style="font-weight: bold;">{{$user->name}}</p>
                         @endforeach--}}
@@ -47,12 +50,7 @@
 
     </div>
 
-    <script>
-        function filter(id)
-        {
-            window.location.href = {{ URL::action('ProjectsController@filter') }} + '/' + id;
-        }
-    </script>
+
 
 @endsection
 @extends('footer')

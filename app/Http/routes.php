@@ -15,7 +15,7 @@ Route::get('/', 'WelcomeController@index');
 
 Route::resource('dashboard', 'DashboardController');
 
-Route::get('projects/filter/{id}', 'ProjectsController@filter');
+Route::post('projects/filter', 'ProjectsController@filter');
 
 Route::get('projects/gallery/{id}', 'ProjectsController@gallery');
 
