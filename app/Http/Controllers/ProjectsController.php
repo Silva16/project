@@ -97,21 +97,23 @@ class ProjectsController extends Controller
 
     public function filter()
     {
-        $filter = array('Author','Date','Project');
-
+        $filter = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name');
         $array = $this->getProjects();
 
         $projects = $array['projects'];
         $created_by = $array['created_by'];
         $image = $array['images'];
 
-        switch (Input::get('filter')){
-            case $filter['Author'];
-            case $filter['Date'];
-            case $filter['Author'];
-        }
+        $key = $filter[Input::get('filter')];
 
-        if(Input::get('filter'))
+
+/*        $projects = array_values(array_sort($projects, function($value)
+        {
+
+            $key = $filter[Input::get('filter')];
+            return $value[$key];
+        }));*/
+
         return view('projects.list', compact('projects', 'created_by','image'));
 
     }
@@ -135,11 +137,11 @@ class ProjectsController extends Controller
     }
 
 
-    private function getProjects(){
-        $projects = Project::where('state', '=', '1')->paginate(5);
+    private function getProjects($sort = 'name'){
+        $projects = Project::where('state', '=', '1')->orderBy($sort)->paginate(5);
 
-        foreach($projects as $project){
-            $created_by[$project->id] = User::find($project->created_by)->name;
+            foreach($projects as $project){
+                $created_by[$project->id] = User::find($project->created_by)->name;
             $media = $project->media->first();
             $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
         }

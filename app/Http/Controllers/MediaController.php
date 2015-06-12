@@ -116,7 +116,7 @@ class MediaController extends Controller {
 
         //$filename = basename($file);
 
-        $path = storage_path() . '/app/projects/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+        $path = storage_path() . '/app/profiles/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
 
         $headers = [
             'Content-Type' => 'image/jpg'

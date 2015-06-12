@@ -10,16 +10,26 @@
         </style>
         <div id="owl-demo" class="owl-carousel">
 
-            <div class="owl-item"><img src="css/imagens/logo.png" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/filipe67.jpg" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/costa.nelson.jpg" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/erika.abreu.jpg" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/eva.fonseca.jpg" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/gil37.jpg" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/ifaria.jpg" alt="Owl Image"></div>
-            <div class="owl-item"><img src="css/imagens/teresa87.jpg" alt="Owl Image"></div>
+            @foreach($featured as $project)
+            <div class="owl-item"><img src="{{$image[$project->id]}}" alt="{{$project->name}}"/></div>
+            @endforeach
 
         </div>
+    <script>
+
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+
+                autoPlay: 3000,
+
+                items: 3
+
+            });
+
+
+        });
+
+    </script>
         <ul>
             @foreach($projects as $project)
                 <div id="artigo">
@@ -30,7 +40,7 @@
                             </figure>
                             <div style="width: 48%" id="projects">
                                 <h1>{{$project->name}}</h1>
-                                <h6>{{$project->started_at}}</h6>
+                                <h6>{{$project->updated_at}}</h6>
 
                                 <p style="text-align: justify; text-justify: inter-word;  line-height: 1.5em; height: 9em; overflow: hidden;">
                                     {{$project->description}}
@@ -49,19 +59,4 @@
             @endforeach
         </ul>
     </div>
-    <script>
-
-        $(document).ready(function () {
-            $("#owl-demo").owlCarousel({
-
-                autoPlay: 3000,
-
-                items: 3
-
-            });
-
-
-        });
-
-    </script>
 @endsection
