@@ -23,7 +23,7 @@ class MediaController extends Controller {
         $mimetype = array("image/jpg", "image/jpeg", "image/png", "image/bmp");
 
         foreach ($medias as $media){
-            $image[$media->id] = action('MediaController@show', $media->int_file);
+            $image[$media->id] = action('MediaController@show_project', $media->int_file);
 
         }
 
@@ -99,16 +99,29 @@ class MediaController extends Controller {
 
     }
 
-    public function show($file){
+    public function show_project($file){
 
-        $filename = basename($file);
+        //$filename = basename($file);
 
-        $path = storage_path() . '/app/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+        $path = storage_path() . '/app/projects/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
 
         $headers = [
             'Content-Type' => 'image/jpg'
         ];
 
-        return response()->download($path, $filename, $headers, 'inline');
+        return response()->download($path, $file, $headers, 'inline');
+    }
+
+    public function show_profile($file){
+
+        //$filename = basename($file);
+
+        $path = storage_path() . '/app/projects/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+
+        $headers = [
+            'Content-Type' => 'image/jpg'
+        ];
+
+        return response()->download($path, $file, $headers, 'inline');
     }
 }

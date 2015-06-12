@@ -35,7 +35,7 @@ class UsersController extends Controller {
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
         foreach ($users as $user){
-            $image[$user->id] = action('MediaController@show', $user->photo_url);
+            $image[$user->id] = action('MediaController@show_profile', $user->photo_url);
 
         }
 

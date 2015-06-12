@@ -1,19 +1,28 @@
 @extends('header')
 @section('content')
 
-<script>
+{{--<script>
 
     function projectimg() {
         document.getElementById("teste").src = "css/imagens/cleal.jpg";
     }
-</script>
+</script>--}}
+
+
     <div class="container">
+        <h5 style="color: #286090; font-weight: bold; margin-left: 2px">Ordenar por:</h5>
+        <select onchange="filter(this.value)" class="form-control" style="width: 200px">
+            <option>Autor</option>
+            <option>Data</option>
+            <option>Projecto</option>
+        </select>
+
         @foreach($projects as $project)
         <div id="artigo">
-            <section >
+            <section>
                 <article id="articles">
                     <figure style="float:right; width: 48%" class="imgproj">
-                        <img id="teste" alt="" src="" width="350px" height="210px"/>
+                        <img alt="" src="{{$image[$project->id]}}" width="350px" height="210px"/>
                     </figure>
                     <div style="width: 48%" id="projects">
                         <h1>{{$project->name}}</h1>
@@ -26,13 +35,24 @@
                         {{--@foreach($project->users as $user)
                             <p style="font-weight: bold;">{{$user->name}}</p>
                         @endforeach--}}
-
                     </div>
                 </article>
             </section>
         </div>
         @endforeach
+
+        <p id="demo"></p>
+
+        {!! $projects->render() !!}
+
     </div>
+
+    <script>
+        function filter(id)
+        {
+            window.location.href = {{ URL::action('ProjectsController@filter') }} + '/' + id;
+        }
+    </script>
 
 @endsection
 @extends('footer')

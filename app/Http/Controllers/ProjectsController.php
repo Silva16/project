@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Media;
 use App\Project;
 use App\User;
 use App\Http\Requests\ProjectRequest;
@@ -12,10 +13,10 @@ class ProjectsController extends Controller
 {
     public $restful = true;
 
-    public function __construct()
+/*    public function __construct()
     {
         $this->middleware('author', ['except' => ['show', 'index']]);
-    }
+    }*/
 
     public function create()
     {
@@ -73,22 +74,63 @@ class ProjectsController extends Controller
 
     public function index()
     {
-        $projects = Project::where('state', '=', '1')->get();
+        $projects = Project::where('state', '=', '1')->paginate(5);
+
+        $filter = array('Autor','Editor','Administrador');
 
         foreach($projects as $project){
             $created_by[$project->id] = User::find($project->created_by)->name;
+            $media = $project->media->first();
+            $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
         }
 
-        return view('projects.list', compact('projects', 'created_by'));
+        /*foreach ($project->media as $media){
+            $image[$project->id] = action('MediaController@show_project', $media->int_file->first());
+
+        }*/
+
+        return view('projects.list', compact('projects', 'created_by', 'filter', 'image'));
     }
 
     public function show($id)
     {
 
         $project = Project::findOrFail($id);
+        $media = $project->media->first();
+        $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
 
         $keywords = explode(',', $project->keywords);
-        return view('projects.show', compact('project', 'keywords'));
+        return view('projects.show', compact('project', 'keywords', 'image'));
+
+    }
+
+    public function filter($id)
+    {
+
+        echo "lol";
+
+    }
+    public function gallery($id)
+    {
+/*        $medias = Media::where('project_id', '=', $id);
+
+        foreach($medias as $media){
+            var_dump($media->name);
+        }*/
+
+        $project = Project::findOrFail($id);
+
+        foreach ($project->media as $media){
+            $image[$media->id] = action('MediaController@show_project', basename($media->int_file));
+
+        }
+
+        return view('projects.gallery', compact('project', 'image'));
+
+
+
+
+
 
     }
 

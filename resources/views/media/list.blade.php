@@ -40,7 +40,7 @@
                 @endif
             <td>{{$media->ext_url}}</td>
             <td>{{$media->int_file}}</td>
-            <td><img src={{$image[$media->id]}} height="100"></td>
+            <td><img src="{{$image[$media->id]}}" height="100"></td>
             <td>{{$media->created_by}}</td>
             <td>{{$media->state}}</td>
             <td>{{$media->approved_by}}</td>

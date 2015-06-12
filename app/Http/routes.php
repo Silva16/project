@@ -15,7 +15,13 @@ Route::get('/', 'WelcomeController@index');
 
 Route::resource('dashboard', 'DashboardController');
 
+Route::get('projects/filter/{id}', 'ProjectsController@filter');
+
+Route::get('projects/gallery/{id}', 'ProjectsController@gallery');
+
 Route::resource('projects', 'ProjectsController');
+
+
 
 //Route::get('projects', 'ProjectsController@index');
 
@@ -62,9 +68,13 @@ Route::patch('media/update/{id}', 'MediaController@update');
 
 Route::get('media/edit/{id}', 'MediaController@edit');
 
-Route::get('media/{id}', 'MediaController@show');
+Route::get('media/projects/{id}', 'MediaController@show_project');
+
+Route::get('media/profiles/{id}', 'MediaController@show_profile');
 
 Route::post('media/delete/{id}', 'MediaController@destroy');
+
+;
 
 //Route::resource('media', 'MediaController');
 
