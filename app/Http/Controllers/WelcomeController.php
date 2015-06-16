@@ -28,24 +28,30 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-        $projects = Project::where('state', '=', '1')->orderBy('updated_at')->paginate(5);
-
-        foreach($projects as $project){
-            $created_by[$project->id] = User::find($project->created_by)->name;
-            $media = $project->media->first();
-            $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
-        }
-
         $featured = Project::where('featured_until', '>=', date("Y-m-d"))->orderBy('updated_at')->get();
-
         foreach($featured as $project){
 
-            if($media != null){
+            $media1 = $project->media->first();
+            if($media1 != null){
 
-                $featuredImage[$project->id] = action('MediaController@show_project', basename($media->int_file));
+                $featuredImage[$project->id] = action('MediaController@show_project', basename($media1->int_file));
             }
             else{
                 $featuredImage[$project->id] = null;
+            }
+        }
+
+        $projects = Project::where('state', '=', '1')->orderBy('updated_at')->paginate(5);
+        foreach($projects as $project){
+            $created_by[$project->id] = User::find($project->created_by)->name;
+            $media2 = $project->media->first();
+
+            if($media2 != null){
+
+                $image[$project->id] = action('MediaController@show_project', basename($media2->int_file));
+            }
+            else{
+                $image[$project->id] = null;
             }
         }
         return view('welcome', compact('projects', 'created_by','image', 'featured', 'featuredImage'));
