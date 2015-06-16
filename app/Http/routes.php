@@ -17,9 +17,10 @@ Route::resource('dashboard', 'DashboardController');
 
 Route::post('projects/sort', 'ProjectsController@sort');
 
+Route::resource('projects', 'ProjectsController');
+
 Route::get('projects/gallery/{id}', 'ProjectsController@gallery');
 
-Route::resource('projects', 'ProjectsController');
 
 
 

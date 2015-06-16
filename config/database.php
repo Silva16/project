@@ -55,7 +55,7 @@ return [
 		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', 'localhost'),
-			'database'  => env('DB_DATABASE', 'portfolioDB_XXX'),
+			'database'  => env('DB_DATABASE', 'portfolioDB_G26'),
 			'username'  => env('DB_USERNAME', 'root'),
 			'password'  => env('DB_PASSWORD', '12\3'),
 			'charset'   => 'utf8',
