@@ -17,7 +17,7 @@
 
         <select name="sort" class="form-control" style="width: 200px; float: left">
             <option value="Author">Nome do Autor</option>
-            <option value="Date">Data de criação</option>
+            <option value="Date">Data de começo</option>
             <option value="Project" selected>Nome do Projeto</option>
             <option value="Last Update">Data de atualização</option>
         </select>

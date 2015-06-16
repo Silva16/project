@@ -39,10 +39,16 @@ class WelcomeController extends Controller {
         $featured = Project::where('featured_until', '>=', date("Y-m-d"))->orderBy('updated_at')->get();
 
         foreach($featured as $project){
-            $media = $project->media->first();
-            $featuredimage[$project->id] = action('MediaController@show_project', basename($media->int_file));
+
+            if($media != null){
+
+                $featuredImage[$project->id] = action('MediaController@show_project', basename($media->int_file));
+            }
+            else{
+                $featuredImage[$project->id] = null;
+            }
         }
-        return view('welcome', compact('projects', 'created_by','image', 'featured', 'featuredimage'));
+        return view('welcome', compact('projects', 'created_by','image', 'featured', 'featuredImage'));
 	}
 
 

@@ -143,7 +143,7 @@ class ProjectsController extends Controller
     }
 
 
-    private function getProjects($sort = 'updated_at', $order = 'desc'){
+    private function getProjects($sort = 'created_at', $order = 'desc'){
 
 
         $projects = Project::where('state', '=', '1')->orderBy($sort, $order)->paginate(5);
