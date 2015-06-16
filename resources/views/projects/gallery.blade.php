@@ -1,4 +1,7 @@
 @extends('header')
+@section('title')
+    Imagens de {{$project->name}}
+@endsection
 @section('content')
 
     <div class="container">

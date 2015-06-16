@@ -1,16 +1,29 @@
 @extends('header')
+@section('title')
+    Portfolios - IPLeiria
+@endsection
 @section('content')
     <div class="container">
 
 
         <style>
-            #owl-example .item{
+            #owl-example .item {
                 margin: 3px;
+                text-align: center;
             }
-            #owl-example .item img{
+
+            #owl-example .item img {
                 display: block;
                 width: 100%;
                 height: auto;
+            }
+
+           #owl-example .text{
+                position:absolute;
+                color:#FFF;
+                display:block;
+                bottom:0;
+                left: 5%;
             }
         </style>
         <div id="owl-example" class="owl-carousel">
@@ -19,6 +32,8 @@
                 <div class="item">
                     <a href="{{url("projects/".$project->id)}}">
                         <img src="{{$featuredImage[$project->id]}}" alt="{{$project->name}}"/>
+                        <p class="text">{{$project->name}}</p>
+
                     </a>
                 </div>
             @endforeach
@@ -27,21 +42,21 @@
         <script>
 
             $(document).ready(function () {
-             $("#owl-example").owlCarousel({
+                $("#owl-example").owlCarousel({
 
-             autoPlay: 3000,
+                    autoPlay: 3000,
 
-             items: 3
+                    items: 3
 
-             });
+                });
 
 
-             });
+            });
             /*$(document).ready(function () {
 
-                $("#owl-example").owlCarousel();
+             $("#owl-example").owlCarousel();
 
-            });*/
+             });*/
 
         </script>
         <ul>

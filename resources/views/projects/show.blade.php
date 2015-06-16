@@ -1,4 +1,7 @@
 @extends('header')
+@section('title')
+{{$project->name}}
+@endsection
 @section('content')
 
 <div class="container">
@@ -20,7 +23,7 @@
             </ul>
         </div>
         <div style="float:right; width: 48%;">
-            <img src="{{$image[$project->id]}}" width="450px" height="300px"/>
+            <img src="{{$image}}" width="450px" height="300px"/>
         </div>
         <div style="clear:both">&nbsp;</div>
         <div>
@@ -32,7 +35,7 @@
             <ul>
                 @foreach($keywords as $keyword)
                 <li>
-                    <p><a href='#'>{{$keyword}}</a></p>
+                    <p><a href='{{url("keywords/".trim($keyword))}}'>{{trim($keyword)}}</a></p>
                 </li>
                 @endforeach
             </ul>
