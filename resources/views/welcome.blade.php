@@ -26,6 +26,7 @@
                 left: 5%;
             }
         </style>
+        <h1>Projectos em Destaque</h1>
         <div id="owl-example" class="owl-carousel">
 
             @foreach($featured as $project)
@@ -59,12 +60,14 @@
              });*/
 
         </script>
+        <h3 style="margin-top: 50px">Ultimos projectos actualizados</h3>
         <ul>
             @foreach($projects as $project)
                 <div id="artigo" style="clear: both">
                     <section>
                         <article id="articles">
-                            <figure style="float:left; width: 48%" class="imgproj">
+                            <hr>
+                            <figure style="float:left; width: 50%" class="imgproj">
                                 <img alt="" src="{{$image[$project->id]}}" width="350px" height="210px"/>
                             </figure>
                             <div style="float: right;width: 48%" id="projects">

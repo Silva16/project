@@ -8,11 +8,27 @@
     <div class="project">
         <div style="float:left; width: 48%; overflow: auto;">
             <p><h1>{{$project->name}}</h1>({{$project->acronym}})</p>
-            <p>Tipo: {{$project->type}}</p>
-            <p>Tema: {{$project->theme}}</p>
-            <p>Começado em: {{$project->started_at}}</p>
-            <p>Acabado em: {{$project->finished_at}}</p>
-            <p>Estado: {{($project->state == '1' ? 'Aprovado' : 'Reprovado')}}</p>
+            <div class="highlight">
+            <p>
+                <label style="font-weight: bold">Tipo:</label>
+                {{$project->type}}
+            </p>
+            <p>
+                <label style="font-weight: bold">Tema:</label>
+                {{$project->theme}}
+            </p>
+            <p>
+                <label style="font-weight: bold">Começado em:</label>
+                {{$project->started_at}}
+                </p>
+            <p>
+                <label style="font-weight: bold">Acabado em: </label>
+                {{$project->finished_at}}
+                </p>
+            <p>
+                <label style="font-weight: bold">Estado: </label>
+                {{($project->state == '1' ? 'Aprovado' : 'Reprovado')}}
+            </p>
             <p style="font-weight: bold">Criado por:</p>
             <ul>
                 @foreach ($project->users as $user)
@@ -22,15 +38,21 @@
                 @endforeach
             </ul>
         </div>
-        <div style="float:right; width: 48%;">
+        </div>
+        <div style="float:right; margin-top: 30px; margin-right: 20px">
             <img src="{{$image}}" width="450px" height="300px"/>
         </div>
         <div style="clear:both">&nbsp;</div>
         <div>
-            <p style="font-weight: bold">Descrição:</p>
-            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;{{$project->description}}</p>
+            <div class="highlight">
+                <p style="font-weight: bold">Descrição:</p>
+                <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;{{$project->description}}</p>
+            </div>
+            <div class="highlight">
             <p style="font-weight: bold">Observations:</p>
             <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;{{$project->observations}}</p>
+            </div>
+            <div class="highlight">
             <p style="font-weight: bold">Keywords:</p>
             <ul>
                 @foreach($keywords as $keyword)
@@ -39,9 +61,12 @@
                 </li>
                 @endforeach
             </ul>
+            </div>
         </div>
         </br>
         <button class="btn btn-lg" onclick="window.location='{{ URL::action('ProjectsController@gallery', $project->id) }}'">Galeria</button>
+        </br>
+        </br>
     </div>
 </div>
 

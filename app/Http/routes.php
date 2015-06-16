@@ -19,8 +19,6 @@ Route::resource('projects', 'ProjectsController');
 
 Route::resource('users', 'UsersController');
 
-Route::post('projects/sort', 'ProjectsController@sort');
-
 Route::get('projects/gallery/{id}', 'ProjectsController@gallery');
 
 Route::get('media/index/{id}', 'MediaController@index');

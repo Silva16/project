@@ -9,6 +9,7 @@ html {
 html,body {
     max-width: 100%;
     margin: 0;
+
     overflow-x: hidden;
 }
 article,
@@ -947,7 +948,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #bbbbbb;
 }
 .sr-only {
   position: absolute;
@@ -6611,6 +6612,14 @@ float:left;
     color: #ffffff;
     font-weight: 600;
 
+}
+
+.highlight {
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
 }
 
 

@@ -13,23 +13,22 @@
 
 
     <div class="container">
-        {!! Form::open(['method' => 'POST', 'action' => ['ProjectsController@sort']]) !!}
-
-
-
-
-        <select name="sort" class="form-control" style="width: 200px; float: left">
-            <option value="Author">Nome do Autor</option>
-            <option value="Date">Data de começo</option>
-            <option value="Project" selected>Nome do Projeto</option>
-            <option value="Last Update">Data de atualização</option>
+        {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@index']]) !!}
+        <select name="sort" class="form-control" style="width: 200px; float: left; margin-right: 10px">
+            <option @if($sort == "Author") selected="selected" @endif value="Author">Nome do Autor</option>
+            <option @if($sort == "Date") selected="selected" @endif value="Date">Data de criação</option>
+            <option @if($sort == "Project") selected="selected" @endif value="Project" selected>Nome do Projeto</option>
+            <option @if($sort == "Last Update") selected="selected" @endif value="Last Update">Data de atualização</option>
         </select>
-        <select name="order" onchange="" class="form-control" style="width: 200px; float: left">
-            <option value="Ascendente">Ascendente</option>
-            <option value="Descendente">Descendente</option>
+
+        <select name="order" onchange="" class="form-control" style="width: 200px; float: left; margin-right: 10px">
+            <option @if($order == "Ascendant") selected="selected" @endif value="Ascendant">Ascendente</option>
+            <option @if($order == "Descendant") selected="selected" @endif value="Descendant">Descendente</option>
         </select>
-        <input type="submit" value="Ordenar"/>
+        <input class="btn" type="submit" value="Ordenar"/>
         {!! Form::close() !!}
+
+        </br>
 
         @foreach($projects as $project)
             <div id="artigo">
@@ -39,8 +38,8 @@
                             <img alt="" src="{{$image[$project->id]}}" width="350px" height="210px"/>
                         </figure>
                         <div style="width: 48%" id="projects">
-                            <h1><a href="{{url("projects/".$project->id)}}">{{$project->name}}</a></h1>
-                            <h6>{{$project->started_at}}</h6>
+                            <h1>{!! HTML::linkAction('ProjectsController@show', $project->name, array($project->id)) !!}</h1>
+                            <h6><label style="font-weight: bold">Criado em:</label> {{$project->started_at}}</h6>
 
                             <p style="text-align: justify; text-justify: inter-word;  line-height: 1.5em; height: 9em; overflow: hidden;">
                                 {{$project->description}}
@@ -48,11 +47,12 @@
                             </p>
 
                             <p style="font-weight: bold;">{{$created_by[$project->id]}}</p>
-                            </br>
                             {{--@foreach($project->users as $user)
                                 <p style="font-weight: bold;">{{$user->name}}</p>
                             @endforeach--}}
+
                         </div>
+                        <hr align="left" width="82%">
                     </article>
                 </section>
             </div>
@@ -60,7 +60,7 @@
 
         <p id="demo"></p>
 
-        {!! $projects->render() !!}
+        {!! $projects->appends(Request::except('page'))->render() !!}
 
     </div>
 

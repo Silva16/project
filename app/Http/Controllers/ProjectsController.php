@@ -74,13 +74,24 @@ class ProjectsController extends Controller
 
     public function index()
     {
-        $array = $this->getProjects();
+        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+        $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
+
+        if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
+
+            $array = $this->getProjects($sort_array[Input::get('sort')], $order_array[Input::get('order')]);
+        }
+        else {
+            $array = $this->getProjects();
+            $sort = 'Last Update';
+            $order = 'Descendant';
+        }
 
         $projects = $array['projects'];
         $created_by = $array['created_by'];
         $image = $array['images'];
 
-        return view('projects.list', compact('projects', 'created_by','image'));
+        return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
     }
 
     public function show($id)
@@ -101,28 +112,7 @@ class ProjectsController extends Controller
 
     }
 
-    public function sort()
-    {
-        $sort = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
-        $order = array('Ascendente' => 'asc', 'Descendente' => 'desc');
 
-        $array = $this->getProjects($sort[Input::get('sort')], $order[Input::get('order')]);
-
-        $projects = $array['projects'];
-        $created_by = $array['created_by'];
-        $image = $array['images'];
-
-
-/*        $projects = array_values(array_sort($projects, function($value)
-        {
-
-            $key = $filter[Input::get('filter')];
-            return $value[$key];
-        }));*/
-
-        return view('projects.list', compact('projects', 'created_by','image'));
-
-    }
     public function gallery($id)
     {
 /*        $medias = Media::where('project_id', '=', $id);
@@ -143,7 +133,7 @@ class ProjectsController extends Controller
     }
 
 
-    private function getProjects($sort = 'created_at', $order = 'desc'){
+    private function getProjects($sort = 'updated_at', $order = 'desc'){
 
 
         $projects = Project::where('state', '=', '1')->orderBy($sort, $order)->paginate(5);
