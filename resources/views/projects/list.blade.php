@@ -1,4 +1,7 @@
 @extends('header')
+@section('title')
+    Lista de Projectos
+@endsection
 @section('content')
 
     {{--<script>

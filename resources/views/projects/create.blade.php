@@ -1,4 +1,7 @@
 @extends('header')
+@section('title')
+    Criar conta de utilizador
+@endsection
 @section('content')
 
     {!! Form::open(['method' => 'POST', 'action' => ['ProjectsController@store'], 'files' => true]) !!}
