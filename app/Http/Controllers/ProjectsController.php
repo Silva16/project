@@ -88,23 +88,29 @@ class ProjectsController extends Controller
 
         $project = Project::findOrFail($id);
         $media = $project->media->first();
-        $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
+
+        if($media != null){
+            $image = action('MediaController@show_project', basename($media->int_file));
+        }
+        else{
+            $image = null;
+        }
 
         $keywords = explode(',', $project->keywords);
         return view('projects.show', compact('project', 'keywords', 'image'));
 
     }
 
-    public function filter()
+    public function sort()
     {
-        $filter = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name');
-        $array = $this->getProjects();
+        $sort = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+        $order = array('Ascendente' => 'asc', 'Descendente' => 'desc');
+
+        $array = $this->getProjects($sort[Input::get('sort')], $order[Input::get('order')]);
 
         $projects = $array['projects'];
         $created_by = $array['created_by'];
         $image = $array['images'];
-
-        $key = $filter[Input::get('filter')];
 
 
 /*        $projects = array_values(array_sort($projects, function($value)
@@ -137,15 +143,20 @@ class ProjectsController extends Controller
     }
 
 
-    private function getProjects($sort = 'updated_at'){
+    private function getProjects($sort = 'updated_at', $order = 'desc'){
 
 
-        $projects = Project::where('state', '=', '1')->orderBy($sort)->paginate(5);
+        $projects = Project::where('state', '=', '1')->orderBy($sort, $order)->paginate(5);
 
         foreach($projects as $project){
             $created_by[$project->id] = User::find($project->created_by)->name;
             $media = $project->media->first();
-            $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
+            if($media != null){
+                $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
+            }
+            else{
+                $image[$project->id] = null;
+            }
         }
 
         return ['projects' => $projects, 'created_by' => $created_by, 'images' =>  $image];

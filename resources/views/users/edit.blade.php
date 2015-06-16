@@ -8,4 +8,3 @@
 {!! Form::close() !!}
 
 @endsection
-@extends('footer')
