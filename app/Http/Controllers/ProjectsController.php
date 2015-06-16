@@ -137,11 +137,13 @@ class ProjectsController extends Controller
     }
 
 
-    private function getProjects($sort = 'name'){
+    private function getProjects($sort = 'updated_at'){
+
+
         $projects = Project::where('state', '=', '1')->orderBy($sort)->paginate(5);
 
-            foreach($projects as $project){
-                $created_by[$project->id] = User::find($project->created_by)->name;
+        foreach($projects as $project){
+            $created_by[$project->id] = User::find($project->created_by)->name;
             $media = $project->media->first();
             $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
         }
