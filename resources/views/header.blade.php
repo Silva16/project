@@ -94,7 +94,7 @@
 
                 <img id="footerlogo" src="http:\\10.10.10.10\project\css\imagens\logoipl.png" alt="logoipl" />
         </div>
-        <div class="col-md-4 vcenter ">
+        <div class="col-md-4 vcenter">
                 <ul><li class="footercenter">Rua General Norton de Matos,</li>
                 <li class="footercenter"> Apartado 4133,</li>
                 <li class="footercenter">2411-901 Leiria – Portugal</li>

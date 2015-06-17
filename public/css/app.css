@@ -9,7 +9,7 @@ html {
 html,body {
     max-width: 100%;
     margin: 0;
-
+    height: 100%;
     overflow-x: hidden;
 }
 article,
@@ -6413,7 +6413,8 @@ float:left;
 
 @media screen and (max-width: 700px){
     footer {
-        position: relative;
+        position: absolute;
+        bottom: 0;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 39.2%;
@@ -6459,16 +6460,15 @@ float:left;
     }
 
     footer {
-        position: relative;
+        position: absolute;
         width: 100%;
         /* Set the fixed height of the footer here */
-
+        bottom: 0;
         background-color: #404040;
     }
 
     .content{
         display: inline;
-
     }
 
     .vcenter{
@@ -6484,11 +6484,6 @@ float:left;
         float: right;
         padding-top: 1.8%;
 
-    }
-
-    .align ul {
-
-        line-height: 145%;
     }
 
     .endfooter{
@@ -6512,14 +6507,14 @@ float:left;
     }
 
     .content{
-
         display: inline;
     }
     
 
 
     footer {
-        position: relative;
+        position: absolute;
+        bottom: 0;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 14.3%;
@@ -6553,8 +6548,9 @@ float:left;
         display: inline;
     }
     footer {
-        position: relative;
+        position: absolute;
         width: 100%;
+        bottom:0;
         /* Set the fixed height of the footer here */
         height: 14.3%;
         background-color: #404040;
@@ -6587,8 +6583,9 @@ float:left;
     display: inline;
 }
     footer {
-        position: relative;
+        position: absolute;
         width: 100%;
+        bottom: 0;
         /* Set the fixed height of the footer here */
         height: 15%;
         background-color: #404040;
@@ -6633,3 +6630,10 @@ float:left;
     margin: 0 auto;
 }
 
+
+.main{
+
+    min-height: 100%;
+    position: relative;
+
+}
