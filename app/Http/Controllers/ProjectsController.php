@@ -123,12 +123,16 @@ class ProjectsController extends Controller
 
         $project = Project::findOrFail($id);
 
+        $image_type = array('image/jpg', 'image/jpeg', 'image/png', 'image/bmp');
+
         foreach ($project->media as $media){
-            $image[$media->id] = action('MediaController@show_project', basename($media->int_file));
+            $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
 
         }
 
-        return view('projects.gallery', compact('project', 'image'));
+        $pdfLogo = action('MediaController@showLogo', 'pdf.png');
+
+        return view('projects.gallery', compact('project', 'image_type', 'video_type', 'document_type', 'file', 'pdfLogo'));
 
     }
 

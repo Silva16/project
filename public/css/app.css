@@ -6623,4 +6623,13 @@ float:left;
     border-radius: 4px;
 }
 
+.img-with-text {
+    text-align: center;
+    width: 120px;
+}
+
+.img-with-text img {
+    display: block;
+    margin: 0 auto;
+}
 
