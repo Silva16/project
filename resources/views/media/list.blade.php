@@ -1,11 +1,14 @@
 @extends('header')
+@section('title')
+    Media de {{$project->name}}
+@endsection
 @section('content')
 
 {!! Form::open(['method' => 'GET', 'action' => ['MediaController@create', $project->id]]) !!}
 {!! Form::submit('Adicionar') !!}
 {!! Form::close() !!}
 
-    <h2>Multimédia - {{$project->name}}</h2>
+    <h2 style="margin-left: 10px">Multimédia - {{$project->name}}</h2>
 
 
 
@@ -31,16 +34,24 @@
     </thead>
     <tbody>
     @foreach ($medias as $media)
-        <tr>
+        <tr >
             <td>{{$media->title}}</td>
             <td>{{$media->alt}}</td>
             <td>{{$media->description}}</td>
-                @if (in_array($media->mime_type, $mimetype, true))
-                    <td>Imagem</td>
-                @endif
+            @if (in_array($media->mime_type, $image_type, true))
+                <td>Imagem</td>
+            @elseif($media->mime_type == 'application/pdf')
+                <td>Documento</td>
+            @endif
             <td>{{$media->ext_url}}</td>
             <td>{{$media->int_file}}</td>
-            <td><img src="{{$image[$media->id]}}" height="100"></td>
+            @if (in_array($media->mime_type, $image_type))
+                <td align="center"><img src="{{$file[$media->id]}}" height="100"></td>
+            @elseif($media->mime_type == 'application/pdf')
+                <td align="center">
+                    {!! html_entity_decode(HTML::linkAction('MediaController@showProject', HTML::image($pdfLogo, "Logo"), array(basename($media->int_file)))) !!}
+                </td>
+            @endif
             <td>{{$media->created_by}}</td>
             <td>{{$media->state}}</td>
             <td>{{$media->approved_by}}</td>
@@ -63,4 +74,3 @@
 </div>
 
 @endsection
-@extends('footer')

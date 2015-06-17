@@ -1,4 +1,7 @@
 @extends('header')
+@section('title')
+    Dashboard de {{$user->name}}
+@endsection
 @section('content')
 
 
@@ -59,4 +62,3 @@
 
 
 @endsection
-@extends('footer')

@@ -20,14 +20,18 @@ class MediaController extends Controller {
         $medias = Media::where('project_id', '=', $id)->get();
 
         $project = Project::find($id);
-        $mimetype = array("image/jpg", "image/jpeg", "image/png", "image/bmp");
+        $image_type = array('image/jpg', 'image/jpeg', 'image/png', 'image/bmp');
+        $video_type = 'video/avi';
+        $document_type = 'application/pdf';
 
         foreach ($medias as $media){
-            $image[$media->id] = action('MediaController@show_project', $media->int_file);
+            $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
 
         }
 
-        return view('media.list', compact('medias', 'project', 'mimetype', 'image'));
+        $pdfLogo = action('MediaController@showLogo', 'pdf.png');
+
+        return view('media.list', compact('medias', 'project', 'image_type', 'video_type', 'document_type', 'file', 'pdfLogo'));
 
 
     }
@@ -99,11 +103,11 @@ class MediaController extends Controller {
 
     }
 
-    public function show_project($file){
+    public function showProfile($file){
 
         //$filename = basename($file);
 
-        $path = storage_path() . '/app/projects/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+        $path = storage_path() . '/app/profiles/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
 
         $headers = [
             'Content-Type' => 'image/jpg'
@@ -112,14 +116,32 @@ class MediaController extends Controller {
         return response()->download($path, $file, $headers, 'inline');
     }
 
-    public function show_profile($file){
+    public function showProject($file){
 
         //$filename = basename($file);
 
-        $path = storage_path() . '/app/profiles/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+        $path = storage_path() . '/app/projects/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
 
         $headers = [
-            'Content-Type' => 'image/jpg'
+            'jpg' => 'image/jpg',
+            'jpeg' => 'image/jpg',
+            'png' => 'image/jpg',
+            'bmp' => 'image/jpg',
+            'avi' => 'video/avi',
+            'pdf' => 'application/pdf',
+        ];
+
+        return response()->download($path, $file, $headers, 'inline');
+    }
+
+    public function showLogo($file){
+
+
+
+        $path = storage_path() . '/app/logos/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
+
+        $headers = [
+            'Content-Type' => 'image/png'
         ];
 
         return response()->download($path, $file, $headers, 'inline');

@@ -101,7 +101,7 @@ class ProjectsController extends Controller
         $media = $project->media->first();
 
         if($media != null){
-            $image = action('MediaController@show_project', basename($media->int_file));
+            $image = action('MediaController@showProject', basename($media->int_file));
         }
         else{
             $image = null;
@@ -142,7 +142,7 @@ class ProjectsController extends Controller
             $created_by[$project->id] = User::find($project->created_by)->name;
             $media = $project->media->first();
             if($media != null){
-                $image[$project->id] = action('MediaController@show_project', basename($media->int_file));
+                $image[$project->id] = action('MediaController@showProject', basename($media->int_file));
             }
             else{
                 $image[$project->id] = null;

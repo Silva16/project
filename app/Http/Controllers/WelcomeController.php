@@ -49,7 +49,7 @@ class WelcomeController extends Controller {
         $media = $project->media->first();
         if($media != null){
 
-            return $featuredImage[$project->id] = action('MediaController@show_project', basename($media->int_file));
+            return $featuredImage[$project->id] = action('MediaController@showProject', basename($media->int_file));
         }
         else{
             return $featuredImage[$project->id] = null;

@@ -31,9 +31,13 @@ Route::patch('media/update/{id}', 'MediaController@update');
 
 Route::get('media/edit/{id}', 'MediaController@edit');
 
-Route::get('media/projects/{id}', 'MediaController@show_project');
+Route::get('media/projects/{id}', 'MediaController@showProject');
 
-Route::get('media/profiles/{id}', 'MediaController@show_profile');
+Route::get('media/profiles/{id}', 'MediaController@showProfile');
+
+Route::get('media/logos/{id}', 'MediaController@showLogo');
+
+Route::get('media/download/{id}', 'MediaController@download');
 
 Route::post('media/delete/{id}', 'MediaController@destroy');
 
