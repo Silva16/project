@@ -9,53 +9,86 @@ use App\User;
 
 use Illuminate\Http\Request;
 
-class UsersController extends Controller {
+class UsersController extends Controller
+{
 
-/*    public function __construct()
+    /*    public function __construct()
+        {
+            $this->middleware('admin');
+        }*/
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
     {
-        $this->middleware('admin');
-    }*/
+        if (($sort = Input::get('sort')) == null) {
+            $sort = 'id';
+        }
+        if (($order = Input::get('order')) == null) {
+            $order = 'asc';
+        }
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-        $users = User::with(array('institution'))->orderBy('name')/*->sortable()*/->paginate(10);
+        $users = User::with(array('institution'))->orderBy($sort, $order);
+        if(Input::get('name') != '')
+            $users->where('name', 'LIKE', '%'.Input::get('name').'%');
+
+        if(Input::get('position') != '')
+            $users->where('position', 'LIKE', '%'.Input::get('position').'%');
+
+        if(Input::get('email') != '')
+            $users->where('email', 'LIKE', '%'.Input::get('email').'%');
+
+        if(Input::get('id') != 0)
+            $users->where('id', '=', Input::get('id'));
+        if(Input::get('institution') != 0)
+            $users->where('institution_id', '=', Input::get('institution'));
+        if(Input::get('role') != 0)
+            $users->where('role', '=', Input::get('role'));
+
+        $users = $users ->paginate(10);
 
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
-        foreach ($users as $user){
+        foreach ($users as $user) {
             $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
 
         }
 
-        return view('users.list', compact('users', 'image', 'role'));
-	}
+        $institutionsAux = Institution::get();
+        foreach($institutionsAux as $institution){
+            $institutions[$institution->id] = $institution->name;
+        }
+        $institutions[0] = "Escolha uma opção...";
+        $role[0] = "Escolha uma opção...";
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
+        return view('users.list', compact('users', 'image', 'role', 'institutions'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
 
         $roles = User::get_roles();
         $status = User::get_status();
-        $institutions = Institution::lists('name','id');
-        return view('users.create', compact('institutions', 'roles', 'status'));
-	}
+        $institutions = Institution::lists('name', 'id');
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(UserRequest $request)
-	{
+        return view('users.create', compact('institutions', 'roles', 'status'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(UserRequest $request)
+    {
 
         $user = new User();
 
@@ -74,7 +107,7 @@ class UsersController extends Controller {
 
         $image = $request->file('photo_url');
 
-        if ($image != null){
+        if ($image != null) {
             $filename = $image->getClientOriginalName();
             $image->move(storage_path() . '/app/profiles/', $filename);
             $fields['photo_url'] = $filename;
@@ -83,10 +116,10 @@ class UsersController extends Controller {
 
         $fields = ['profile_url' => Input::get('profile_url'), 'alt_email' => Input::get('alt_email')];
 
-        foreach ($fields as $key => $value){
-            if (empty($value) || $value == null){
+        foreach ($fields as $key => $value) {
+            if (empty($value) || $value == null) {
                 $user->$key = null;
-            } else{
+            } else {
                 $user->$key = $value;
             }
         }
@@ -94,57 +127,56 @@ class UsersController extends Controller {
         $user->save();
 
         return redirect('admin.users');
-	}
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
 
 
-	public function show()
-	{
+    public function show()
+    {
         //$users = User::all();
 
 
+    }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
 
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-
-		$user = User::find($id);
+        $user = User::find($id);
 
         $roles = User::get_roles();
-        $institutions = Institution::lists('name','id');
+        $institutions = Institution::lists('name', 'id');
         $status = User::get_status();
-        return view ('users.edit', compact('user', 'institutions', 'roles', 'status'));
-	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id, UserRequest $request)
-	{
+        return view('users.edit', compact('user', 'institutions', 'roles', 'status'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id, UserRequest $request)
+    {
         $user = User::find($id);
         $date = new \DateTime();
 
         $user->name = Input::get('name');
         $user->email = Input::get('email');
         $password = Input::get('password');
-        if (!empty($password)){
+        if (!empty($password)) {
             $user->password = Hash::make($password);
         }
         $user->institution_id = Input::get('id');
@@ -155,7 +187,7 @@ class UsersController extends Controller {
         $user->updated_at = $date->getTimestamp();
 
         $image = $request->file('photo_url');
-        if ($image != null){
+        if ($image != null) {
             $filename = $image->getClientOriginalName();
             $image->move(storage_path() . '/app/profiles/', $filename);
             $fields['photo_url'] = $filename;
@@ -163,10 +195,10 @@ class UsersController extends Controller {
 
         $fields['profile_url'] = Input::get('profile_url');
 
-        foreach ($fields as $key => $value){
-            if (empty($value)){
+        foreach ($fields as $key => $value) {
+            if (empty($value)) {
                 $user->$key = null;
-            } else{
+            } else {
                 $user->$key = $value;
             }
         }
@@ -175,22 +207,22 @@ class UsersController extends Controller {
 
 
         return redirect('admin.users');
-	}
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
         $user = User::find($id);
 
         $user->delete();
 
         return redirect('admin.users');
-	}
+    }
 
     public function status()
     {
@@ -204,7 +236,7 @@ class UsersController extends Controller {
 
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
-        foreach ($users as $user){
+        foreach ($users as $user) {
             $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
 
         }
