@@ -12,6 +12,9 @@
 
             <select name="filter" id="filter" class="form-control" style="width: 200px; float: left; margin-right: 10px">
                 <option @if($filter == "All") selected="selected" @endif value="All" selected>Todos os projectos</option>
+                @if ($user->role == 2)
+                    <option @if($filter == "Mine") selected="selected" @endif value="Mine">Os meus projectos</option>
+                @endif
                 <option @if($filter == "Approved") selected="selected" @endif value="Approved">Projetos Aprovados</option>
                 <option @if($filter == "Pending") selected="selected" @endif value="Pending">Projectos Pendentes</option>
                 <option @if($filter == "Refused") selected="selected" @endif value="Refused">Projectos Recusados</option>
@@ -47,6 +50,9 @@
     <table class="table">
         <thead>
             <tr>
+                @if ($user->role == 2)
+                    <th>Acção</th>
+                @endif
                 <th>Nome</th>
                 <th>Acrónimo</th>
                 <th>Tipo</th>
@@ -62,6 +68,7 @@
                 <th>Software</th>
                 <th>Hardware</th>
                 <th>Estado</th>
+                <th>Aprovado por</th>
                 <th>Mensagem de Rejeição</th>
                 <th>Editar</th>
                 <th>Apagar</th>
@@ -69,12 +76,27 @@
         </thead>
         <tbody>
         @foreach ($projects as $project)
+
             <tr>
+                @if ($user->role == 2 && $project->state == 2)
+                <td>
+                    <div style="margin-bottom: 10px">
+                    {!! Form::open(['method' => 'POST', 'action' => ['ProjectsController@approve', $project->id]]) !!}
+                    {!! Form::submit('Aprovar') !!}
+                    {!! Form::close() !!}
+                    </div>
+                    {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@refuse', $project->id]]) !!}
+                    {!! Form::submit('Rejeitar') !!}
+                    {!! Form::close() !!}
+                </td>
+                @else
+                    <td><hr width="82%"></td>
+                @endif
                 <td>{{$project->name}}</td>
                 <td>{{$project->acronym}}</td>
                 <td>{{$project->type}}</td>
                 <td>{{$project->theme}}</td>
-                <td>{{$project->description}}</td>
+                <td style="text-align: justify;">{{$project->description}}</td>
                 <td>
                     {!! Form::open(['method' => 'GET', 'action' => ['MediaController@index', $project->id]]) !!}
                     {!! Form::submit('Ficheiros') !!}
@@ -82,12 +104,28 @@
                 </td>
                 <td>{{$project->keywords}}</td>
                 <td>{{$project->started_at}}</td>
-                <td>{{$project->finished_at}}</td>
+                @if ($project->finished_at != null)
+                    <td>{{$project->finished_at}}</td>
+                @else
+                    <td><hr align="center" width="82%"></td>
+                @endif
                 <td>{{$created_by[$project->id]}}</td>
                 <td>{{$updated_by[$project->id]}}</td>
-                <td>{{$project->observations}}</td>
-                <td>{{$project->used_software}}</td>
-                <td>{{$project->used_hardware}}</td>
+                @if ($project->observations != null)
+                    <td>{{$project->observations}}</td>
+                @else
+                    <td><hr align="center" width="82%"></td>
+                @endif
+                @if ($project->used_software != null)
+                    <td>{{$project->used_software}}</td>
+                @else
+                    <td><hr align="center" width="82%"></td>
+                @endif
+                @if ($project->used_hardware != null)
+                    <td>{{$project->used_hardware}}</td>
+                @else
+                    <td><hr align="center" width="82%"></td>
+                @endif
                 @if($project->state == 0)
                     <td style="color: red; font-weight: bold">Recusado</td>
                 @elseif($project->state == 1)
@@ -95,7 +133,16 @@
                 @elseif($project->state == 2)
                     <td style="color: #FFCC00; font-weight: bold">Pendente</td>
                 @endif
-                <td>{{$project->refusal_msg}}</td>
+                @if (array_key_exists($project->id, $approved_by))
+                    <td>{{$approved_by[$project->id]}}</td>
+                @else
+                    <td><hr align="center" width="82%"></td>
+                @endif
+                @if ($project->refusal_msg != null)
+                    <td>{{$project->refusal_msg}}</td>
+                @else
+                    <td><hr align="center" width="82%"></td>
+                @endif
                 <td>
                     {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@edit', $project->id]]) !!}
                     {!! Form::submit('Editar') !!}

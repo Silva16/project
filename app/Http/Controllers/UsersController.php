@@ -2,8 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
+use App\Project;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\Controller;
 use App\Institution;
 use App\User;
 
@@ -23,7 +25,12 @@ class UsersController extends Controller {
 	 */
 	public function index()
 	{
-        $users = User::with(array('institution'))->orderBy('name')/*->sortable()*/->paginate(10);
+        $users = User::with(array('institution'))->get();
+
+        $users = array_values(array_sort($users, function($value)
+        {
+            return $value['name'];
+        }));
 
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
@@ -93,7 +100,7 @@ class UsersController extends Controller {
 
         $user->save();
 
-        return redirect('admin.users');
+        return redirect('users');
 	}
 
 	/**
@@ -174,7 +181,7 @@ class UsersController extends Controller {
         $user->save();
 
 
-        return redirect('admin.users');
+        return redirect('users');
 	}
 
 	/**
@@ -189,7 +196,7 @@ class UsersController extends Controller {
 
         $user->delete();
 
-        return redirect('admin.users');
+        return redirect('users');
 	}
 
     public function status()
@@ -198,17 +205,6 @@ class UsersController extends Controller {
 
     }
 
-    public function admin()
-    {
-        $users = User::with(array('institution'))->orderBy('name')->paginate(10);
 
-        $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
-        foreach ($users as $user){
-            $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
-
-        }
-
-        return view('admin.users', compact('users', 'image', 'role'));
-    }
 }

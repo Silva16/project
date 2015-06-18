@@ -45,7 +45,7 @@
                     {!! HTML::linkRoute('projects.index', 'Projectos') !!}
                 </li>
                 <li>
-                    {!! HTML::linkRoute('users.index', 'Utilizadores') !!}
+                    <a href="resources/views/projects/list">Autores</a>
                 </li>
                 {{--<li>
                     <input type="button" class="button1" value="Login" onclick="window.location='{{ url("auth/login") }}'">
@@ -57,7 +57,7 @@
                 @endif
                 @if (Auth::check() && Auth::user()->role == 4)
                     <li >
-                        {!! HTML::linkRoute('users.admin', 'Gestão de Utilizadores') !!}
+                        {!! HTML::linkRoute('users.index', 'Gestão de Utilizadores') !!}
                     </li>
                 @endif
                 <div class="pull-right">

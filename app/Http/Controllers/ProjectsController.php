@@ -21,7 +21,7 @@ class ProjectsController extends Controller
     public function index()
     {
 
-       /* $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
         $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
 
         if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
@@ -34,60 +34,11 @@ class ProjectsController extends Controller
             $order = 'Descendant';
         }
 
-
-        if(Input::get('name'))
-            $array->where('name', '=', Input::get('name'));
-
-        if(Input::get('acronym'))
-            $array->where('hasCoffeeMachine', '=', Input::get('hasCoffeeMachine'));
         $projects = $array['projects'];
         $created_by = $array['created_by'];
         $image = $array['images'];
 
-        return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));*/
-
-
-
-
-        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
-        $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
-
-        if(($sort = Input::get('sort')) == null){
-            $sort = 'Last Update';
-        }
-
-        if(($order = Input::get('order')) == null){
-            $order = 'Descendant';
-        }
-
-        $projects = Project::where('state', '=', '1')->orderBy($sort_array[$sort], $order_array[$order]);
-
-        if(Input::get('name'))
-            $projects->where('name', 'LIKE', '%'.Input::get('name').'%');
-
-        if(Input::get('acronym'))
-            $projects->where('acronym', 'LIKE', '%'.Input::get('acronym').'%');
-
-        if(Input::get('created_by'))
-            $projects->where('created_by', '=', Input::get('created_by'));
-
-        if(Input::get('keywords'))
-            $projects->where('keywords', 'LIKE', '%'.Input::get('keywords').'%');
-
-        $projects = $projects->paginate(5);
-        foreach($projects as $project){
-            $created_by[$project->id] = User::find($project->created_by)->name;
-            $media = $project->media()->where('state', '=', '1')->first();
-            if($media != null){
-                $image[$project->id] = action('MediaController@showProject', basename($media->int_file));
-            }
-            else{
-                $image[$project->id] = null;
-            }
-        }
-
         return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
-
     }
 
     public function create()
@@ -117,6 +68,7 @@ class ProjectsController extends Controller
 
         if (Auth::user()->role == 2){
             $project->state = 1;
+            $project->approved_by = Auth::user()->id;
         } else {
             $project->state = 2;
         }
@@ -197,6 +149,7 @@ class ProjectsController extends Controller
 
         if (Auth::user()->role == 2){
             $project->state = 1;
+            $project->approved_by = Auth::user()->id;
         } else {
             $project->state = 2;
         }
@@ -276,6 +229,46 @@ class ProjectsController extends Controller
         $project->delete();
 
         return redirect('dashboard');
+    }
+
+    public function approve($id){
+
+        $project = Project::find($id);
+        $state = '1';
+        $this->editState($project, $state);
+
+        return redirect('dashboard');
+    }
+
+    public function refuse($id){
+
+        $project = Project::find($id);
+
+        return view('projects.refusal', compact('project'));
+    }
+
+    public function refuseMessage($id){
+
+        $project = Project::find($id);
+        $state = '0';
+        $message = Input::get('message');
+        $this->editState($project, $state, $message);
+
+
+        return redirect('dashboard');
+    }
+
+    private function editState($project, $state, $message = null){
+
+        if ($state == 1){
+            $project->state = $state;
+            $project->approved_by = Auth::user()->id;
+        } elseif ($state == 0) {
+            $project->refusal_msg = $message;
+            $project->state = $state;
+        }
+
+        $project->save();
     }
 
 }
