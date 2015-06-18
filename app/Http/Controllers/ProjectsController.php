@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Media;
 use App\Project;
 use App\User;
@@ -177,6 +178,7 @@ class ProjectsController extends Controller
 
         $project = Project::findOrFail($id);
         $media = $project->media->first();
+        $comments = Comment::where("state","=",1)->where("project_id","=",$id)->orderBy("created_at")->get();
 
         if ($media != null) {
             $image = action('MediaController@showProject', basename($media->int_file));
@@ -186,7 +188,7 @@ class ProjectsController extends Controller
 
         $keywords = explode(',', $project->keywords);
 
-        return view('projects.show', compact('project', 'keywords', 'image'));
+        return view('projects.show', compact('project', 'keywords', 'image','comments'));
 
     }
 
