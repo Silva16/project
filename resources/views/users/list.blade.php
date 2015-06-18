@@ -34,10 +34,10 @@
 
         <p id="demo"></p>
 
-        {{--{!! $users->appends(Request::except('page'))->render() !!}--}}
-        {{ $users->appends(Input::except('page'))->links() }}
+        {!! $users->appends(Request::except('page'))->render() !!}
+    {{--{{ $users->appends(Input::except('page'))->links() }}--}}
 
 
-    </div>
+</div>
 
 @endsection
