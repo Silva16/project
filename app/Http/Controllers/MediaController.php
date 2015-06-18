@@ -19,8 +19,7 @@ class MediaController extends Controller {
     public function index($id){
 
         $user = Auth::user();
-
-
+        $approved_by = null;
 
         $filter_array = array('All' => 'all', 'Refused' => '0', 'Approved' => '1', 'Pending' => '2');
         $sort_array = array('Title' => 'title', 'Mime' => 'mime_type', 'File' => 'int_file', 'Created' => 'created_at', 'Updated' => 'updated_at');
@@ -44,11 +43,14 @@ class MediaController extends Controller {
         foreach ($medias as $media){
             $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
             $created_by[$media->id] = User::find($media->created_by)->name;
+            if ($project->approved_by != null) {
+                $approved_by[$media->id] = User::find($media->approved_by)->name;
+            }
         }
 
         $pdfLogo = action('MediaController@showLogo', 'pdf.png');
 
-        return view('media.list', compact('medias', 'project', 'image_type', 'file', 'pdfLogo', 'created_by', 'sort', 'order', 'filter', 'user'));
+        return view('media.list', compact('medias', 'project', 'image_type', 'file', 'pdfLogo', 'created_by', 'approved_by','sort', 'order', 'filter', 'user'));
 
     }
 
@@ -70,12 +72,12 @@ class MediaController extends Controller {
         $media->alt = Input::get('alt');
         $media->flags = 0;
         $media->created_by = Auth::user()->id;
-        $media->approved_by = Auth::user()->id;
         $media->created_at = $date->getTimestamp();
         $media->updated_at = $date->getTimestamp();
 
         if (Auth::user()->role == 2){
             $media->state = 1;
+            $media->approved_by = Auth::user()->id;
         } else {
             $media->state = 2;
         }
@@ -142,6 +144,7 @@ class MediaController extends Controller {
 
         if (Auth::user()->role == 2){
             $media->state = 1;
+            $media->approved_by = Auth::user()->id;
         } else {
             $media->state = 2;
         }
@@ -267,23 +270,31 @@ class MediaController extends Controller {
     public function refuse($id){
 
         $media = Media::find($id);
+
+        return view('media.refusal', compact('media'));
+    }
+
+    public function refuseMessage($id){
+
+        $media = Media::find($id);
         $state = '0';
-        $this->editState($media, $state);
+        $message = Input::get('message');
+        $this->editState($media, $state, $message);
 
 
         return redirect('media/index/' . $media->project_id);
     }
 
-    private function editState($media, $state){
+    private function editState($media, $state, $message = null){
 
         if ($state == 1){
             $media->state = $state;
+            $media->approved_by = Auth::user()->id;
         } elseif ($state == 0) {
+            $media->refusal_msg = $message;
             $media->state = $state;
         }
 
         $media->save();
-
-
     }
 }

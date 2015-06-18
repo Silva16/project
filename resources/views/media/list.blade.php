@@ -79,7 +79,7 @@
                 {!! Form::submit('Aprovar') !!}
                 {!! Form::close() !!}
                 </div>
-                {!! Form::open(['method' => 'POST', 'action' => ['MediaController@refuse', $media->id]]) !!}
+                {!! Form::open(['method' => 'GET', 'action' => ['MediaController@refuse', $media->id]]) !!}
                 {!! Form::submit('Rejeitar') !!}
                 {!! Form::close() !!}
             </td>
@@ -119,7 +119,11 @@
             @elseif($media->state == 2)
                 <td style="color: #FFCC00; font-weight: bold">Pendente</td>
             @endif
-            <td>{{$media->approved_by}}</td>
+            @if ($approved_by[$media->id] != null)
+                <td>{{$approved_by[$media->id]}}</td>
+            @else
+                <td><hr align="center" width="82%"></td>
+            @endif
             @if ($media->refusal_msg != null)
                 <td>{{$media->refusal_msg}}</td>
             @else

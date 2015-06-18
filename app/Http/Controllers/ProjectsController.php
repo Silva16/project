@@ -21,12 +21,14 @@ class ProjectsController extends Controller
 
     public function index()
     {
-
         /* $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
          $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
+        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+        $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
+
+        if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
 
          if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
-
              $array = $this->getProjects($sort_array[Input::get('sort')], $order_array[Input::get('order')]);
          }
          else {
@@ -108,7 +110,6 @@ class ProjectsController extends Controller
         }
 
         return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
-
     }
 
     public function create()
@@ -138,6 +139,7 @@ class ProjectsController extends Controller
 
         if (Auth::user()->role == 2) {
             $project->state = 1;
+            $project->approved_by = Auth::user()->id;
         } else {
             $project->state = 2;
         }
@@ -220,6 +222,7 @@ class ProjectsController extends Controller
 
         if (Auth::user()->role == 2) {
             $project->state = 1;
+            $project->approved_by = Auth::user()->id;
         } else {
             $project->state = 2;
         }
@@ -304,6 +307,46 @@ class ProjectsController extends Controller
         $project->delete();
 
         return redirect('dashboard');
+    }
+
+    public function approve($id){
+
+        $project = Project::find($id);
+        $state = '1';
+        $this->editState($project, $state);
+
+        return redirect('dashboard');
+    }
+
+    public function refuse($id){
+
+        $project = Project::find($id);
+
+        return view('projects.refusal', compact('project'));
+    }
+
+    public function refuseMessage($id){
+
+        $project = Project::find($id);
+        $state = '0';
+        $message = Input::get('message');
+        $this->editState($project, $state, $message);
+
+
+        return redirect('dashboard');
+    }
+
+    private function editState($project, $state, $message = null){
+
+        if ($state == 1){
+            $project->state = $state;
+            $project->approved_by = Auth::user()->id;
+        } elseif ($state == 0) {
+            $project->refusal_msg = $message;
+            $project->state = $state;
+        }
+
+        $project->save();
     }
 
 }

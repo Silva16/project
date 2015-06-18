@@ -3,8 +3,8 @@
     Portfolios - IPLeiria
 @endsection
 @section('content')
-
     <div class="container">
+
 
         <style>
             #owl-example .item {

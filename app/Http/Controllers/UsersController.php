@@ -2,8 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
+use App\Project;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\Controller;
 use App\Institution;
 use App\User;
 
@@ -24,6 +26,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         if (($sort = Input::get('sort')) == null) {
             $sort = 'id';
         }
@@ -49,6 +52,24 @@ class UsersController extends Controller
             $users->where('role', '=', Input::get('role'));
 
         $users = $users ->paginate(10);
+=======
+        $this->middleware('admin');
+    }*/
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+        $users = User::with(array('institution'))->get();
+
+        $users = array_values(array_sort($users, function($value)
+        {
+            return $value['name'];
+        }));
+>>>>>>> origin/master
 
         $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
@@ -126,8 +147,13 @@ class UsersController extends Controller
 
         $user->save();
 
+<<<<<<< HEAD
         return redirect('admin.users');
     }
+=======
+        return redirect('users');
+	}
+>>>>>>> origin/master
 
     /**
      * Display the specified resource.
@@ -206,6 +232,7 @@ class UsersController extends Controller
         $user->save();
 
 
+<<<<<<< HEAD
         return redirect('admin.users');
     }
 
@@ -217,12 +244,30 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+=======
+        return redirect('users');
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+>>>>>>> origin/master
         $user = User::find($id);
 
         $user->delete();
 
+<<<<<<< HEAD
         return redirect('admin.users');
     }
+=======
+        return redirect('users');
+	}
+>>>>>>> origin/master
 
     public function status()
     {
@@ -230,12 +275,9 @@ class UsersController extends Controller
 
     }
 
-    public function admin()
-    {
-        $users = User::with(array('institution'))->orderBy('name')->paginate(10);
 
-        $role = ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
 
+<<<<<<< HEAD
         foreach ($users as $user) {
             $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
 
@@ -243,4 +285,6 @@ class UsersController extends Controller
 
         return view('admin.users', compact('users', 'image', 'role'));
     }
+=======
+>>>>>>> origin/master
 }
