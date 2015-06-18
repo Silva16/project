@@ -57,12 +57,18 @@ class UsersController extends Controller
 
         }
 
+        $institutions[0] = "Escolha uma opção...";
         $institutionsAux = Institution::get();
         foreach($institutionsAux as $institution){
             $institutions[$institution->id] = $institution->name;
         }
-        $institutions[0] = "Escolha uma opção...";
         $role[0] = "Escolha uma opção...";
+
+        $role[1] = "Author";
+
+        $role[2] = "Editor";
+
+        $role[4] = "Administrator";
 
         return view('users.list', compact('users', 'image', 'role', 'institutions'));
     }
