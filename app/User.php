@@ -1,5 +1,6 @@
 <?php namespace App;
 
+//use App\Commands\SortableTrait;
 use Illuminate\Auth\Authenticatable;
 
 use Auth;
@@ -9,8 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
-
-	use Authenticatable, CanResetPassword;
+	use Authenticatable, CanResetPassword;//, SortableTrait;
 
 	/**
 	 * The database table used by the model.

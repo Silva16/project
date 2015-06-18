@@ -57,7 +57,7 @@
             <ul>
                 @foreach($keywords as $keyword)
                 <li>
-                    <p><a href='{{url("keywords/".trim($keyword))}}'>{{trim($keyword)}}</a></p>
+                    <p><a href='{{url("projects?keywords=".trim($keyword))}}'>{{trim($keyword)}}</a></p>
                 </li>
                 @endforeach
             </ul>
