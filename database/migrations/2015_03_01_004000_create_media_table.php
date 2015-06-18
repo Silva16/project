@@ -17,7 +17,7 @@ class CreateMediaTable extends Migration {
 			$table->increments('id');
 
 			$table->integer('project_id')->unsigned();
-			$table->foreign('project_id')->references('id')->on('projects');
+			$table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
 			$table->string('title');
 			$table->text('description');
@@ -30,13 +30,13 @@ class CreateMediaTable extends Migration {
 			$table->string('public_name')->nullable();
 
 			$table->integer('created_by')->unsigned();
-			$table->foreign('created_by')->references('id')->on('users');
+			$table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
 			$table->integer('approved_by')->unsigned();
-			$table->foreign('approved_by')->references('id')->on('users');
+			$table->foreign('approved_by')->references('id')->on('users')->onDelete('cascade');
 
 			$table->integer('replaces_id')->unsigned()->nullable(); // edited version of a comment
-			$table->foreign('replaces_id')->references('id')->on('media');
+			$table->foreign('replaces_id')->references('id')->on('media')->onDelete('cascade');
 
 			$table->integer('state')->unsigned();
 			$table->string('refusal_msg')->nullable();

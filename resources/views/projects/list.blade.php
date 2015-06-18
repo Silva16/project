@@ -47,9 +47,6 @@
                             </p>
 
                             <p style="font-weight: bold;">{{$created_by[$project->id]}}</p>
-                            {{--@foreach($project->users as $user)
-                                <p style="font-weight: bold;">{{$user->name}}</p>
-                            @endforeach--}}
 
                         </div>
                         <hr align="left" width="82%">

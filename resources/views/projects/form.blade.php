@@ -64,20 +64,15 @@
         @endif
     </div>
 
-    <div class="form-group @if ($errors->has('featured_until')) has-error @endif">
-        {!! Form::label('featured_until', 'Desenvolvido até:') !!}</br>
-        {!! Form::input('date', 'featured_until', null, array('class' => 'form-control')) !!}
-        @if ($errors->has('featured_until'))
+    <div class="form-group @if ($errors->has('finished_at')) has-error @endif">
+        {!! Form::label('finished_at', 'Data de finalização:') !!}</br>
+        {!! Form::input('date', 'finished_at', null, array('class' => 'form-control')) !!}
+        @if ($errors->has('finished_at'))
         <span class="alert alert-danger">
-            {{ $errors->first('featured_until') }}
+            {{ $errors->first('finished_at') }}
         </span>
 
         @endif
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('finished_at', 'Data de finalização:') !!}</br>
-        {!! Form::input('date', 'finished_at', null, array('class' => 'form-control')) !!}
     </div>
 
 
@@ -92,9 +87,15 @@
         {!! Form::textarea('used_hardware', null, array('class' => 'form-control')) !!}
     </div>
 
-    <div class="form-group">
+    <div class="form-group @if ($errors->has('observations')) has-error @endif">
         {!! Form::label('observations', 'Observações:') !!}</br>
         {!! Form::textarea('observations', null, array('class' => 'form-control')) !!}
+        @if ($errors->has('observations'))
+        <span class="alert alert-danger">
+            {{ $errors->first('observations') }}
+        </span>
+
+        @endif
     </div>
 
     <div class="form-group">

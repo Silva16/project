@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 255);
 
 			$table->integer('institution_id')->unsigned();
-			$table->foreign('institution_id')->references('id')->on('institutions');
+			$table->foreign('institution_id')->references('id')->on('institutions')->onDelete('cascade');
 
 			$table->string('position');
 

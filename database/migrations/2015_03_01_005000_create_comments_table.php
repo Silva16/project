@@ -19,18 +19,18 @@ class CreateCommentsTable extends Migration {
 			$table->text('comment');
 
 			$table->integer('project_id')->unsigned();
-			$table->foreign('project_id')->references('id')->on('projects');
+			$table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
 			$table->string('user_name')->nullable(); // optional name for anonymous comments
 
 			$table->integer('user_id')->unsigned()->nullable();	// if null, user is anonymous
-			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
 			$table->integer('approved_by')->unsigned()->nullable();
-			$table->foreign('approved_by')->references('id')->on('users');
+			$table->foreign('approved_by')->references('id')->on('users')->onDelete('cascade');
 
 			$table->integer('replaces_id')->unsigned()->nullable(); // edited version of a comment
-			$table->foreign('replaces_id')->references('id')->on('comments');
+			$table->foreign('replaces_id')->references('id')->on('comments')->onDelete('cascade');
 
 			$table->integer('state')->unsigned();
 			$table->string('refusal_msg')->nullable();

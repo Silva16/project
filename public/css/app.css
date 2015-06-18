@@ -8,8 +8,9 @@ html {
 }
 html,body {
     max-width: 100%;
+    max-height: 100%;
     margin: 0;
-    height: 100%;
+
     overflow-x: hidden;
 }
 article,
@@ -253,6 +254,7 @@ th {
   .table-bordered th,
   .table-bordered td {
     border: 1px solid #ddd !important;
+
   }
 }
 @font-face {
@@ -889,6 +891,7 @@ body {
   line-height: 1.42857143;
   color: #333333;
   background-color: #ffffff;
+    max-height: 100%;
 }
 input,
 button,
@@ -2046,7 +2049,7 @@ caption {
   text-align: left;
 }
 th {
-  text-align: left;
+  text-align: center;
 }
 .table {
   width: 100%;
@@ -2063,6 +2066,7 @@ th {
   line-height: 1.42857143;
   vertical-align: middle;
   border-top: 1px solid #dddddd;
+    text-align: center;
 }
 .table > thead > tr > th {
   vertical-align: bottom;
@@ -2274,7 +2278,9 @@ table th[class*="col-"] {
   .table-responsive > .table-bordered > tbody > tr:last-child > td,
   .table-responsive > .table-bordered > tfoot > tr:last-child > td {
     border-bottom: 0;
+
   }
+
 }
 fieldset {
   padding: 0;
@@ -6413,8 +6419,7 @@ float:left;
 
 @media screen and (max-width: 700px){
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 39.2%;
@@ -6460,15 +6465,16 @@ float:left;
     }
 
     footer {
-        position: absolute;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
-        bottom: 0;
+
         background-color: #404040;
     }
 
     .content{
         display: inline;
+
     }
 
     .vcenter{
@@ -6484,6 +6490,11 @@ float:left;
         float: right;
         padding-top: 1.8%;
 
+    }
+
+    .align ul {
+
+        line-height: 145%;
     }
 
     .endfooter{
@@ -6507,14 +6518,14 @@ float:left;
     }
 
     .content{
+
         display: inline;
     }
     
 
 
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
         /* Set the fixed height of the footer here */
         height: 14.3%;
@@ -6548,9 +6559,8 @@ float:left;
         display: inline;
     }
     footer {
-        position: absolute;
+        position: relative;
         width: 100%;
-        bottom:0;
         /* Set the fixed height of the footer here */
         height: 14.3%;
         background-color: #404040;
@@ -6583,9 +6593,8 @@ float:left;
     display: inline;
 }
     footer {
-        position: absolute;
+        position: relative;
         width: 100%;
-        bottom: 0;
         /* Set the fixed height of the footer here */
         height: 15%;
         background-color: #404040;
@@ -6630,10 +6639,3 @@ float:left;
     margin: 0 auto;
 }
 
-
-.main{
-
-    min-height: 100%;
-    position: relative;
-
-}

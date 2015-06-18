@@ -28,13 +28,13 @@ class CreateProjectsTable extends Migration {
 			$table->date('finished_at')->nullable();
 
 			$table->integer('created_by')->unsigned();
-			$table->foreign('created_by')->references('id')->on('users');
+			$table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
 			$table->integer('updated_by')->unsigned();
-			$table->foreign('updated_by')->references('id')->on('users');
+			$table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
 
 			$table->integer('approved_by')->unsigned()->nullable();
-			$table->foreign('approved_by')->references('id')->on('users');
+			$table->foreign('approved_by')->references('id')->on('users')->onDelete('cascade');
 
 			$table->text('used_software')->nullable();
 			$table->text('used_hardware')->nullable();
@@ -42,7 +42,7 @@ class CreateProjectsTable extends Migration {
 			$table->date('featured_until')->nullable();
 
 			$table->integer('replaces_id')->unsigned()->nullable(); // edited version of a comment
-			$table->foreign('replaces_id')->references('id')->on('projects');
+			$table->foreign('replaces_id')->references('id')->on('projects')->onDelete('cascade');
 
 			$table->integer('state')->unsigned();
 			$table->string('refusal_msg')->nullable();

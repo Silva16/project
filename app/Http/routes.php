@@ -39,7 +39,11 @@ Route::get('media/logos/{id}', 'MediaController@showLogo');
 
 Route::get('media/download/{id}', 'MediaController@download');
 
-Route::post('media/delete/{id}', 'MediaController@destroy');
+Route::delete('media/delete/{id}', 'MediaController@destroy');
+
+Route::post('media/approve/{id}', 'MediaController@approve');
+
+Route::post('media/refuse/{id}', 'MediaController@refuse');
 
 
 /*Route::get('media/{id}', 'MediaController@index');

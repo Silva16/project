@@ -28,7 +28,7 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-        $featured = Project::where('featured_until', '>=', date("Y-m-d"))->orderBy('updated_at')->get();
+        $featured = Project::where('featured_until', '>=', date("Y-m-d"))->where('state', '=', '1')->orderBy('updated_at')->get();
         foreach($featured as $project){
 
             $featuredImage[$project->id] = $this->getMediaProject($project);

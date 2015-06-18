@@ -18,6 +18,29 @@ class ProjectsController extends Controller
         $this->middleware('author', ['except' => ['show', 'index']]);
     }*/
 
+    public function index()
+    {
+
+        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+        $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
+
+        if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
+
+            $array = $this->getProjects($sort_array[Input::get('sort')], $order_array[Input::get('order')]);
+        }
+        else {
+            $array = $this->getProjects();
+            $sort = 'Last Update';
+            $order = 'Descendant';
+        }
+
+        $projects = $array['projects'];
+        $created_by = $array['created_by'];
+        $image = $array['images'];
+
+        return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
+    }
+
     public function create()
     {
 
@@ -28,8 +51,9 @@ class ProjectsController extends Controller
     public function store(ProjectRequest $request)
     {
 
-        $date    = new \DateTime();
+
         $project = new Project();
+        $date    = new \DateTime();
 
         $project->name           = Input::get('name');
         $project->type           = Input::get('type');
@@ -38,14 +62,14 @@ class ProjectsController extends Controller
         $project->started_at     = Input::get('started_at');
         $project->created_by     = Auth::user()->id;
         $project->updated_by     = Auth::user()->id;
-        $project->featured_until = Input::get('featured_until');
+        $project->featured_until = date('Y-m-d', strtotime("+30 days"));
         $project->created_at     = $date->getTimestamp();
         $project->updated_at     = $date->getTimestamp();
 
         if (Auth::user()->role == 2){
             $project->state = 1;
         } else {
-            $project->state = 0;
+            $project->state = 2;
         }
 
 
@@ -69,30 +93,10 @@ class ProjectsController extends Controller
 
 
 
-        return redirect('projects');
+        return redirect('dashboard');
     }
 
-    public function index()
-    {
-        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
-        $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
 
-        if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
-
-            $array = $this->getProjects($sort_array[Input::get('sort')], $order_array[Input::get('order')]);
-        }
-        else {
-            $array = $this->getProjects();
-            $sort = 'Last Update';
-            $order = 'Descendant';
-        }
-
-        $projects = $array['projects'];
-        $created_by = $array['created_by'];
-        $image = $array['images'];
-
-        return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
-    }
 
     public function show($id)
     {
@@ -112,6 +116,65 @@ class ProjectsController extends Controller
 
     }
 
+    public function edit($id)
+    {
+
+        $project = Project::find($id);
+
+        return view ('projects.edit', compact('project'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id, ProjectRequest $request)
+    {
+        $project = Project::find($id);
+        $date    = new \DateTime();
+
+        $project->name           = Input::get('name');
+        $project->type           = Input::get('type');
+        $project->theme          = Input::get('theme');
+        $project->description    = Input::get('description');
+        $project->started_at     = Input::get('started_at');
+        $project->created_by     = Auth::user()->id;
+        $project->updated_by     = Auth::user()->id;
+        $project->featured_until = date('Y-m-d', strtotime("+30 days"));
+        $project->created_at     = $date->getTimestamp();
+        $project->updated_at     = $date->getTimestamp();
+
+        if (Auth::user()->role == 2){
+            $project->state = 1;
+        } else {
+            $project->state = 2;
+        }
+
+
+
+        $fields = ['acronym' => Input::get('acronym'), 'finished_at' => Input::get('finished_at'), 'keywords' => Input::get('keywords'),
+            'used_software' => Input::get('used_software'), 'used_hardware' => Input::get('used_hardware'),
+            'observations' => Input::get('observations')];
+
+        foreach ($fields as $key => $value) {
+            if (empty($value)) {
+                $project->$key = null;
+            } else {
+                $project->$key = $value;
+            }
+        }
+
+        if ($project->save()) {
+            $user_id= Auth::user()->id;
+            $project->users()->sync(array($user_id));
+        }
+
+
+        return redirect('dashboard');
+    }
+
 
     public function gallery($id)
     {
@@ -122,12 +185,13 @@ class ProjectsController extends Controller
         }*/
 
         $project = Project::findOrFail($id);
-
         $image_type = array('image/jpg', 'image/jpeg', 'image/png', 'image/bmp');
 
         foreach ($project->media as $media){
-            $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
 
+            if ($media->state == 1){
+                $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
+            }
         }
 
         $pdfLogo = action('MediaController@showLogo', 'pdf.png');
@@ -144,7 +208,7 @@ class ProjectsController extends Controller
 
         foreach($projects as $project){
             $created_by[$project->id] = User::find($project->created_by)->name;
-            $media = $project->media->first();
+            $media = $project->media()->where('state', '=', '1')->first();
             if($media != null){
                 $image[$project->id] = action('MediaController@showProject', basename($media->int_file));
             }
@@ -154,6 +218,15 @@ class ProjectsController extends Controller
         }
 
         return ['projects' => $projects, 'created_by' => $created_by, 'images' =>  $image];
+    }
+
+    public function destroy($id)
+    {
+        $project = Project::find($id);
+
+        $project->delete();
+
+        return redirect('dashboard');
     }
 
 }

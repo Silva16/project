@@ -4,7 +4,44 @@
 @endsection
 @section('content')
 
+    <h1 style="margin-left: 10px; color: #337ab7; margin-bottom: 20px">Dashboard</h1>
 
+    <div style="margin-left: 10px; margin-bottom: 20px">
+
+    {!! Form::open(['method' => 'GET', 'action' => ['DashboardController@index']]) !!}
+
+            <select name="filter" id="filter" class="form-control" style="width: 200px; float: left; margin-right: 10px">
+                <option @if($filter == "All") selected="selected" @endif value="All" selected>Todos os projectos</option>
+                <option @if($filter == "Approved") selected="selected" @endif value="Approved">Projetos Aprovados</option>
+                <option @if($filter == "Pending") selected="selected" @endif value="Pending">Projectos Pendentes</option>
+                <option @if($filter == "Refused") selected="selected" @endif value="Refused">Projectos Recusados</option>
+            </select>
+
+            <select name="sort" class="form-control" style="width: 200px; float: left; margin-right: 10px">
+                <option @if($sort == "Name") selected="selected" @endif value="Name" selected>Nome do Projeto</option>
+                <option @if($sort == "Acronym") selected="selected" @endif value="Acronym">Acronimo</option>
+                <option @if($sort == "Type") selected="selected" @endif value="Type">Tipo</option>
+                <option @if($sort == "Theme") selected="selected" @endif value="Theme">Tema</option>
+                <option @if($sort == "Started") selected="selected" @endif value="Started">Data de criação</option>
+                <option @if($sort == "Updated") selected="selected" @endif value="Updated">Data de atualização</option>
+            </select>
+
+            <select name="order" onchange="" class="form-control" style="width: 200px; float: left; margin-right: 10px">
+                <option @if($order == "Ascendant") selected="selected" @endif value="Ascendant">Ascendente</option>
+                <option @if($order == "Descendant") selected="selected" @endif value="Descendant">Descendente</option>
+            </select>
+            <input class="btn" type="submit" value="Filtrar"/>
+    {!! Form::close() !!}
+
+    </div>
+
+    <div style="margin-left: 10px; margin-bottom: 20px">
+
+    {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@create']]) !!}
+    {!! Form::submit('Adicionar Projecto') !!}
+    {!! Form::close() !!}
+
+    </div>
 
     <div class="table-responsive">
     <table class="table">
@@ -18,7 +55,6 @@
                 <th>Media</th>
                 <th>Palavras-Chave</th>
                 <th>Iniciado</th>
-                <th>Desenvolvido até</th>
                 <th>Finalizado</th>
                 <th>Criado por</th>
                 <th>Actualizado por</th>
@@ -27,10 +63,12 @@
                 <th>Hardware</th>
                 <th>Estado</th>
                 <th>Mensagem de Rejeição</th>
+                <th>Editar</th>
+                <th>Apagar</th>
             </tr>
         </thead>
         <tbody>
-        @foreach ($user->projects as $project)
+        @foreach ($projects as $project)
             <tr>
                 <td>{{$project->name}}</td>
                 <td>{{$project->acronym}}</td>
@@ -44,15 +82,30 @@
                 </td>
                 <td>{{$project->keywords}}</td>
                 <td>{{$project->started_at}}</td>
-                <td>{{$project->featured_until}}</td>
                 <td>{{$project->finished_at}}</td>
-                <td>{{$project->created_by}}</td>
-                <td>{{$project->updated_by}}</td>
+                <td>{{$created_by[$project->id]}}</td>
+                <td>{{$updated_by[$project->id]}}</td>
                 <td>{{$project->observations}}</td>
                 <td>{{$project->used_software}}</td>
                 <td>{{$project->used_hardware}}</td>
-                <td>{{$project->state}}</td>
+                @if($project->state == 0)
+                    <td style="color: red; font-weight: bold">Recusado</td>
+                @elseif($project->state == 1)
+                    <td style="color: green; font-weight: bold">Aprovado</td>
+                @elseif($project->state == 2)
+                    <td style="color: #FFCC00; font-weight: bold">Pendente</td>
+                @endif
                 <td>{{$project->refusal_msg}}</td>
+                <td>
+                    {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@edit', $project->id]]) !!}
+                    {!! Form::submit('Editar') !!}
+                    {!! Form::close() !!}
+                </td>
+                <td>
+                    {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectsController@destroy', $project->id]]) !!}
+                    {!! Form::submit('Apagar') !!}
+                    {!! Form::close() !!}
+                </td>
             </tr>
         @endforeach
     </table>

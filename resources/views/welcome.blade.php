@@ -67,7 +67,7 @@
                     <section>
                         <article id="articles">
                             <hr>
-                            <figure style="float:left; width: 50%" class="imgproj">
+                            <figure style="float:left; width: 48%; margin-top: 30px" class="imgproj">
                                 <img alt="" src="{{$image[$project->id]}}" width="350px" height="210px"/>
                             </figure>
                             <div style="float: right;width: 48%" id="projects">

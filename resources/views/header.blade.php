@@ -89,12 +89,13 @@
 @yield('content')
 
 <footer>
+
         <div class="content" style="background-color:#404040">
         <div class="col-md-4 ">
 
                 <img id="footerlogo" src="http:\\10.10.10.10\project\css\imagens\logoipl.png" alt="logoipl" />
         </div>
-        <div class="col-md-4 vcenter">
+        <div class="col-md-4 vcenter ">
                 <ul><li class="footercenter">Rua General Norton de Matos,</li>
                 <li class="footercenter"> Apartado 4133,</li>
                 <li class="footercenter">2411-901 Leiria – Portugal</li>
@@ -109,7 +110,7 @@
         </div>
         </div>
     <div class="endfooter">
-        <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria mahala amhjala</a>
+        <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria</a>
 
     </div>
 </footer>
