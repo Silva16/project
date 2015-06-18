@@ -17,6 +17,8 @@ Route::resource('dashboard', 'DashboardController');
 
 Route::resource('projects', 'ProjectsController');
 
+Route::get('users/admin', ['as' => 'users.admin', 'uses' =>'UsersController@admin']);
+
 Route::resource('users', 'UsersController');
 
 Route::get('projects/gallery/{id}', 'ProjectsController@gallery');

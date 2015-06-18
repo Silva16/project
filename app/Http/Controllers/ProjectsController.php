@@ -21,7 +21,7 @@ class ProjectsController extends Controller
     public function index()
     {
 
-        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+       /* $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
         $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
 
         if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null){
@@ -34,11 +34,60 @@ class ProjectsController extends Controller
             $order = 'Descendant';
         }
 
+
+        if(Input::get('name'))
+            $array->where('name', '=', Input::get('name'));
+
+        if(Input::get('acronym'))
+            $array->where('hasCoffeeMachine', '=', Input::get('hasCoffeeMachine'));
         $projects = $array['projects'];
         $created_by = $array['created_by'];
         $image = $array['images'];
 
+        return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));*/
+
+
+
+
+        $sort_array = array('Author' => 'created_by','Date' => 'started_at','Project' => 'name','Last Update' => 'updated_at');
+        $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
+
+        if(($sort = Input::get('sort')) == null){
+            $sort = 'Last Update';
+        }
+
+        if(($order = Input::get('order')) == null){
+            $order = 'Descendant';
+        }
+
+        $projects = Project::where('state', '=', '1')->orderBy($sort_array[$sort], $order_array[$order]);
+
+        if(Input::get('name'))
+            $projects->where('name', 'LIKE', '%'.Input::get('name').'%');
+
+        if(Input::get('acronym'))
+            $projects->where('acronym', 'LIKE', '%'.Input::get('acronym').'%');
+
+        if(Input::get('created_by'))
+            $projects->where('created_by', '=', Input::get('created_by'));
+
+        if(Input::get('keywords'))
+            $projects->where('keywords', 'LIKE', '%'.Input::get('keywords').'%');
+
+        $projects = $projects->paginate(5);
+        foreach($projects as $project){
+            $created_by[$project->id] = User::find($project->created_by)->name;
+            $media = $project->media()->where('state', '=', '1')->first();
+            if($media != null){
+                $image[$project->id] = action('MediaController@showProject', basename($media->int_file));
+            }
+            else{
+                $image[$project->id] = null;
+            }
+        }
+
         return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
+
     }
 
     public function create()
