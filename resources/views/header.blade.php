@@ -62,7 +62,10 @@
                 @endif
                 <div class="pull-right">
                 <li>
-                    <input type="text" style="margin-top: -4px" class="search-query" placeholder="Search">
+                    {!! Form::open(['method' => 'GET' , 'action' => ['ProjectsController@search']]) !!}
+                    <input type="text" style="margin-top: -4px" class="search-query" name="find" placeholder="Search">
+                    <input type="submit" >
+                    {!! Form::close() !!}
                 </li>
                 @if (Auth::guest())
                 <li>

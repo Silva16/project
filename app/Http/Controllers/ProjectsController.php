@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\Request;
 use App\Media;
 use App\Project;
+use App\Http\Requests\FindRequest;
 use App\User;
 use App\Http\Requests\ProjectRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation;
 use Auth;
@@ -23,6 +25,39 @@ class ProjectsController extends Controller
 
 
         return view('projects.create');
+    }
+
+    public function search(FindRequest $request){
+
+
+
+    $field= Input::get('name');
+    $ids=null;
+        if(empty($field)){
+
+            $project = null;
+        }else{
+
+            $project = $field;
+        }
+
+        $result = Project::find($ids)->where('name' == $project);
+
+        if(empty($result))
+        {
+
+
+        }else{
+            $sort = 'Last Update';
+            $order = 'Descendant';
+            $projects = $project['projects'];
+            $created_by = $project['created_by'];
+            $image = $project['images'];
+
+            return view('projects.list', compact('projects', 'created_by', 'image', 'sort', 'order'));
+
+        }
+
     }
 
     public function store(ProjectRequest $request)
@@ -141,7 +176,8 @@ class ProjectsController extends Controller
 
 
         $projects = Project::where('state', '=', '1')->orderBy($sort, $order)->paginate(5);
-
+        $created_by = null;
+        $image = null;
         foreach($projects as $project){
             $created_by[$project->id] = User::find($project->created_by)->name;
             $media = $project->media->first();

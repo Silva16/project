@@ -76,6 +76,7 @@ Route::post('users', 'UsersController@status');
 
 Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);*/
 
+Route::get('projects/search/{$request}', 'ProjectsController@search');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
