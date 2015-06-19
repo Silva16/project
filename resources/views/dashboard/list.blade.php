@@ -46,7 +46,7 @@
 
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive" style="overflow: scroll">
     <table class="table">
         <thead>
             <tr>
@@ -90,8 +90,6 @@
                     {!! Form::submit('Rejeitar') !!}
                     {!! Form::close() !!}
                 </td>
-                @else
-                    <td><hr width="82%"></td>
                 @endif
                 <td>{{$project->name}}</td>
                 <td>{{$project->acronym}}</td>
@@ -138,11 +136,6 @@
                     <td style="color: green; font-weight: bold">Aprovado</td>
                 @elseif($project->state == 2)
                     <td ><p style="color: #FFCC00; font-weight: bold">Pendente</p>
-                        @if(Auth::user()->role == 1)
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectsController@destroy', $project->id]]) !!}
-                            {!! Form::submit('Apagar') !!}
-                            {!! Form::close() !!}
-                        @endif
                     </td>
                 @endif
                 @if (array_key_exists($project->id, $approved_by))
