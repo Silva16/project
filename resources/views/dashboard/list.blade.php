@@ -38,10 +38,10 @@
 
     </div>
 
-    <div style="margin-left: 10px; margin-bottom: 20px">
+    <div style="margin-left: 10px">
 
     {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@create']]) !!}
-    {!! Form::submit('Adicionar Projecto') !!}
+    {!! Form::submit('Adicionar Projecto', array('class' => 'btn btn-lg')) !!}
     {!! Form::close() !!}
 
     </div>
@@ -58,7 +58,8 @@
                 <th>Tipo</th>
                 <th>Tema</th>
                 <th>Descrição</th>
-                <th>Media</th>
+                <th>Mídia</th>
+                <th>Comentários</th>
                 <th>Palavras-Chave</th>
                 <th>Iniciado</th>
                 <th>Finalizado</th>
@@ -96,10 +97,15 @@
                 <td>{{$project->acronym}}</td>
                 <td>{{$project->type}}</td>
                 <td>{{$project->theme}}</td>
-                <td style="text-align: justify;">{{$project->description}}</td>
+                <td>{{$project->description}}</td>
                 <td>
                     {!! Form::open(['method' => 'GET', 'action' => ['MediaController@index', $project->id]]) !!}
                     {!! Form::submit('Ficheiros') !!}
+                    {!! Form::close() !!}
+                </td>
+                <td>
+                    {!! Form::open(['method' => 'GET', 'action' => ['CommentsController@index', $project->id]]) !!}
+                    {!! Form::submit('Comentários') !!}
                     {!! Form::close() !!}
                 </td>
                 <td>{{$project->keywords}}</td>

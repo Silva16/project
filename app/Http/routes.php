@@ -13,6 +13,18 @@
 
 Route::get('/', 'WelcomeController@index');
 
+Route::get('comments/index/{id}', 'CommentsController@index');
+
+Route::get('comments/create/{id}', 'CommentsController@create');
+
+Route::post('comments/store/{id}', 'CommentsController@store');
+
+Route::post('comments/approve/{id}', 'CommentsController@approve');
+
+Route::get('comments/refuse/{id}', 'CommentsController@refuse');
+
+Route::patch('comments/refuseMsg/{id}', 'CommentsController@refuseMessage');
+
 Route::resource('dashboard', 'DashboardController');
 
 Route::resource('projects', 'ProjectsController');
@@ -45,7 +57,9 @@ Route::delete('media/delete/{id}', 'MediaController@destroy');
 
 Route::post('media/approve/{id}', 'MediaController@approve');
 
-Route::post('media/refuse/{id}', 'MediaController@refuse');
+Route::get('media/refuse/{id}', 'MediaController@refuse');
+
+Route::patch('media/refuseMsg/{id}', 'MediaController@refuseMessage');
 
 
 /*Route::get('media/{id}', 'MediaController@index');

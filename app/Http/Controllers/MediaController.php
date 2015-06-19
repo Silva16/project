@@ -43,7 +43,7 @@ class MediaController extends Controller {
         foreach ($medias as $media){
             $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
             $created_by[$media->id] = User::find($media->created_by)->name;
-            if ($project->approved_by != null) {
+            if ($media->approved_by != null) {
                 $approved_by[$media->id] = User::find($media->approved_by)->name;
             }
         }

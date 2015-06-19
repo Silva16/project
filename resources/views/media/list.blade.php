@@ -34,10 +34,10 @@
 
     </div>
 
-    <div style="margin-left: 10px; margin-bottom: 20px">
+    <div style="margin-left: 10px">
 
             {!! Form::open(['method' => 'GET', 'action' => ['MediaController@create', $project->id]]) !!}
-            {!! Form::submit('Adicionar') !!}
+            {!! Form::submit('Adicionar', array('class' => 'btn btn-lg')) !!}
             {!! Form::close() !!}
 
     </div>
@@ -119,7 +119,7 @@
             @elseif($media->state == 2)
                 <td style="color: #FFCC00; font-weight: bold">Pendente</td>
             @endif
-            @if ($approved_by[$media->id] != null)
+            @if (array_key_exists($media->id, $approved_by))
                 <td>{{$approved_by[$media->id]}}</td>
             @else
                 <td><hr align="center" width="82%"></td>

@@ -83,6 +83,7 @@
             <div class="comments">
                 <h1>Comentários</h1>
                 @foreach($comments as $comment)
+                    @if($comment->state == 1)
                     <div class="comment highlight">
                         <div class="comment-info">
                             <ul style="list-style-type: none;">
@@ -108,7 +109,13 @@
                             <p>{{$comment->comment}}</p>
                         </div>
                     </div>
+                    @endif
                 @endforeach
+                <div style="margin-bottom: 20px">
+                    {!! Form::open(['method' => 'GET', 'action' => ['CommentsController@create', $project->id]]) !!}
+                    {!! Form::submit('Adicionar Comentário', array('class' => 'btn btn-lg')) !!}
+                    {!! Form::close() !!}
+                </div>
             </div>
         </div>
     </div>
