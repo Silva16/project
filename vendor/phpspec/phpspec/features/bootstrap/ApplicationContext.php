@@ -1,7 +1,7 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Fake\Prompter;
@@ -11,7 +11,6 @@ use Matcher\ExitStatusMatcher;
 use Matcher\ValidJUnitXmlMatcher;
 use PhpSpec\Console\Application;
 use PhpSpec\Matcher\MatchersProviderInterface;
-use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
 /**
@@ -93,9 +92,9 @@ class ApplicationContext implements Context, MatchersProviderInterface
      * @When /I run phpspec (?P<interactive>interactively)$/
      * @When /I run phpspec (?P<interactive>interactively) with the (?P<option>.*) option/
      */
-    public function iRunPhpspec($formatter = null, $option = null, $interactive=null)
+    public function iRunPhpspec($formatter = null, $option = null, $interactive = null)
     {
-        $arguments = array (
+        $arguments = array(
             'command' => 'run'
         );
 
@@ -112,15 +111,15 @@ class ApplicationContext implements Context, MatchersProviderInterface
      * @When I run phpspec and answer :answer when asked if I want to generate the code
      * @When I run phpspec with the option :option and (I) answer :answer when asked if I want to generate the code
      */
-    public function iRunPhpspecAndAnswerWhenAskedIfIWantToGenerateTheCode($answer, $option=null)
+    public function iRunPhpspecAndAnswerWhenAskedIfIWantToGenerateTheCode($answer, $option = null)
     {
-        $arguments = array (
+        $arguments = array(
             'command' => 'run'
         );
 
         $this->addOptionToArguments($option, $arguments);
 
-        $this->prompter->setAnswer($answer=='y');
+        $this->prompter->setAnswer($answer == 'y');
 
         $this->lastExitCode = $this->tester->run($arguments, array('interactive' => true));
     }

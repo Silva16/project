@@ -18,7 +18,8 @@
             <option @if($sort == "Author") selected="selected" @endif value="Author">Nome do Autor</option>
             <option @if($sort == "Date") selected="selected" @endif value="Date">Data de criação</option>
             <option @if($sort == "Project") selected="selected" @endif value="Project" selected>Nome do Projeto</option>
-            <option @if($sort == "Last Update") selected="selected" @endif value="Last Update">Data de atualização</option>
+            <option @if($sort == "Last Update") selected="selected" @endif value="Last Update">Data de atualização
+            </option>
         </select>
 
         <select name="order" onchange="" class="form-control" style="width: 200px; float: left; margin-right: 10px">
@@ -38,7 +39,8 @@
                             <img alt="" src="{{$image[$project->id]}}" width="350px" height="210px"/>
                         </figure>
                         <div style="width: 48%" id="projects">
-                            <h1>{!! HTML::linkAction('ProjectsController@show', $project->name, array($project->id)) !!}</h1>
+                            <h1>{!! HTML::linkAction('ProjectsController@show', $project->name, array($project->id))
+                                !!}</h1>
                             <h6><label style="font-weight: bold">Criado em:</label> {{$project->started_at}}</h6>
 
                             <p style="text-align: justify; text-justify: inter-word;  line-height: 1.5em; height: 9em; overflow: hidden;">

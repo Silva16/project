@@ -11,20 +11,21 @@
 
 namespace Symfony\Component\HttpFoundation\Tests;
 
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ResponseHeaderBagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Symfony\Component\HttpFoundation\ResponseHeaderBag::allPreserveCase
+     * @covers       Symfony\Component\HttpFoundation\ResponseHeaderBag::allPreserveCase
      * @dataProvider provideAllPreserveCase
      */
     public function testAllPreserveCase($headers, $expected)
     {
         $bag = new ResponseHeaderBag($headers);
 
-        $this->assertEquals($expected, $bag->allPreserveCase(), '->allPreserveCase() gets all input keys in original case');
+        $this->assertEquals($expected, $bag->allPreserveCase(),
+            '->allPreserveCase() gets all input keys in original case');
     }
 
     public function provideAllPreserveCase()
@@ -118,7 +119,8 @@ class ResponseHeaderBagTest extends \PHPUnit_Framework_TestCase
 
         $bag->clearCookie('foo');
 
-        $this->assertContains('Set-Cookie: foo=deleted; expires='.gmdate('D, d-M-Y H:i:s T', time() - 31536001).'; path=/; httponly', explode("\r\n", $bag->__toString()));
+        $this->assertContains('Set-Cookie: foo=deleted; expires=' . gmdate('D, d-M-Y H:i:s T',
+                time() - 31536001) . '; path=/; httponly', explode("\r\n", $bag->__toString()));
     }
 
     public function testClearCookieSecureNotHttpOnly()
@@ -127,7 +129,8 @@ class ResponseHeaderBagTest extends \PHPUnit_Framework_TestCase
 
         $bag->clearCookie('foo', '/', null, true, false);
 
-        $this->assertContains("Set-Cookie: foo=deleted; expires=".gmdate("D, d-M-Y H:i:s T", time() - 31536001)."; path=/; secure", explode("\r\n", $bag->__toString()));
+        $this->assertContains("Set-Cookie: foo=deleted; expires=" . gmdate("D, d-M-Y H:i:s T",
+                time() - 31536001) . "; path=/; secure", explode("\r\n", $bag->__toString()));
     }
 
     public function testReplace()
@@ -251,7 +254,7 @@ class ResponseHeaderBagTest extends \PHPUnit_Framework_TestCase
         $headers->set('Location', 'http://www.symfony.com');
         $headers->set('Content-type', 'text/html');
 
-        (string) $headers;
+        (string)$headers;
 
         $allHeaders = $headers->allPreserveCase();
         $this->assertEquals(array('http://www.symfony.com'), $allHeaders['Location']);
@@ -265,8 +268,18 @@ class ResponseHeaderBagTest extends \PHPUnit_Framework_TestCase
             array('attachment', 'foo.html', '', 'attachment; filename="foo.html"'),
             array('attachment', 'foo bar.html', '', 'attachment; filename="foo bar.html"'),
             array('attachment', 'foo "bar".html', '', 'attachment; filename="foo \\"bar\\".html"'),
-            array('attachment', 'foo%20bar.html', 'foo bar.html', 'attachment; filename="foo bar.html"; filename*=utf-8\'\'foo%2520bar.html'),
-            array('attachment', 'föö.html', 'foo.html', 'attachment; filename="foo.html"; filename*=utf-8\'\'f%C3%B6%C3%B6.html'),
+            array(
+                'attachment',
+                'foo%20bar.html',
+                'foo bar.html',
+                'attachment; filename="foo bar.html"; filename*=utf-8\'\'foo%2520bar.html'
+            ),
+            array(
+                'attachment',
+                'föö.html',
+                'foo.html',
+                'attachment; filename="foo.html"; filename*=utf-8\'\'f%C3%B6%C3%B6.html'
+            ),
         );
     }
 

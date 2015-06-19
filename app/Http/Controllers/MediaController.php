@@ -1,35 +1,41 @@
 <?php namespace App\Http\Controllers;
 
-use App\Media;
-use App\User;
-use App\Project;
-use Symfony\Component\HttpFoundation\File;
-use Illuminate\Support\Facades\Response;
 use App\Http\Requests\MediaRequest;
+use App\Media;
+use App\Project;
+use App\User;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\File;
 
-class MediaController extends Controller {
+class MediaController extends Controller
+{
 
     private $disk;
 
 
-
-
-    public function index($id){
+    public function index($id)
+    {
 
         $user = Auth::user();
         $approved_by = null;
 
         $filter_array = array('All' => 'all', 'Refused' => '0', 'Approved' => '1', 'Pending' => '2');
-        $sort_array = array('Title' => 'title', 'Mime' => 'mime_type', 'File' => 'int_file', 'Created' => 'created_at', 'Updated' => 'updated_at');
+        $sort_array = array(
+            'Title' => 'title',
+            'Mime' => 'mime_type',
+            'File' => 'int_file',
+            'Created' => 'created_at',
+            'Updated' => 'updated_at'
+        );
         $order_array = array('Ascendant' => 'asc', 'Descendant' => 'desc');
 
-        if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null && ($filter = Input::get('filter')) != null){
+        if (($sort = Input::get('sort')) != null && ($order = Input::get('order')) != null && ($filter = Input::get('filter')) != null) {
 
-            $medias = $this->getMedia($id, $sort_array[Input::get('sort')], $order_array[Input::get('order')], $filter_array[Input::get('filter')]);
-        }
-        else {
+            $medias = $this->getMedia($id, $sort_array[Input::get('sort')], $order_array[Input::get('order')],
+                $filter_array[Input::get('filter')]);
+        } else {
 
             $medias = $this->getMedia($id);
             $sort = 'Title';
@@ -40,7 +46,7 @@ class MediaController extends Controller {
         $project = Project::find($id);
         $image_type = array('image/jpg', 'image/jpeg', 'image/png', 'image/bmp');
 
-        foreach ($medias as $media){
+        foreach ($medias as $media) {
             $file[$media->id] = action('MediaController@showProject', basename($media->int_file));
             $created_by[$media->id] = User::find($media->created_by)->name;
             if ($media->approved_by != null) {
@@ -50,16 +56,20 @@ class MediaController extends Controller {
 
         $pdfLogo = action('MediaController@showLogo', 'pdf.png');
 
-        return view('media.list', compact('medias', 'project', 'image_type', 'file', 'pdfLogo', 'created_by', 'approved_by','sort', 'order', 'filter', 'user'));
+        return view('media.list',
+            compact('medias', 'project', 'image_type', 'file', 'pdfLogo', 'created_by', 'approved_by', 'sort', 'order',
+                'filter', 'user'));
 
     }
 
-    public function create($id){
+    public function create($id)
+    {
 
         return view('media.store', compact('id'));
     }
 
-    public function store($id, MediaRequest $request){
+    public function store($id, MediaRequest $request)
+    {
 
         $fields = [];
         $media = new Media();
@@ -75,7 +85,7 @@ class MediaController extends Controller {
         $media->created_at = $date->getTimestamp();
         $media->updated_at = $date->getTimestamp();
 
-        if (Auth::user()->role == 2){
+        if (Auth::user()->role == 2) {
             $media->state = 1;
             $media->approved_by = Auth::user()->id;
         } else {
@@ -92,14 +102,13 @@ class MediaController extends Controller {
             $fields['int_file'] = 'projects/' . $filename;
         }
 
-        if ($this->youtubeID(Input::get('ext_url')) != false){
+        if ($this->youtubeID(Input::get('ext_url')) != false) {
             $media->ext_url = $this->youtubeID(Input::get('ext_url'));
             $media->public_name = $this->youtubeID(Input::get('ext_url'));
             $media->mime_type = "video/youtube";
         } else {
             $fields['ext_url'] = Input::get('ext_url');
         }
-
 
 
         foreach ($fields as $key => $value) {
@@ -119,13 +128,13 @@ class MediaController extends Controller {
     {
         $media = Media::find($id);
 
-        return view ('media.edit', compact('media'));
+        return view('media.edit', compact('media'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function update($id, MediaRequest $request)
@@ -142,7 +151,7 @@ class MediaController extends Controller {
         $media->created_at = $date->getTimestamp();
         $media->updated_at = $date->getTimestamp();
 
-        if (Auth::user()->role == 2){
+        if (Auth::user()->role == 2) {
             $media->state = 1;
             $media->approved_by = Auth::user()->id;
         } else {
@@ -159,14 +168,13 @@ class MediaController extends Controller {
             $fields['int_file'] = 'projects/' . $filename;
         }
 
-        if ($this->youtubeID(Input::get('ext_url')) != false){
+        if ($this->youtubeID(Input::get('ext_url')) != false) {
             $media->ext_url = $this->youtubeID(Input::get('ext_url'));
             $media->public_name = $this->youtubeID(Input::get('ext_url'));
             $media->mime_type = "video/youtube";
         } else {
             $fields['ext_url'] = Input::get('ext_url');
         }
-
 
 
         foreach ($fields as $key => $value) {
@@ -191,7 +199,8 @@ class MediaController extends Controller {
         return redirect('media/index/' . $media->project_id);
     }
 
-    public function showProfile($file){
+    public function showProfile($file)
+    {
 
         //$filename = basename($file);
 
@@ -204,7 +213,8 @@ class MediaController extends Controller {
         return response()->download($path, $file, $headers, 'inline');
     }
 
-    public function showProject($file){
+    public function showProject($file)
+    {
 
         //$filename = basename($file);
 
@@ -221,8 +231,8 @@ class MediaController extends Controller {
         return response()->download($path, $file, $headers, 'inline');
     }
 
-    public function showLogo($file){
-
+    public function showLogo($file)
+    {
 
 
         $path = storage_path() . '/app/logos/' . $file;//, "imgs/FindMyBurger.png", "imgs/GuideTour.jpeg", "imgs/SeriesTime.png", "imgs/SimpleExpensesMananger.png
@@ -236,19 +246,20 @@ class MediaController extends Controller {
 
     private function youtubeID($url)
     {
-            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match))
-            {
-                return $match[1];
-            }
-            else
-                return false;
+        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+            $url, $match)) {
+            return $match[1];
+        } else {
+            return false;
+        }
 
     }
 
 
-    private function getMedia($id, $sort = 'title', $order = 'asc', $filter = 'all'){
+    private function getMedia($id, $sort = 'title', $order = 'asc', $filter = 'all')
+    {
 
-        if ($filter != 'all'){
+        if ($filter != 'all') {
             $medias = Media::where('project_id', '=', $id)->where('state', '=', $filter)->orderBy($sort, $order)->get();
 
         } else {
@@ -258,7 +269,8 @@ class MediaController extends Controller {
         return $medias;
     }
 
-    public function approve($id){
+    public function approve($id)
+    {
 
         $media = Media::find($id);
         $state = '1';
@@ -267,14 +279,16 @@ class MediaController extends Controller {
         return redirect('media/index/' . $media->project_id);
     }
 
-    public function refuse($id){
+    public function refuse($id)
+    {
 
         $media = Media::find($id);
 
         return view('media.refusal', compact('media'));
     }
 
-    public function refuseMessage($id){
+    public function refuseMessage($id)
+    {
 
         $media = Media::find($id);
         $state = '0';
@@ -285,9 +299,10 @@ class MediaController extends Controller {
         return redirect('media/index/' . $media->project_id);
     }
 
-    private function editState($media, $state, $message = null){
+    private function editState($media, $state, $message = null)
+    {
 
-        if ($state == 1){
+        if ($state == 1) {
             $media->state = $state;
             $media->approved_by = Auth::user()->id;
         } elseif ($state == 0) {

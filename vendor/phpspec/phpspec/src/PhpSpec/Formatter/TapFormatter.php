@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Formatter;
 
-use PhpSpec\Event\SuiteEvent;
-use PhpSpec\Event\SpecificationEvent;
 use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Event\SpecificationEvent;
+use PhpSpec\Event\SuiteEvent;
 use Symfony\Component\Yaml\Yaml;
 
 class TapFormatter extends ConsoleFormatter
@@ -152,6 +152,7 @@ class TapFormatter extends ConsoleFormatter
                     )
                 );
         }
+
         return $message;
     }
 

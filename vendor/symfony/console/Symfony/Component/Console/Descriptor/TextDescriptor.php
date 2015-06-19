@@ -41,7 +41,7 @@ class TextDescriptor extends Descriptor
 
         $this->writeText(sprintf(" <info>%-${nameWidth}s</info> %s%s",
             $argument->getName(),
-            str_replace("\n", "\n".str_repeat(' ', $nameWidth + 2), $argument->getDescription()),
+            str_replace("\n", "\n" . str_repeat(' ', $nameWidth + 2), $argument->getDescription()),
             $default
         ), $options);
     }
@@ -61,9 +61,9 @@ class TextDescriptor extends Descriptor
         $nameWithShortcutWidth = $nameWidth - strlen($option->getName()) - 2;
 
         $this->writeText(sprintf(" <info>%s</info> %-${nameWithShortcutWidth}s%s%s%s",
-            '--'.$option->getName(),
+            '--' . $option->getName(),
             $option->getShortcut() ? sprintf('(-%s) ', $option->getShortcut()) : '',
-            str_replace("\n", "\n".str_repeat(' ', $nameWidth + 2), $option->getDescription()),
+            str_replace("\n", "\n" . str_repeat(' ', $nameWidth + 2), $option->getDescription()),
             $default,
             $option->isArray() ? '<comment> (multiple values allowed)</comment>' : ''
         ), $options);
@@ -120,12 +120,13 @@ class TextDescriptor extends Descriptor
 
         $this->writeText('<comment>Usage:</comment>', $options);
         $this->writeText("\n");
-        $this->writeText(' '.$command->getSynopsis(), $options);
+        $this->writeText(' ' . $command->getSynopsis(), $options);
         $this->writeText("\n");
 
         if (count($command->getAliases()) > 0) {
             $this->writeText("\n");
-            $this->writeText('<comment>Aliases:</comment> <info>'.implode(', ', $command->getAliases()).'</info>', $options);
+            $this->writeText('<comment>Aliases:</comment> <info>' . implode(', ', $command->getAliases()) . '</info>',
+                $options);
         }
 
         if ($definition = $command->getNativeDefinition()) {
@@ -138,7 +139,7 @@ class TextDescriptor extends Descriptor
         if ($help = $command->getProcessedHelp()) {
             $this->writeText('<comment>Help:</comment>', $options);
             $this->writeText("\n");
-            $this->writeText(' '.str_replace("\n", "\n ", $help), $options);
+            $this->writeText(' ' . str_replace("\n", "\n ", $help), $options);
             $this->writeText("\n");
         }
     }
@@ -189,7 +190,8 @@ class TextDescriptor extends Descriptor
             $width = $this->getColumnWidth($description->getCommands());
 
             if ($describedNamespace) {
-                $this->writeText(sprintf('<comment>Available commands for the "%s" namespace:</comment>', $describedNamespace), $options);
+                $this->writeText(sprintf('<comment>Available commands for the "%s" namespace:</comment>',
+                    $describedNamespace), $options);
             } else {
                 $this->writeText('<comment>Available commands:</comment>', $options);
             }
@@ -198,12 +200,13 @@ class TextDescriptor extends Descriptor
             foreach ($description->getNamespaces() as $namespace) {
                 if (!$describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
                     $this->writeText("\n");
-                    $this->writeText('<comment>'.$namespace['id'].'</comment>', $options);
+                    $this->writeText('<comment>' . $namespace['id'] . '</comment>', $options);
                 }
 
                 foreach ($namespace['commands'] as $name) {
                     $this->writeText("\n");
-                    $this->writeText(sprintf(" <info>%-${width}s</info> %s", $name, $description->getCommand($name)->getDescription()), $options);
+                    $this->writeText(sprintf(" <info>%-${width}s</info> %s", $name,
+                        $description->getCommand($name)->getDescription()), $options);
                 }
             }
 

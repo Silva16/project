@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Logger;
 use Monolog\Formatter\LogglyFormatter;
+use Monolog\Logger;
 
 /**
  * Sends errors to Loggly.
@@ -48,7 +48,7 @@ class LogglyHandler extends AbstractProcessingHandler
 
     public function addTag($tag)
     {
-        $this->tag = (strlen($this->tag) > 0) ? $this->tag .','. $tag : $tag;
+        $this->tag = (strlen($this->tag) > 0) ? $this->tag . ',' . $tag : $tag;
     }
 
     protected function write(array $record)

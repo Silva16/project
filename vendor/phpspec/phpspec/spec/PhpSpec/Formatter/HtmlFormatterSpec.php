@@ -2,15 +2,14 @@
 
 namespace spec\PhpSpec\Formatter;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
 use PhpSpec\Event\ExampleEvent;
 use PhpSpec\Formatter\Html\IO;
 use PhpSpec\Formatter\Html\ReportItem;
 use PhpSpec\Formatter\Html\ReportItemFactory;
 use PhpSpec\Formatter\Presenter\PresenterInterface as Presenter;
 use PhpSpec\Listener\StatisticsCollector;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class HtmlFormatterSpec extends ObjectBehavior
 {
@@ -27,9 +26,11 @@ class HtmlFormatterSpec extends ObjectBehavior
     }
 
     function it_delegates_the_reporting_to_the_event_type_line_reporter(
-        ExampleEvent $event, ReportItem $item, ReportItemFactory $factory,
-        Presenter $presenter)
-    {
+        ExampleEvent $event,
+        ReportItem $item,
+        ReportItemFactory $factory,
+        Presenter $presenter
+    ) {
         $factory->create($event, $presenter)->willReturn($item);
         $item->write(Argument::any())->shouldBeCalled();
         $this->afterExample($event);

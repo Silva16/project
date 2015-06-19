@@ -11,15 +11,15 @@
 
 namespace Symfony\Component\HttpKernel\Tests;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class HttpKernelTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleWhenControllerThrowsAnExceptionAndCatchIsTrue()
     {
-        $kernel = new HttpKernel(new EventDispatcher(), $this->getResolver(function () { throw new \RuntimeException(); }));
+        $kernel = new HttpKernel(new EventDispatcher(), $this->getResolver(function () {
+            throw new \RuntimeException();
+        }));
 
         $kernel->handle(new Request(), HttpKernelInterface::MASTER_REQUEST, true);
     }
@@ -38,7 +40,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleWhenControllerThrowsAnExceptionAndCatchIsFalseAndNoListenerIsRegistered()
     {
-        $kernel = new HttpKernel(new EventDispatcher(), $this->getResolver(function () { throw new \RuntimeException(); }));
+        $kernel = new HttpKernel(new EventDispatcher(), $this->getResolver(function () {
+            throw new \RuntimeException();
+        }));
 
         $kernel->handle(new Request(), HttpKernelInterface::MASTER_REQUEST, false);
     }
@@ -50,7 +54,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
             $event->setResponse(new Response($event->getException()->getMessage()));
         });
 
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { throw new \RuntimeException('foo'); }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            throw new \RuntimeException('foo');
+        }));
         $response = $kernel->handle(new Request(), HttpKernelInterface::MASTER_REQUEST, true);
 
         $this->assertEquals('500', $response->getStatusCode());
@@ -67,7 +73,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
             // should set a response, but does not
         });
 
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { throw new \RuntimeException('foo'); }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            throw new \RuntimeException('foo');
+        }));
         $kernel->handle(new Request(), HttpKernelInterface::MASTER_REQUEST, true);
     }
 
@@ -78,7 +86,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
             $event->setResponse(new RedirectResponse('/login', 301));
         });
 
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { throw new AccessDeniedHttpException(); }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            throw new AccessDeniedHttpException();
+        }));
         $response = $kernel->handle(new Request());
 
         $this->assertEquals('301', $response->getStatusCode());
@@ -92,7 +102,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
             $event->setResponse(new Response($event->getException()->getMessage()));
         });
 
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { throw new MethodNotAllowedHttpException(array('POST')); }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            throw new MethodNotAllowedHttpException(array('POST'));
+        }));
         $response = $kernel->handle(new Request());
 
         $this->assertEquals('405', $response->getStatusCode());
@@ -105,11 +117,15 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
     public function testHandleWhenAnExceptionIsHandledWithASpecificStatusCode($responseStatusCode, $expectedStatusCode)
     {
         $dispatcher = new EventDispatcher();
-        $dispatcher->addListener(KernelEvents::EXCEPTION, function ($event) use ($responseStatusCode, $expectedStatusCode) {
-            $event->setResponse(new Response('', $responseStatusCode, array('X-Status-Code' => $expectedStatusCode)));
-        });
+        $dispatcher->addListener(KernelEvents::EXCEPTION,
+            function ($event) use ($responseStatusCode, $expectedStatusCode) {
+                $event->setResponse(new Response('', $responseStatusCode,
+                    array('X-Status-Code' => $expectedStatusCode)));
+            });
 
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { throw new \RuntimeException(); }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            throw new \RuntimeException();
+        }));
         $response = $kernel->handle(new Request());
 
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
@@ -164,7 +180,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response('foo');
         $dispatcher = new EventDispatcher();
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () use ($response) { return $response; }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () use ($response) {
+            return $response;
+        }));
 
         $this->assertSame($response, $kernel->handle(new Request()));
     }
@@ -196,7 +214,8 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
     public function testHandleWhenTheControllerIsAStaticArray()
     {
         $dispatcher = new EventDispatcher();
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(array('Symfony\Component\HttpKernel\Tests\Controller', 'staticcontroller')));
+        $kernel = new HttpKernel($dispatcher,
+            $this->getResolver(array('Symfony\Component\HttpKernel\Tests\Controller', 'staticcontroller')));
 
         $this->assertResponseEquals(new Response('foo'), $kernel->handle(new Request()));
     }
@@ -207,7 +226,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
     public function testHandleWhenTheControllerDoesNotReturnAResponse()
     {
         $dispatcher = new EventDispatcher();
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { return 'foo'; }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            return 'foo';
+        }));
 
         $kernel->handle(new Request());
     }
@@ -218,7 +239,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
         $dispatcher->addListener(KernelEvents::VIEW, function ($event) {
             $event->setResponse(new Response($event->getControllerResult()));
         });
-        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () { return 'foo'; }));
+        $kernel = new HttpKernel($dispatcher, $this->getResolver(function () {
+            return 'foo';
+        }));
 
         $this->assertEquals('foo', $kernel->handle(new Request())->getContent());
     }
@@ -238,12 +261,13 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
     {
         $dispatcher = new EventDispatcher();
         $kernel = new HttpKernel($dispatcher, $this->getResolver());
-        $dispatcher->addListener(KernelEvents::TERMINATE, function ($event) use (&$called, &$capturedKernel, &$capturedRequest, &$capturedResponse) {
-            $called = true;
-            $capturedKernel = $event->getKernel();
-            $capturedRequest = $event->getRequest();
-            $capturedResponse = $event->getResponse();
-        });
+        $dispatcher->addListener(KernelEvents::TERMINATE,
+            function ($event) use (&$called, &$capturedKernel, &$capturedRequest, &$capturedResponse) {
+                $called = true;
+                $capturedKernel = $event->getKernel();
+                $capturedRequest = $event->getRequest();
+                $capturedResponse = $event->getResponse();
+            });
 
         $kernel->terminate($request = Request::create('/'), $response = new Response());
         $this->assertTrue($called);
@@ -269,7 +293,9 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
     protected function getResolver($controller = null)
     {
         if (null === $controller) {
-            $controller = function () { return new Response('Hello'); };
+            $controller = function () {
+                return new Response('Hello');
+            };
         }
 
         $resolver = $this->getMock('Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface');

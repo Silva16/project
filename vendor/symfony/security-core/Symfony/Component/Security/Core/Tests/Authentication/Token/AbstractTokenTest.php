@@ -163,14 +163,17 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
         $token->setAttribute('foo', 'foo');
         $this->assertEquals('foo', $token->getAttribute('foo'), '->setAttribute() changes the value of an attribute');
         $this->assertTrue($token->hasAttribute('foo'), '->hasAttribute() returns true if the attribute is defined');
-        $this->assertFalse($token->hasAttribute('oof'), '->hasAttribute() returns false if the attribute is not defined');
+        $this->assertFalse($token->hasAttribute('oof'),
+            '->hasAttribute() returns false if the attribute is not defined');
 
         try {
             $token->getAttribute('foobar');
             $this->fail('->getAttribute() throws an \InvalidArgumentException exception when the attribute does not exist');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('\InvalidArgumentException', $e, '->getAttribute() throws an \InvalidArgumentException exception when the attribute does not exist');
-            $this->assertEquals('This token has no "foobar" attribute.', $e->getMessage(), '->getAttribute() throws an \InvalidArgumentException exception when the attribute does not exist');
+            $this->assertInstanceOf('\InvalidArgumentException', $e,
+                '->getAttribute() throws an \InvalidArgumentException exception when the attribute does not exist');
+            $this->assertEquals('This token has no "foobar" attribute.', $e->getMessage(),
+                '->getAttribute() throws an \InvalidArgumentException exception when the attribute does not exist');
         }
     }
 
@@ -220,46 +223,60 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array(
-                'foo', 'bar',
+                'foo',
+                'bar',
             ),
             array(
-                'foo', new TestUser('bar'),
+                'foo',
+                new TestUser('bar'),
             ),
             array(
-                'foo', $user,
+                'foo',
+                $user,
             ),
             array(
-                'foo', $advancedUser,
+                'foo',
+                $advancedUser,
             ),
             array(
-                $user, 'foo',
+                $user,
+                'foo',
             ),
             array(
-                $advancedUser, 'foo',
+                $advancedUser,
+                'foo',
             ),
             array(
-                $user, new TestUser('foo'),
+                $user,
+                new TestUser('foo'),
             ),
             array(
-                $advancedUser, new TestUser('foo'),
+                $advancedUser,
+                new TestUser('foo'),
             ),
             array(
-                new TestUser('foo'), new TestUser('bar'),
+                new TestUser('foo'),
+                new TestUser('bar'),
             ),
             array(
-                new TestUser('foo'), 'bar',
+                new TestUser('foo'),
+                'bar',
             ),
             array(
-                new TestUser('foo'), $user,
+                new TestUser('foo'),
+                $user,
             ),
             array(
-                new TestUser('foo'), $advancedUser,
+                new TestUser('foo'),
+                $advancedUser,
             ),
             array(
-                $user, $advancedUser,
+                $user,
+                $advancedUser,
             ),
             array(
-                $advancedUser, $user,
+                $advancedUser,
+                $user,
             ),
         );
     }
@@ -282,6 +299,7 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
     protected function getToken(array $roles = array())
     {
-        return $this->getMockForAbstractClass('Symfony\Component\Security\Core\Authentication\Token\AbstractToken', array($roles));
+        return $this->getMockForAbstractClass('Symfony\Component\Security\Core\Authentication\Token\AbstractToken',
+            array($roles));
     }
 }

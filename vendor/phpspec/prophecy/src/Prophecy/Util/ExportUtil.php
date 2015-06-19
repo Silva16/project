@@ -38,7 +38,7 @@ class ExportUtil
      *  - Carriage returns and newlines are normalized to \n
      *  - Recursion and repeated rendering is treated properly
      *
-     * @param  mixed   $value       The value to export
+     * @param  mixed $value The value to export
      * @param  integer $indentation The indentation level of the 2nd+ line
      *
      * @return string
@@ -60,7 +60,7 @@ class ExportUtil
     {
         $array = array();
 
-        foreach ((array) $object as $key => $value) {
+        foreach ((array)$object as $key => $value) {
             // properties are transformed to keys in the following way:
 
             // private   $property => "\0Classname\0property"
@@ -92,9 +92,9 @@ class ExportUtil
     /**
      * Recursive implementation of export.
      *
-     * @param  mixed   $value            The value to export
-     * @param  integer $indentation      The indentation level of the 2nd+ line
-     * @param  array   $processedObjects Contains all objects that were already
+     * @param  mixed $value The value to export
+     * @param  integer $indentation The indentation level of the 2nd+ line
+     * @param  array $processedObjects Contains all objects that were already
      *                                   rendered
      *
      * @return string
@@ -149,8 +149,8 @@ class ExportUtil
             // Numeric integer strings are automatically converted to integers
             // by PHP
             foreach ($recursiveKeys as $key => $recursiveKey) {
-                if ((string) (integer) $recursiveKey === $recursiveKey) {
-                    $recursiveKeys[$key] = (integer) $recursiveKey;
+                if ((string)(integer)$recursiveKey === $recursiveKey) {
+                    $recursiveKeys[$key] = (integer)$recursiveKey;
                 }
             }
 
@@ -172,14 +172,15 @@ class ExportUtil
 
             return sprintf(
                 "%s (%s)",
-                is_object($origValue) ? sprintf('%s:%s', get_class($origValue), spl_object_hash($origValue)) . ' Object' : 'Array', $content
+                is_object($origValue) ? sprintf('%s:%s', get_class($origValue),
+                        spl_object_hash($origValue)) . ' Object' : 'Array', $content
             );
         }
 
-        if (is_double($value) && (double)(integer) $value === $value) {
+        if (is_double($value) && (double)(integer)$value === $value) {
             return $value . '.0';
         }
 
-        return (string) $value;
+        return (string)$value;
     }
 }

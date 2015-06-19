@@ -1,17 +1,13 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
 
-class ProjectTag extends Model {
+class ProjectTag extends Model
+{
 
     protected $table = 'project_tag';
 
     //
-
-
-
-
 
 
     /*public static function add($project){

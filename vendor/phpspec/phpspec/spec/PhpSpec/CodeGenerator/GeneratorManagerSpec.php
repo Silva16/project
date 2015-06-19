@@ -2,16 +2,16 @@
 
 namespace spec\PhpSpec\CodeGenerator;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
 use PhpSpec\CodeGenerator\Generator\GeneratorInterface;
 use PhpSpec\Locator\ResourceInterface;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class GeneratorManagerSpec extends ObjectBehavior
 {
     function it_uses_registered_generators_to_generate_code(
-        GeneratorInterface $generator, ResourceInterface $resource
+        GeneratorInterface $generator,
+        ResourceInterface $resource
     ) {
         $generator->getPriority()->willReturn(0);
         $generator->supports($resource, 'specification', array())->willReturn(true);
@@ -22,7 +22,9 @@ class GeneratorManagerSpec extends ObjectBehavior
     }
 
     function it_chooses_generator_by_priority(
-        GeneratorInterface $generator1, GeneratorInterface $generator2, ResourceInterface $resource
+        GeneratorInterface $generator1,
+        GeneratorInterface $generator2,
+        ResourceInterface $resource
     ) {
         $generator1->supports($resource, 'class', array('class' => 'CustomLoader'))
             ->willReturn(true);

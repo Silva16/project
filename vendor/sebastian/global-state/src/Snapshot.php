@@ -119,18 +119,28 @@ class Snapshot
      * Creates a snapshot of the current global state.
      *
      * @param Blacklist $blacklist
-     * @param boolean   $includeGlobalVariables
-     * @param boolean   $includeStaticAttributes
-     * @param boolean   $includeConstants
-     * @param boolean   $includeFunctions
-     * @param boolean   $includeClasses
-     * @param boolean   $includeInterfaces
-     * @param boolean   $includeTraits
-     * @param boolean   $includeIniSettings
-     * @param boolean   $includeIncludedFiles
+     * @param boolean $includeGlobalVariables
+     * @param boolean $includeStaticAttributes
+     * @param boolean $includeConstants
+     * @param boolean $includeFunctions
+     * @param boolean $includeClasses
+     * @param boolean $includeInterfaces
+     * @param boolean $includeTraits
+     * @param boolean $includeIniSettings
+     * @param boolean $includeIncludedFiles
      */
-    public function __construct(Blacklist $blacklist = null, $includeGlobalVariables = true, $includeStaticAttributes = true, $includeConstants = true, $includeFunctions = true, $includeClasses = true, $includeInterfaces = true, $includeTraits = true, $includeIniSettings = true, $includeIncludedFiles = true)
-    {
+    public function __construct(
+        Blacklist $blacklist = null,
+        $includeGlobalVariables = true,
+        $includeStaticAttributes = true,
+        $includeConstants = true,
+        $includeFunctions = true,
+        $includeClasses = true,
+        $includeInterfaces = true,
+        $includeTraits = true,
+        $includeIniSettings = true,
+        $includeIncludedFiles = true
+    ) {
         if ($blacklist === null) {
             $blacklist = new Blacklist;
         }
@@ -346,7 +356,8 @@ class Snapshot
             if ($key != 'GLOBALS' &&
                 !in_array($key, $superGlobalArrays) &&
                 $this->canBeSerialized($GLOBALS[$key]) &&
-                !$this->blacklist->isGlobalVariableBlacklisted($key)) {
+                !$this->blacklist->isGlobalVariableBlacklisted($key)
+            ) {
                 $this->globalVariables[$key] = unserialize(serialize($GLOBALS[$key]));
             }
         }
@@ -374,7 +385,7 @@ class Snapshot
     private function snapshotStaticAttributes()
     {
         foreach ($this->classes as $className) {
-            $class    = new ReflectionClass($className);
+            $class = new ReflectionClass($className);
             $snapshot = array();
 
             foreach ($class->getProperties() as $attribute) {
@@ -437,7 +448,8 @@ class Snapshot
      * @return boolean
      * @todo   Implement this properly
      */
-    private function canBeSerialized($variable) {
+    private function canBeSerialized($variable)
+    {
         return !$variable instanceof Closure;
     }
 }

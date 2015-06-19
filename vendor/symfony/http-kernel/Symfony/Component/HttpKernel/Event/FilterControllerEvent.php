@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\HttpKernel\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Allows filtering of a controller callable.
@@ -68,7 +68,8 @@ class FilterControllerEvent extends KernelEvent
     {
         // controller must be a callable
         if (!is_callable($controller)) {
-            throw new \LogicException(sprintf('The controller must be a callable (%s given).', $this->varToString($controller)));
+            throw new \LogicException(sprintf('The controller must be a callable (%s given).',
+                $this->varToString($controller)));
         }
 
         $this->controller = $controller;
@@ -105,6 +106,6 @@ class FilterControllerEvent extends KernelEvent
             return 'true';
         }
 
-        return (string) $var;
+        return (string)$var;
     }
 }

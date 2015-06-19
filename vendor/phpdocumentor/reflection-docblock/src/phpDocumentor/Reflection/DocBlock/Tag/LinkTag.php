@@ -51,31 +51,33 @@ class LinkTag extends Tag
         $this->setDescription(isset($parts[1]) ? $parts[1] : $parts[0]);
 
         $this->content = $content;
+
         return $this;
     }
 
     /**
-    * Gets the link
-    *
-    * @return string
-    */
+     * Gets the link
+     *
+     * @return string
+     */
     public function getLink()
     {
         return $this->link;
     }
 
     /**
-    * Sets the link
-    *
-    * @param string $link The link
-    *
-    * @return $this
-    */
+     * Sets the link
+     *
+     * @param string $link The link
+     *
+     * @return $this
+     */
     public function setLink($link)
     {
         $this->link = $link;
 
         $this->content = null;
+
         return $this;
     }
 }

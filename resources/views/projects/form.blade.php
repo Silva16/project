@@ -1,9 +1,9 @@
-    <div class="container">
+<div class="container">
     <div class="form-group @if ($errors->has('name')) has-error @endif">
         {!! Form::label('name', 'Nome: ') !!}</br>
         {!! Form::text('name', null, array('class' => 'form-control')) !!}
         @if ($errors->has('name'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('name') }}
         </span>
 
@@ -19,7 +19,7 @@
         {!! Form::label('type', 'Tipo:') !!}</br>
         {!! Form::text('type', null, array('class' => 'form-control')) !!}
         @if ($errors->has('type'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('type') }}
         </span>
 
@@ -30,7 +30,7 @@
         {!! Form::label('description', 'Descrição:') !!}</br>
         {!! Form::textarea('description', null, array('class' => 'form-control')) !!}
         @if ($errors->has('description'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('description') }}
         </span>
 
@@ -41,7 +41,7 @@
         {!! Form::label('theme', 'Área temática:') !!}</br>
         {!! Form::text('theme', null, array('class' => 'form-control')) !!}
         @if ($errors->has('theme'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('theme') }}
         </span>
 
@@ -57,7 +57,7 @@
         {!! Form::label('started_at', 'Data de inicio:') !!}</br>
         {!! Form::input('date', 'started_at', null, array('class' => 'form-control')) !!}
         @if ($errors->has('started_at'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('started_at') }}
         </span>
 
@@ -68,13 +68,12 @@
         {!! Form::label('finished_at', 'Data de finalização:') !!}</br>
         {!! Form::input('date', 'finished_at', null, array('class' => 'form-control')) !!}
         @if ($errors->has('finished_at'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('finished_at') }}
         </span>
 
         @endif
     </div>
-
 
 
     <div class="form-group">
@@ -91,7 +90,7 @@
         {!! Form::label('observations', 'Observações:') !!}</br>
         {!! Form::textarea('observations', null, array('class' => 'form-control')) !!}
         @if ($errors->has('observations'))
-        <span class="alert alert-danger">
+            <span class="alert alert-danger">
             {{ $errors->first('observations') }}
         </span>
 
@@ -101,4 +100,4 @@
     <div class="form-group">
         {!! Form::submit($submitButton) !!}
     </div>
-    </div>
+</div>

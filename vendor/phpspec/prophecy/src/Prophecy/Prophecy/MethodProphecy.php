@@ -12,11 +12,11 @@
 namespace Prophecy\Prophecy;
 
 use Prophecy\Argument;
-use Prophecy\Promise;
-use Prophecy\Prediction;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Prophecy\Exception\InvalidArgumentException;
 use Prophecy\Exception\Prophecy\MethodProphecyException;
+use Prophecy\Prediction;
+use Prophecy\Promise;
 
 /**
  * Method prophecy.
@@ -36,8 +36,8 @@ class MethodProphecy
     /**
      * Initializes method prophecy.
      *
-     * @param ObjectProphecy                        $objectProphecy
-     * @param string                                $methodName
+     * @param ObjectProphecy $objectProphecy
+     * @param string $methodName
      * @param null|Argument\ArgumentsWildcard|array $arguments
      *
      * @throws \Prophecy\Exception\Doubler\MethodNotFoundException If method not found
@@ -52,12 +52,12 @@ class MethodProphecy
         }
 
         $this->objectProphecy = $objectProphecy;
-        $this->methodName     = $methodName;
+        $this->methodName = $methodName;
 
         $reflectedMethod = new \ReflectionMethod($double, $methodName);
         if ($reflectedMethod->isFinal()) {
             throw new MethodProphecyException(sprintf(
-                "Can not add prophecy for a method `%s::%s()`\n".
+                "Can not add prophecy for a method `%s::%s()`\n" .
                 "as it is a final method.",
                 get_class($double),
                 $methodName
@@ -86,7 +86,7 @@ class MethodProphecy
 
         if (!$arguments instanceof Argument\ArgumentsWildcard) {
             throw new InvalidArgumentException(sprintf(
-                "Either an array or an instance of ArgumentsWildcard expected as\n".
+                "Either an array or an instance of ArgumentsWildcard expected as\n" .
                 'a `MethodProphecy::withArguments()` argument, but got %s.',
                 gettype($arguments)
             ));

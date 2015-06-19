@@ -127,8 +127,8 @@ class PresenterManager implements Presenter, \IteratorAggregate
      * If $depth is 0, the value will be presented as a ref instead.
      *
      * @param mixed $value
-     * @param int   $depth   (default: null)
-     * @param int   $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @throws \InvalidArgumentException If no Presenter is registered for $value
      *

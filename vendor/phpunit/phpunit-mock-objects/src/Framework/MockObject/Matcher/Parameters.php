@@ -43,7 +43,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
         foreach ($parameters as $parameter) {
             if (!($parameter instanceof PHPUnit_Framework_Constraint)) {
                 $parameter = new PHPUnit_Framework_Constraint_IsEqual(
-                  $parameter
+                    $parameter
                 );
             }
 
@@ -76,6 +76,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
     public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
         $this->invocation = $invocation;
+
         return $this->verify();
     }
 
@@ -84,7 +85,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
      * does the matcher will get the invoked() method called which should check
      * if an expectation is met.
      *
-     * @param  PHPUnit_Framework_MockObject_Invocation      $invocation
+     * @param  PHPUnit_Framework_MockObject_Invocation $invocation
      *                                                                  Object containing information on a mocked or stubbed method which
      *                                                                  was invoked.
      * @return bool
@@ -92,9 +93,9 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
      */
     public function verify()
     {
-        if ($this->invocation === NULL) {
+        if ($this->invocation === null) {
             throw new PHPUnit_Framework_ExpectationFailedException(
-              'Mocked method does not exist.'
+                'Mocked method does not exist.'
             );
         }
 
@@ -106,25 +107,26 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
             //
             // @see https://github.com/sebastianbergmann/phpunit-mock-objects/issues/199
             if (count($this->parameters) === 1 &&
-                get_class($this->parameters[0]) === 'PHPUnit_Framework_Constraint_IsAnything') {
+                get_class($this->parameters[0]) === 'PHPUnit_Framework_Constraint_IsAnything'
+            ) {
                 $message .= "\nTo allow 0 or more parameters with any value, omit ->with() or use ->withAnyParameters() instead.";
             }
 
             throw new PHPUnit_Framework_ExpectationFailedException(
-              sprintf($message, $this->invocation->toString())
+                sprintf($message, $this->invocation->toString())
             );
         }
 
         foreach ($this->parameters as $i => $parameter) {
             $parameter->evaluate(
-              $this->invocation->parameters[$i],
-              sprintf(
-                'Parameter %s for invocation %s does not match expected ' .
-                'value.',
+                $this->invocation->parameters[$i],
+                sprintf(
+                    'Parameter %s for invocation %s does not match expected ' .
+                    'value.',
 
-                $i,
-                $this->invocation->toString()
-              )
+                    $i,
+                    $this->invocation->toString()
+                )
             );
         }
 

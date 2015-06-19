@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\VarDumper\Caster;
 
-use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 use Symfony\Component\VarDumper\Cloner\Stub;
+use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 
 /**
  * Casts common Exception classes to array representation.
@@ -43,18 +43,18 @@ class ExceptionCaster
     public static function castException(\Exception $e, array $a, Stub $stub, $isNested)
     {
         $xPrefix = PHP_VERSION_ID >= 70000 ? "\0BaseException\0" : "\0Exception\0";
-        $trace = $a[$xPrefix.'trace'];
-        unset($a[$xPrefix.'trace']); // Ensures the trace is always last
+        $trace = $a[$xPrefix . 'trace'];
+        unset($a[$xPrefix . 'trace']); // Ensures the trace is always last
 
         static::filterTrace($trace, static::$traceArgs);
 
         if (null !== $trace) {
-            $a[$xPrefix.'trace'] = $trace;
+            $a[$xPrefix . 'trace'] = $trace;
         }
-        if (empty($a[$xPrefix.'previous'])) {
-            unset($a[$xPrefix.'previous']);
+        if (empty($a[$xPrefix . 'previous'])) {
+            unset($a[$xPrefix . 'previous']);
         }
-        unset($a[$xPrefix.'string'], $a["\0+\0xdebug_message"], $a["\0+\0__destructorException"]);
+        unset($a[$xPrefix . 'string'], $a["\0+\0xdebug_message"], $a["\0+\0__destructorException"]);
 
         return $a;
     }
@@ -71,19 +71,19 @@ class ExceptionCaster
     public static function castThrowingCasterException(ThrowingCasterException $e, array $a, Stub $stub, $isNested)
     {
         $xPrefix = PHP_VERSION_ID >= 70000 ? "\0BaseException\0" : "\0Exception\0";
-        $b = (array) $a[$xPrefix.'previous'];
+        $b = (array)$a[$xPrefix . 'previous'];
 
-        if (isset($a[$xPrefix.'trace'][0])) {
-            $b[$xPrefix.'trace'][0] += array(
+        if (isset($a[$xPrefix . 'trace'][0])) {
+            $b[$xPrefix . 'trace'][0] += array(
                 'file' => $b["\0*\0file"],
                 'line' => $b["\0*\0line"],
             );
-            array_splice($b[$xPrefix.'trace'], -1 - count($a[$xPrefix.'trace']));
-            static::filterTrace($b[$xPrefix.'trace'], false);
-            $a["\0~\0trace"] = $b[$xPrefix.'trace'];
+            array_splice($b[$xPrefix . 'trace'], -1 - count($a[$xPrefix . 'trace']));
+            static::filterTrace($b[$xPrefix . 'trace'], false);
+            $a["\0~\0trace"] = $b[$xPrefix . 'trace'];
         }
 
-        unset($a[$xPrefix.'trace'], $a[$xPrefix.'previous'], $a["\0*\0code"], $a["\0*\0file"], $a["\0*\0line"]);
+        unset($a[$xPrefix . 'trace'], $a[$xPrefix . 'previous'], $a["\0*\0code"], $a["\0*\0file"], $a["\0*\0line"]);
 
         return $a;
     }
@@ -108,7 +108,7 @@ class ExceptionCaster
 
         foreach ($trace as &$t) {
             $t = array(
-                'call' => (isset($t['class']) ? $t['class'].$t['type'] : '').$t['function'].'()',
+                'call' => (isset($t['class']) ? $t['class'] . $t['type'] : '') . $t['function'] . '()',
                 'file' => isset($t['line']) ? "{$t['file']}:{$t['line']}" : '',
                 'args' => &$t['args'],
             );

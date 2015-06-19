@@ -19,6 +19,7 @@ class Prompter implements PrompterInterface
     {
         $this->hasBeenAsked = true;
         $this->question = $question;
+
         return (bool)$this->answer;
     }
 
@@ -29,6 +30,6 @@ class Prompter implements PrompterInterface
         }
 
         return $this->hasBeenAsked
-            && preg_replace('/\s+/', ' ', trim(strip_tags($this->question))) == preg_replace('/\s+/', ' ', $question) ;
+        && preg_replace('/\s+/', ' ', trim(strip_tags($this->question))) == preg_replace('/\s+/', ' ', $question);
     }
 }

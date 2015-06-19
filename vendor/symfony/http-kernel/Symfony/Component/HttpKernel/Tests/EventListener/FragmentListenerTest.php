@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\Tests\EventListener;
 
-use Symfony\Component\HttpKernel\EventListener\FragmentListener;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\EventListener\FragmentListener;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\UriSigner;
 
 class FragmentListenerTest extends \PHPUnit_Framework_TestCase
@@ -52,7 +52,8 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccessDeniedWithWrongSignature()
     {
-        $request = Request::create('http://example.com/_fragment', 'GET', array(), array(), array(), array('REMOTE_ADDR' => '10.0.0.1'));
+        $request = Request::create('http://example.com/_fragment', 'GET', array(), array(), array(),
+            array('REMOTE_ADDR' => '10.0.0.1'));
 
         $listener = new FragmentListener(new UriSigner('foo'));
         $event = $this->createGetResponseEvent($request);
@@ -63,7 +64,8 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
     public function testWithSignature()
     {
         $signer = new UriSigner('foo');
-        $request = Request::create($signer->sign('http://example.com/_fragment?_path=foo%3Dbar%26_controller%3Dfoo'), 'GET', array(), array(), array(), array('REMOTE_ADDR' => '10.0.0.1'));
+        $request = Request::create($signer->sign('http://example.com/_fragment?_path=foo%3Dbar%26_controller%3Dfoo'),
+            'GET', array(), array(), array(), array('REMOTE_ADDR' => '10.0.0.1'));
 
         $listener = new FragmentListener($signer);
         $event = $this->createGetResponseEvent($request);
@@ -76,6 +78,7 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
 
     private function createGetResponseEvent(Request $request)
     {
-        return new GetResponseEvent($this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface'), $request, HttpKernelInterface::MASTER_REQUEST);
+        return new GetResponseEvent($this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface'), $request,
+            HttpKernelInterface::MASTER_REQUEST);
     }
 }

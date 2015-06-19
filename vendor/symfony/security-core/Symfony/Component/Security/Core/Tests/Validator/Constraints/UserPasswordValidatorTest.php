@@ -111,14 +111,12 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $mock
             ->expects($this->any())
             ->method('getPassword')
-            ->will($this->returnValue(static::PASSWORD))
-        ;
+            ->will($this->returnValue(static::PASSWORD));
 
         $mock
             ->expects($this->any())
             ->method('getSalt')
-            ->will($this->returnValue(static::SALT))
-        ;
+            ->will($this->returnValue(static::SALT));
 
         return $mock;
     }
@@ -135,8 +133,7 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $mock
             ->expects($this->any())
             ->method('getEncoder')
-            ->will($this->returnValue($encoder))
-        ;
+            ->will($this->returnValue($encoder));
 
         return $mock;
     }
@@ -149,8 +146,7 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $mock
             ->expects($this->any())
             ->method('getToken')
-            ->will($this->returnValue($token))
-        ;
+            ->will($this->returnValue($token));
 
         return $mock;
     }
@@ -161,8 +157,7 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $mock
             ->expects($this->any())
             ->method('getUser')
-            ->will($this->returnValue($user))
-        ;
+            ->will($this->returnValue($user));
 
         return $mock;
     }

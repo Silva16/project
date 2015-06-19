@@ -4,7 +4,6 @@ namespace League\Flysystem\Adapter;
 
 use DirectoryIterator;
 use FilesystemIterator;
-use Finfo;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
 use League\Flysystem\Util;
@@ -33,8 +32,8 @@ class Local extends AbstractAdapter
     {
         $realRoot = $this->ensureDirectory($root);
 
-        if ( ! is_dir($realRoot) || ! is_readable($realRoot)) {
-            throw new \LogicException('The root path '.$root.' is not readable.');
+        if (!is_dir($realRoot) || !is_readable($realRoot)) {
+            throw new \LogicException('The root path ' . $root . ' is not readable.');
         }
 
         $this->setPathPrefix($realRoot);
@@ -97,15 +96,15 @@ class Local extends AbstractAdapter
         $location = $this->applyPathPrefix($path);
         $this->ensureDirectory(dirname($location));
 
-        if (! $stream = fopen($location, 'w+')) {
+        if (!$stream = fopen($location, 'w+')) {
             return false;
         }
 
-        while (! feof($resource)) {
+        while (!feof($resource)) {
             fwrite($stream, fread($resource, 1024), 1024);
         }
 
-        if (! fclose($stream)) {
+        if (!fclose($stream)) {
             return false;
         }
 
@@ -206,9 +205,9 @@ class Local extends AbstractAdapter
     public function listContents($directory = '', $recursive = false)
     {
         $result = [];
-        $location = $this->applyPathPrefix($directory).$this->pathSeparator;
+        $location = $this->applyPathPrefix($directory) . $this->pathSeparator;
 
-        if (! is_dir($location)) {
+        if (!is_dir($location)) {
             return [];
         }
 
@@ -294,7 +293,7 @@ class Local extends AbstractAdapter
     {
         $location = $this->applyPathPrefix($dirname);
 
-        if (! is_dir($location) && ! mkdir($location, 0777, true)) {
+        if (!is_dir($location) && !mkdir($location, 0777, true)) {
             return false;
         }
 
@@ -308,7 +307,7 @@ class Local extends AbstractAdapter
     {
         $location = $this->applyPathPrefix($dirname);
 
-        if (! is_dir($location)) {
+        if (!is_dir($location)) {
             return false;
         }
 

@@ -23,8 +23,8 @@ class PHP_CodeCoverage_Report_Crap4j
 
     /**
      * @param  PHP_CodeCoverage $coverage
-     * @param  string           $target
-     * @param  string           $name
+     * @param  string $target
+     * @param  string $name
      * @return string
      */
     public function process(PHP_CodeCoverage $coverage, $target = null, $name = null)
@@ -37,18 +37,18 @@ class PHP_CodeCoverage_Report_Crap4j
 
         $project = $document->createElement('project', is_string($name) ? $name : '');
         $root->appendChild($project);
-        $root->appendChild($document->createElement('timestamp', date('Y-m-d H:i:s', (int) $_SERVER['REQUEST_TIME'])));
+        $root->appendChild($document->createElement('timestamp', date('Y-m-d H:i:s', (int)$_SERVER['REQUEST_TIME'])));
 
-        $stats       = $document->createElement('stats');
+        $stats = $document->createElement('stats');
         $methodsNode = $document->createElement('methods');
 
         $report = $coverage->getReport();
         unset($coverage);
 
-        $fullMethodCount     = 0;
+        $fullMethodCount = 0;
         $fullCrapMethodCount = 0;
-        $fullCrapLoad        = 0;
-        $fullCrap            = 0;
+        $fullCrapLoad = 0;
+        $fullCrap = 0;
 
         foreach ($report as $item) {
             $namespace = 'global';
@@ -66,7 +66,7 @@ class PHP_CodeCoverage_Report_Crap4j
                 foreach ($class['methods'] as $methodName => $method) {
                     $crapLoad = $this->getCrapLoad($method['crap'], $method['ccn'], $method['coverage']);
 
-                    $fullCrap     += $method['crap'];
+                    $fullCrap += $method['crap'];
                     $fullCrapLoad += $crapLoad;
                     $fullMethodCount++;
 
@@ -83,11 +83,14 @@ class PHP_CodeCoverage_Report_Crap4j
                     $methodNode->appendChild($document->createElement('package', $namespace));
                     $methodNode->appendChild($document->createElement('className', $className));
                     $methodNode->appendChild($document->createElement('methodName', $methodName));
-                    $methodNode->appendChild($document->createElement('methodSignature', htmlspecialchars($method['signature'])));
-                    $methodNode->appendChild($document->createElement('fullMethod', htmlspecialchars($method['signature'])));
+                    $methodNode->appendChild($document->createElement('methodSignature',
+                        htmlspecialchars($method['signature'])));
+                    $methodNode->appendChild($document->createElement('fullMethod',
+                        htmlspecialchars($method['signature'])));
                     $methodNode->appendChild($document->createElement('crap', $this->roundValue($method['crap'])));
                     $methodNode->appendChild($document->createElement('complexity', $method['ccn']));
-                    $methodNode->appendChild($document->createElement('coverage', $this->roundValue($method['coverage'])));
+                    $methodNode->appendChild($document->createElement('coverage',
+                        $this->roundValue($method['coverage'])));
                     $methodNode->appendChild($document->createElement('crapLoad', round($crapLoad)));
 
                     $methodsNode->appendChild($methodNode);
@@ -100,7 +103,8 @@ class PHP_CodeCoverage_Report_Crap4j
         $stats->appendChild($document->createElement('crapMethodCount', $fullCrapMethodCount));
         $stats->appendChild($document->createElement('crapLoad', round($fullCrapLoad)));
         $stats->appendChild($document->createElement('totalCrap', $fullCrap));
-        $stats->appendChild($document->createElement('crapMethodPercent', $this->roundValue(100 * $fullCrapMethodCount / $fullMethodCount)));
+        $stats->appendChild($document->createElement('crapMethodPercent',
+            $this->roundValue(100 * $fullCrapMethodCount / $fullMethodCount)));
 
         $root->appendChild($stats);
         $root->appendChild($methodsNode);

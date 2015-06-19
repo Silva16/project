@@ -34,9 +34,9 @@ class ReturnConstantGenerator implements GeneratorInterface
     private $filesystem;
 
     /**
-     * @param IO               $io
+     * @param IO $io
      * @param TemplateRenderer $templates
-     * @param Filesystem       $filesystem
+     * @param Filesystem $filesystem
      */
     public function __construct(IO $io, TemplateRenderer $templates, Filesystem $filesystem = null)
     {
@@ -47,8 +47,8 @@ class ReturnConstantGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $generation
-     * @param array             $data
+     * @param string $generation
+     * @param array $data
      *
      * @return bool
      */
@@ -59,7 +59,7 @@ class ReturnConstantGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param array             $data
+     * @param array $data
      */
     public function generate(ResourceInterface $resource, array $data)
     {
@@ -76,8 +76,8 @@ class ReturnConstantGenerator implements GeneratorInterface
             );
         }
 
-        $pattern = '/'.'(function\s+'.preg_quote($method, '/').'\s*\([^\)]*\))\s+{[^}]*?}/';
-        $replacement = '$1'.$content;
+        $pattern = '/' . '(function\s+' . preg_quote($method, '/') . '\s*\([^\)]*\))\s+{[^}]*?}/';
+        $replacement = '$1' . $content;
 
         $modifiedCode = preg_replace($pattern, $replacement, $code);
 
@@ -103,6 +103,6 @@ class ReturnConstantGenerator implements GeneratorInterface
      */
     protected function getTemplate()
     {
-        return file_get_contents(__DIR__.'/templates/returnconstant.template');
+        return file_get_contents(__DIR__ . '/templates/returnconstant.template');
     }
 }

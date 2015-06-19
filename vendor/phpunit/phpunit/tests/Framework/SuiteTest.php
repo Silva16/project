@@ -170,8 +170,10 @@ class Framework_SuiteTest extends PHPUnit_Framework_TestCase
         BeforeClassAndAfterClassTest::resetProperties();
         $suite->run($this->result);
 
-        $this->assertEquals(1, BeforeClassAndAfterClassTest::$beforeClassWasRun, "@beforeClass method was not run once for the whole suite.");
-        $this->assertEquals(1, BeforeClassAndAfterClassTest::$afterClassWasRun, "@afterClass method was not run once for the whole suite.");
+        $this->assertEquals(1, BeforeClassAndAfterClassTest::$beforeClassWasRun,
+            "@beforeClass method was not run once for the whole suite.");
+        $this->assertEquals(1, BeforeClassAndAfterClassTest::$afterClassWasRun,
+            "@afterClass method was not run once for the whole suite.");
     }
 
     public function testBeforeAnnotation()
@@ -227,8 +229,8 @@ class Framework_SuiteTest extends PHPUnit_Framework_TestCase
 
         $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Inheritance' . DIRECTORY_SEPARATOR;
 
-        $suite->addTestFile($dir.'InheritanceA.php');
-        $suite->addTestFile($dir.'InheritanceB.php');
+        $suite->addTestFile($dir . 'InheritanceA.php');
+        $suite->addTestFile($dir . 'InheritanceB.php');
         $result = $suite->run();
         $this->assertEquals(2, count($result));
     }

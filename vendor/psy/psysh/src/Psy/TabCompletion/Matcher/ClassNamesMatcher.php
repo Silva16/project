@@ -36,6 +36,7 @@ class ClassNamesMatcher extends AbstractMatcher
                 // get the number of namespace separators
                 $nsPos = substr_count($class, '\\');
                 $pieces = explode('\\', $className);
+
                 //$methods = Mirror::get($class);
                 return implode('\\', array_slice($pieces, $nsPos, count($pieces)));
             },
@@ -57,7 +58,10 @@ class ClassNamesMatcher extends AbstractMatcher
         $prevToken = array_pop($tokens);
 
         $blacklistedTokens = array(
-            self::T_INCLUDE, self::T_INCLUDE_ONCE, self::T_REQUIRE, self::T_REQUIRE_ONCE,
+            self::T_INCLUDE,
+            self::T_INCLUDE_ONCE,
+            self::T_REQUIRE,
+            self::T_REQUIRE_ONCE,
         );
 
         switch (true) {

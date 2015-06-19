@@ -2,19 +2,21 @@
 
 namespace PhpParser\Unserializer;
 
-use XMLReader;
 use DomainException;
 use PhpParser\Unserializer;
+use XMLReader;
 
 class XML implements Unserializer
 {
     protected $reader;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->reader = new XMLReader;
     }
 
-    public function unserialize($string) {
+    public function unserialize($string)
+    {
         $this->reader->XML($string);
 
         $this->reader->read();
@@ -25,7 +27,8 @@ class XML implements Unserializer
         return $this->read($this->reader->depth);
     }
 
-    protected function read($depthLimit, $throw = true, &$nodeFound = null) {
+    protected function read($depthLimit, $throw = true, &$nodeFound = null)
+    {
         $nodeFound = true;
         while ($this->reader->read() && $depthLimit < $this->reader->depth) {
             if (XMLReader::ELEMENT !== $this->reader->nodeType) {
@@ -49,7 +52,8 @@ class XML implements Unserializer
         }
     }
 
-    protected function readNode() {
+    protected function readNode()
+    {
         $className = $this->getClassNameFromType($this->reader->localName);
 
         // create the node without calling it's constructor
@@ -86,7 +90,8 @@ class XML implements Unserializer
         return $node;
     }
 
-    protected function readScalar() {
+    protected function readScalar()
+    {
         switch ($name = $this->reader->localName) {
             case 'array':
                 $depth = $this->reader->depth;
@@ -98,6 +103,7 @@ class XML implements Unserializer
                     }
                     $array[] = $node;
                 }
+
                 return $array;
             case 'string':
                 return $this->reader->readString();
@@ -108,6 +114,7 @@ class XML implements Unserializer
                 if (false === $float = filter_var($text, FILTER_VALIDATE_FLOAT)) {
                     throw new DomainException(sprintf('"%s" is not a valid float', $text));
                 }
+
                 return $float;
             case 'true':
             case 'false':
@@ -115,31 +122,36 @@ class XML implements Unserializer
                 if (!$this->reader->isEmptyElement) {
                     throw new DomainException(sprintf('"%s" scalar must be empty', $name));
                 }
+
                 return constant($name);
             default:
                 throw new DomainException(sprintf('Unknown scalar type "%s"', $name));
         }
     }
 
-    private function parseInt($text) {
+    private function parseInt($text)
+    {
         if (false === $int = filter_var($text, FILTER_VALIDATE_INT)) {
             throw new DomainException(sprintf('"%s" is not a valid integer', $text));
         }
+
         return $int;
     }
 
-    protected function readComment() {
+    protected function readComment()
+    {
         $className = $this->reader->getAttribute('isDocComment') === 'true'
             ? 'PhpParser\Comment\Doc'
-            : 'PhpParser\Comment'
-        ;
+            : 'PhpParser\Comment';
+
         return new $className(
             $this->reader->readString(),
             $this->parseInt($this->reader->getAttribute('line'))
         );
     }
 
-    protected function getClassNameFromType($type) {
+    protected function getClassNameFromType($type)
+    {
         $className = 'PhpParser\\Node\\' . strtr($type, '_', '\\');
         if (!class_exists($className)) {
             $className .= '_';
@@ -147,6 +159,7 @@ class XML implements Unserializer
         if (!class_exists($className)) {
             throw new DomainException(sprintf('Unknown node type "%s"', $type));
         }
+
         return $className;
     }
 }

@@ -1,32 +1,33 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
 
-class Project extends Model {
+class Project extends Model
+{
 
     protected $table = 'projects';
 
     //
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany('App\User');
     }
 
-    public function tags(){
+    public function tags()
+    {
         return $this->belongsToMany('App\Tag');
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany('App\Comment');
     }
-    
 
-    public function media(){
+
+    public function media()
+    {
         return $this->hasMany('App\Media');
     }
-
-
-
 
 
     /*public static function add($project){

@@ -2,15 +2,18 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Media extends Model {
+class Media extends Model
+{
 
     protected $table = 'media';
 
-    public function project(){
+    public function project()
+    {
         return $this->belongsTo('App\Project');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 

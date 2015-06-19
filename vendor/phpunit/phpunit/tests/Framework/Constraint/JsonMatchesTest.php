@@ -21,9 +21,9 @@ class Framework_Constraint_JsonMatchesTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider evaluateDataprovider
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::evaluate
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::matches
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::__construct
+     * @covers       PHPUnit_Framework_Constraint_JsonMatches::evaluate
+     * @covers       PHPUnit_Framework_Constraint_JsonMatches::matches
+     * @covers       PHPUnit_Framework_Constraint_JsonMatches::__construct
      */
     public function testEvaluate($expected, $jsonOther, $jsonValue)
     {
@@ -49,7 +49,11 @@ class Framework_Constraint_JsonMatchesTest extends PHPUnit_Framework_TestCase
             'valid JSON' => array(true, json_encode(array('Mascott' => 'Tux')), json_encode(array('Mascott' => 'Tux'))),
             'error syntax' => array(false, '{"Mascott"::}', json_encode(array('Mascott' => 'Tux'))),
             'error UTF-8' => array(false, json_encode('\xB1\x31'), json_encode(array('Mascott' => 'Tux'))),
-            'invalid JSON in class instantiation' => array(false, json_encode(array('Mascott' => 'Tux')), '{"Mascott"::}'),
+            'invalid JSON in class instantiation' => array(
+                false,
+                json_encode(array('Mascott' => 'Tux')),
+                '{"Mascott"::}'
+            ),
         );
     }
 }

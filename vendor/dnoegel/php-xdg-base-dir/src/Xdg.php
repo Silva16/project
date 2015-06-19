@@ -62,7 +62,10 @@ class Xdg
      */
     public function getDataDirs()
     {
-        $dataDirs = getenv('XDG_DATA_DIRS') ? explode(':', getenv('XDG_DATA_DIRS')) : array('/usr/local/share', '/usr/share');
+        $dataDirs = getenv('XDG_DATA_DIRS') ? explode(':', getenv('XDG_DATA_DIRS')) : array(
+            '/usr/local/share',
+            '/usr/share'
+        );
 
         $paths = array_merge(array($this->getHomeDataDir()), $dataDirs);
 
@@ -80,7 +83,7 @@ class Xdg
 
     }
 
-    public function getRuntimeDir($strict=true)
+    public function getRuntimeDir($strict = true)
     {
         if ($runtimeDir = getenv('XDG_RUNTIME_DIR')) {
             return $runtimeDir;

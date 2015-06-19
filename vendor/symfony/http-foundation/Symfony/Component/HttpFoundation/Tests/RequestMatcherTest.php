@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\HttpFoundation\Tests;
 
-use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestMatcher;
 
 class RequestMatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,7 +46,8 @@ class RequestMatcherTest extends \PHPUnit_Framework_TestCase
     public function testScheme()
     {
         $httpRequest = $request = $request = Request::create('');
-        $httpsRequest = $request = $request = Request::create('', 'get', array(), array(), array(), array('HTTPS' => 'on'));
+        $httpsRequest = $request = $request = Request::create('', 'get', array(), array(), array(),
+            array('HTTPS' => 'on'));
 
         $matcher = new RequestMatcher();
         $matcher->matchScheme('https');

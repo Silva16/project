@@ -1,10 +1,10 @@
 @extends('header')
 @section('content')
 
-{!! Form::model($user, ['method' => 'PATCH', 'action' => ['UsersController@update', $user->id], 'files' => true]) !!}
+    {!! Form::model($user, ['method' => 'PATCH', 'action' => ['UsersController@update', $user->id], 'files' => true]) !!}
 
-   @include('users.form', ['submitButton' => 'Actualizar Utilizador'])
+    @include('users.form', ['submitButton' => 'Actualizar Utilizador'])
 
-{!! Form::close() !!}
+    {!! Form::close() !!}
 
 @endsection

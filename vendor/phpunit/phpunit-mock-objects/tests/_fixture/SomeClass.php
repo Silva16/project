@@ -1,13 +1,14 @@
 <?php
+
 class SomeClass
 {
     public function doSomething($a, $b)
     {
-        return NULL;
+        return null;
     }
 
     public function doSomethingElse($c)
     {
-        return NULL;
+        return null;
     }
 }

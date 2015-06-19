@@ -17,7 +17,7 @@ namespace Psy\Presenter;
 abstract class RecursivePresenter implements Presenter, PresenterManagerAware
 {
     const MAX_DEPTH = 5;
-    const INDENT    = '    ';
+    const INDENT = '    ';
 
     protected $manager;
     protected $depth;
@@ -41,8 +41,8 @@ abstract class RecursivePresenter implements Presenter, PresenterManagerAware
      * @see self::presentValue()
      *
      * @param mixed $value
-     * @param int   $depth   (default: null)
-     * @param int   $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
@@ -86,7 +86,7 @@ abstract class RecursivePresenter implements Presenter, PresenterManagerAware
      * @see PresenterManager::presentRef()
      *
      * @param mixed $value
-     * @param int   $options One of Presenter constants
+     * @param int $options One of Presenter constants
      *
      * @return string
      */

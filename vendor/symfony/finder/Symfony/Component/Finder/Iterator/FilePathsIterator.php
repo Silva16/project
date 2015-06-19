@@ -46,7 +46,7 @@ class FilePathsIterator extends \ArrayIterator
     private $current;
 
     /**
-     * @param array  $paths   List of paths returned by shell command
+     * @param array $paths List of paths returned by shell command
      * @param string $baseDir Base dir for relative path building
      */
     public function __construct(array $paths, $baseDir)
@@ -59,7 +59,7 @@ class FilePathsIterator extends \ArrayIterator
 
     /**
      * @param string $name
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return mixed
      */

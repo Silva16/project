@@ -14,8 +14,8 @@ namespace Symfony\Component\Console\Logger;
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * PSR-3 compliant console logger
@@ -61,11 +61,14 @@ class ConsoleLogger extends AbstractLogger
 
     /**
      * @param OutputInterface $output
-     * @param array           $verbosityLevelMap
-     * @param array           $formatLevelMap
+     * @param array $verbosityLevelMap
+     * @param array $formatLevelMap
      */
-    public function __construct(OutputInterface $output, array $verbosityLevelMap = array(), array $formatLevelMap = array())
-    {
+    public function __construct(
+        OutputInterface $output,
+        array $verbosityLevelMap = array(),
+        array $formatLevelMap = array()
+    ) {
         $this->output = $output;
         $this->verbosityLevelMap = $verbosityLevelMap + $this->verbosityLevelMap;
         $this->formatLevelMap = $formatLevelMap + $this->formatLevelMap;
@@ -88,7 +91,8 @@ class ConsoleLogger extends AbstractLogger
         }
 
         if ($output->getVerbosity() >= $this->verbosityLevelMap[$level]) {
-            $output->writeln(sprintf('<%1$s>[%2$s] %3$s</%1$s>', $this->formatLevelMap[$level], $level, $this->interpolate($message, $context)));
+            $output->writeln(sprintf('<%1$s>[%2$s] %3$s</%1$s>', $this->formatLevelMap[$level], $level,
+                $this->interpolate($message, $context)));
         }
     }
 
@@ -98,7 +102,7 @@ class ConsoleLogger extends AbstractLogger
      * @author PHP Framework Interoperability Group
      *
      * @param string $message
-     * @param array  $context
+     * @param array $context
      *
      * @return string
      */

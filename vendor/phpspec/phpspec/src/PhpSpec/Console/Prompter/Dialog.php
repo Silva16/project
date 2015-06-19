@@ -31,7 +31,7 @@ final class Dialog implements Prompter
 
     /**
      * @param OutputInterface $output
-     * @param DialogHelper    $dialogHelper
+     * @param DialogHelper $dialogHelper
      */
     public function __construct(OutputInterface $output, DialogHelper $dialogHelper)
     {
@@ -40,7 +40,7 @@ final class Dialog implements Prompter
     }
 
     /**
-     * @param string  $question
+     * @param string $question
      * @param boolean $default
      * @return boolean
      */

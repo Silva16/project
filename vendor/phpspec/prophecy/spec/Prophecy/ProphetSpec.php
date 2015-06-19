@@ -8,7 +8,7 @@ use Prophecy\Argument;
 class ProphetSpec extends ObjectBehavior
 {
     /**
-     * @param \Prophecy\Doubler\Doubler                   $doubler
+     * @param \Prophecy\Doubler\Doubler $doubler
      * @param \Prophecy\Prophecy\ProphecySubjectInterface $double
      */
     function let($doubler, $double)
@@ -58,15 +58,17 @@ class ProphetSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Prophecy\MethodProphecy    $method1
-     * @param \Prophecy\Prophecy\MethodProphecy    $method2
+     * @param \Prophecy\Prophecy\MethodProphecy $method1
+     * @param \Prophecy\Prophecy\MethodProphecy $method2
      * @param \Prophecy\Argument\ArgumentsWildcard $arguments1
      * @param \Prophecy\Argument\ArgumentsWildcard $arguments2
      */
     function it_throws_AggregateException_if_defined_predictions_fail(
-        $method1, $method2, $arguments1, $arguments2
-    )
-    {
+        $method1,
+        $method2,
+        $arguments1,
+        $arguments2
+    ) {
         $method1->getMethodName()->willReturn('getName');
         $method1->getArgumentsWildcard()->willReturn($arguments1);
         $method1->checkPrediction()->willReturn(null);

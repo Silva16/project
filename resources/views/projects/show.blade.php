@@ -84,31 +84,31 @@
                 <h1>Comentários</h1>
                 @foreach($comments as $comment)
                     @if($comment->state == 1)
-                    <div class="comment highlight">
-                        <div class="comment-info">
-                            <ul style="list-style-type: none;">
-                                @if($comment->user_name != null)
+                        <div class="comment highlight">
+                            <div class="comment-info">
+                                <ul style="list-style-type: none;">
+                                    @if($comment->user_name != null)
+                                        <li>
+                                            <p>{{$comment->user_name}}</p>
+                                        </li>
+                                    @endif
+                                    @if($comment->user_name == null)
+                                        <li>
+                                            <p>Visitante</p>
+                                        </li>
+                                    @endif
                                     <li>
-                                        <p>{{$comment->user_name}}</p>
+                                        <p>Criado em: <br/>{{$comment->created_at}}</p>
                                     </li>
-                                @endif
-                                @if($comment->user_name == null)
                                     <li>
-                                        <p>Visitante</p>
+                                        <p>Ultimo update: <br/>{{$comment->updated_at}}</p>
                                     </li>
-                                @endif
-                                <li>
-                                    <p>Criado em: <br/>{{$comment->created_at}}</p>
-                                </li>
-                                <li>
-                                    <p>Ultimo update: <br/>{{$comment->updated_at}}</p>
-                                </li>
-                            </ul>
+                                </ul>
+                            </div>
+                            <div class="comment-body">
+                                <p>{{$comment->comment}}</p>
+                            </div>
                         </div>
-                        <div class="comment-body">
-                            <p>{{$comment->comment}}</p>
-                        </div>
-                    </div>
                     @endif
                 @endforeach
                 <div style="margin-bottom: 20px">

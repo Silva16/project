@@ -162,7 +162,8 @@ class DebugClassLoader
 
         ErrorHandler::unstackErrors();
 
-        $exists = class_exists($class, false) || interface_exists($class, false) || (function_exists('trait_exists') && trait_exists($class, false));
+        $exists = class_exists($class, false) || interface_exists($class,
+                false) || (function_exists('trait_exists') && trait_exists($class, false));
 
         if ('\\' === $class[0]) {
             $class = substr($class, 1);
@@ -173,19 +174,24 @@ class DebugClassLoader
             $name = $refl->getName();
 
             if ($name !== $class && 0 === strcasecmp($name, $class)) {
-                throw new \RuntimeException(sprintf('Case mismatch between loaded and declared class names: %s vs %s', $class, $name));
+                throw new \RuntimeException(sprintf('Case mismatch between loaded and declared class names: %s vs %s',
+                    $class, $name));
             }
         }
 
         if ($file) {
             if (!$exists) {
                 if (false !== strpos($class, '/')) {
-                    throw new \RuntimeException(sprintf('Trying to autoload a class with an invalid name "%s". Be careful that the namespace separator is "\" in PHP, not "/".', $class));
+                    throw new \RuntimeException(sprintf('Trying to autoload a class with an invalid name "%s". Be careful that the namespace separator is "\" in PHP, not "/".',
+                        $class));
                 }
 
-                throw new \RuntimeException(sprintf('The autoloader expected class "%s" to be defined in file "%s". The file was found but the class was not in it, the class name or namespace probably has a typo.', $class, $file));
+                throw new \RuntimeException(sprintf('The autoloader expected class "%s" to be defined in file "%s". The file was found but the class was not in it, the class name or namespace probably has a typo.',
+                    $class, $file));
             }
-            if (self::$caseCheck && preg_match('#([/\\\\][a-zA-Z_\x7F-\xFF][a-zA-Z0-9_\x7F-\xFF]*)+\.(php|hh)$#D', $file, $tail)) {
+            if (self::$caseCheck && preg_match('#([/\\\\][a-zA-Z_\x7F-\xFF][a-zA-Z0-9_\x7F-\xFF]*)+\.(php|hh)$#D',
+                    $file, $tail)
+            ) {
                 $tail = $tail[0];
                 $real = $refl->getFilename();
 
@@ -196,8 +202,8 @@ class DebugClassLoader
                     chdir(substr($real, 0, $basename));
                     $basename = substr($real, $basename + 1);
                     // glob() patterns are case-sensitive even if the underlying fs is not
-                    if (!in_array($basename, glob($basename.'*', GLOB_NOSORT), true)) {
-                        $real = getcwd().'/';
+                    if (!in_array($basename, glob($basename . '*', GLOB_NOSORT), true)) {
+                        $real = getcwd() . '/';
                         $h = opendir('.');
                         while (false !== $f = readdir($h)) {
                             if (0 === strcasecmp($f, $basename)) {
@@ -211,9 +217,10 @@ class DebugClassLoader
                 }
 
                 if (0 === substr_compare($real, $tail, -strlen($tail), strlen($tail), true)
-                  && 0 !== substr_compare($real, $tail, -strlen($tail), strlen($tail), false)
+                    && 0 !== substr_compare($real, $tail, -strlen($tail), strlen($tail), false)
                 ) {
-                    throw new \RuntimeException(sprintf('Case mismatch between class and source file names: %s vs %s', $class, $real));
+                    throw new \RuntimeException(sprintf('Case mismatch between class and source file names: %s vs %s',
+                        $class, $real));
                 }
             }
 

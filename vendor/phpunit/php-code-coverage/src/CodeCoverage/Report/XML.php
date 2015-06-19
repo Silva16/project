@@ -74,8 +74,10 @@ class PHP_CodeCoverage_Report_XML
         }
     }
 
-    private function processDirectory(PHP_CodeCoverage_Report_Node_Directory $directory, PHP_CodeCoverage_Report_XML_Node $context)
-    {
+    private function processDirectory(
+        PHP_CodeCoverage_Report_Node_Directory $directory,
+        PHP_CodeCoverage_Report_XML_Node $context
+    ) {
         $dirObject = $context->addDirectory($directory->getName());
 
         $this->setTotals($directory, $dirObject->getTotals());
@@ -97,8 +99,10 @@ class PHP_CodeCoverage_Report_XML
         }
     }
 
-    private function processFile(PHP_CodeCoverage_Report_Node_File $file, PHP_CodeCoverage_Report_XML_Directory $context)
-    {
+    private function processFile(
+        PHP_CodeCoverage_Report_Node_File $file,
+        PHP_CodeCoverage_Report_XML_Directory $context
+    ) {
         $fileObject = $context->addFile(
             $file->getName(),
             $file->getId() . '.xml'

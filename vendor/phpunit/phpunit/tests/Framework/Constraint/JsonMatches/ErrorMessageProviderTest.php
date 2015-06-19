@@ -20,7 +20,7 @@ class Framework_Constraint_JsonMatches_ErrorMessageProviderTest extends PHPUnit_
 {
     /**
      * @dataProvider translateTypeToPrefixDataprovider
-     * @covers PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::translateTypeToPrefix
+     * @covers       PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::translateTypeToPrefix
      */
     public function testTranslateTypeToPrefix($expected, $type)
     {
@@ -32,7 +32,7 @@ class Framework_Constraint_JsonMatches_ErrorMessageProviderTest extends PHPUnit_
 
     /**
      * @dataProvider determineJsonErrorDataprovider
-     * @covers PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError
+     * @covers       PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError
      */
     public function testDetermineJsonError($expected, $error, $prefix)
     {
@@ -48,23 +48,35 @@ class Framework_Constraint_JsonMatches_ErrorMessageProviderTest extends PHPUnit_
     public static function determineJsonErrorDataprovider()
     {
         return array(
-            'JSON_ERROR_NONE'  => array(
-                null, 'json_error_none', ''
+            'JSON_ERROR_NONE' => array(
+                null,
+                'json_error_none',
+                ''
             ),
             'JSON_ERROR_DEPTH' => array(
-                'Maximum stack depth exceeded', JSON_ERROR_DEPTH, ''
+                'Maximum stack depth exceeded',
+                JSON_ERROR_DEPTH,
+                ''
             ),
             'prefixed JSON_ERROR_DEPTH' => array(
-                'TUX: Maximum stack depth exceeded', JSON_ERROR_DEPTH, 'TUX: '
+                'TUX: Maximum stack depth exceeded',
+                JSON_ERROR_DEPTH,
+                'TUX: '
             ),
             'JSON_ERROR_STATE_MISMatch' => array(
-                'Underflow or the modes mismatch', JSON_ERROR_STATE_MISMATCH, ''
+                'Underflow or the modes mismatch',
+                JSON_ERROR_STATE_MISMATCH,
+                ''
             ),
             'JSON_ERROR_CTRL_CHAR' => array(
-                'Unexpected control character found', JSON_ERROR_CTRL_CHAR, ''
+                'Unexpected control character found',
+                JSON_ERROR_CTRL_CHAR,
+                ''
             ),
             'JSON_ERROR_SYNTAX' => array(
-                'Syntax error, malformed JSON', JSON_ERROR_SYNTAX, ''
+                'Syntax error, malformed JSON',
+                JSON_ERROR_SYNTAX,
+                ''
             ),
             'JSON_ERROR_UTF8`' => array(
                 'Malformed UTF-8 characters, possibly incorrectly encoded',
@@ -72,7 +84,9 @@ class Framework_Constraint_JsonMatches_ErrorMessageProviderTest extends PHPUnit_
                 ''
             ),
             'Invalid error indicator' => array(
-                'Unknown error', 55, ''
+                'Unknown error',
+                55,
+                ''
             ),
         );
     }

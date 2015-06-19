@@ -33,7 +33,7 @@ Route::post('project/refuse/{id}', 'ProjectsController@refuse');
 
 Route::resource('projects', 'ProjectsController');
 
-Route::get('users/admin', ['as' => 'users.admin', 'uses' =>'UsersController@admin']);
+Route::get('users/admin', ['as' => 'users.admin', 'uses' => 'UsersController@admin']);
 
 Route::resource('users', 'UsersController');
 
@@ -101,6 +101,6 @@ Route::post('users', 'UsersController@status');
 Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show']);*/
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);

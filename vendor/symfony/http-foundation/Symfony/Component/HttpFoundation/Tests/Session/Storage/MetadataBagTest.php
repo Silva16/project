@@ -31,7 +31,11 @@ class MetadataBagTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->bag = new MetadataBag();
-        $this->array = array(MetadataBag::CREATED => 1234567, MetadataBag::UPDATED => 12345678, MetadataBag::LIFETIME => 0);
+        $this->array = array(
+            MetadataBag::CREATED => 1234567,
+            MetadataBag::UPDATED => 12345678,
+            MetadataBag::LIFETIME => 0
+        );
         $this->bag->initialize($this->array);
     }
 
@@ -80,7 +84,11 @@ class MetadataBagTest extends \PHPUnit_Framework_TestCase
     public function testGetLifetime()
     {
         $bag = new MetadataBag();
-        $array = array(MetadataBag::CREATED => 1234567, MetadataBag::UPDATED => 12345678, MetadataBag::LIFETIME => 1000);
+        $array = array(
+            MetadataBag::CREATED => 1234567,
+            MetadataBag::UPDATED => 12345678,
+            MetadataBag::LIFETIME => 1000
+        );
         $bag->initialize($array);
         $this->assertEquals(1000, $bag->getLifetime());
     }

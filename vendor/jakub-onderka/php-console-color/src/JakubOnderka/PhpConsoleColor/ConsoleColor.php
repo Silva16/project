@@ -26,7 +26,6 @@ class ConsoleColor
         'blink' => '5',
         'reverse' => '7',
         'concealed' => '8',
-
         'default' => '39',
         'black' => '30',
         'red' => '31',
@@ -36,7 +35,6 @@ class ConsoleColor
         'magenta' => '35',
         'cyan' => '36',
         'light_gray' => '37',
-
         'dark_gray' => '90',
         'light_red' => '91',
         'light_green' => '92',
@@ -45,7 +43,6 @@ class ConsoleColor
         'light_magenta' => '95',
         'light_cyan' => '96',
         'white' => '97',
-
         'bg_default' => '49',
         'bg_black' => '40',
         'bg_red' => '41',
@@ -55,7 +52,6 @@ class ConsoleColor
         'bg_magenta' => '45',
         'bg_cyan' => '46',
         'bg_light_gray' => '47',
-
         'bg_dark_gray' => '100',
         'bg_light_red' => '101',
         'bg_light_green' => '102',
@@ -99,10 +95,12 @@ class ConsoleColor
         foreach ($style as $s) {
             if (isset($this->themes[$s])) {
                 $sequences = array_merge($sequences, $this->themeSequence($s));
-            } else if ($this->isValidStyle($s)) {
-                $sequences[] = $this->styleSequence($s);
             } else {
-                throw new InvalidStyleException($s);
+                if ($this->isValidStyle($s)) {
+                    $sequences[] = $this->styleSequence($s);
+                } else {
+                    throw new InvalidStyleException($s);
+                }
             }
         }
 
@@ -122,7 +120,7 @@ class ConsoleColor
      */
     public function setForceStyle($forceStyle)
     {
-        $this->forceStyle = (bool) $forceStyle;
+        $this->forceStyle = (bool)$forceStyle;
     }
 
     /**
@@ -234,6 +232,7 @@ class ConsoleColor
         foreach ($this->themes[$name] as $style) {
             $sequences[] = $this->styleSequence($style);
         }
+
         return $sequences;
     }
 

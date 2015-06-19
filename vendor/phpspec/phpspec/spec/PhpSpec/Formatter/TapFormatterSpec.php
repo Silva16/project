@@ -3,13 +3,13 @@
 namespace spec\PhpSpec\Formatter;
 
 use PhpSpec\Console\IO;
-use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Event\ExampleEvent;
 use PhpSpec\Event\SpecificationEvent;
-use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\Loader\Node\SpecificationNode;
+use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Listener\StatisticsCollector;
+use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\Loader\Node\SpecificationNode;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -32,8 +32,13 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln($expected)->shouldHaveBeenCalled();
     }
 
-    function it_outputs_plan_on_aftersuite_event(SuiteEvent $suiteEvent, ExampleEvent $exampleEvent, ExampleNode $example, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_plan_on_aftersuite_event(
+        SuiteEvent $suiteEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $stats->getEventsCount()->willReturn(3);
         $exampleEvent->getExample()->willReturn($example);
         $example->getTitle()->willReturn('foobar');
@@ -45,8 +50,14 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln('1..3')->shouldHaveBeenCalled();
     }
 
-    function it_outputs_progress_on_afterexample_event(SpecificationEvent $specEvent, ExampleEvent $exampleEvent, ExampleNode $example, SpecificationNode $spec, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_progress_on_afterexample_event(
+        SpecificationEvent $specEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        SpecificationNode $spec,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $specEvent->getSpecification()->willReturn($spec);
         $exampleEvent->getExample()->willReturn($example);
         $exampleEvent->getResult()->willReturn(ExampleEvent::PASSED);
@@ -67,8 +78,14 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln($expected2)->shouldHaveBeenCalled();
     }
 
-    function it_outputs_failure_progress_on_afterexample_event(SpecificationEvent $specEvent, ExampleEvent $exampleEvent, ExampleNode $example, SpecificationNode $spec, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_failure_progress_on_afterexample_event(
+        SpecificationEvent $specEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        SpecificationNode $spec,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $specEvent->getSpecification()->willReturn($spec);
         $exampleEvent->getExample()->willReturn($example);
         $example->getTitle()->willReturn('foobar');
@@ -83,8 +100,14 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln($expected)->shouldHaveBeenCalled();
     }
 
-    function it_outputs_skip_progress_on_afterexample_event(SpecificationEvent $specEvent, ExampleEvent $exampleEvent, ExampleNode $example, SpecificationNode $spec, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_skip_progress_on_afterexample_event(
+        SpecificationEvent $specEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        SpecificationNode $spec,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $specEvent->getSpecification()->willReturn($spec);
         $exampleEvent->getExample()->willReturn($example);
         $example->getTitle()->willReturn('foobar');
@@ -99,8 +122,14 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln($expected)->shouldHaveBeenCalled();
     }
 
-    function it_outputs_todo_progress_on_afterexample_event(SpecificationEvent $specEvent, ExampleEvent $exampleEvent, ExampleNode $example, SpecificationNode $spec, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_todo_progress_on_afterexample_event(
+        SpecificationEvent $specEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        SpecificationNode $spec,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $specEvent->getSpecification()->willReturn($spec);
         $exampleEvent->getExample()->willReturn($example);
         $example->getTitle()->willReturn('foobar');
@@ -115,8 +144,14 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln($expected)->shouldHaveBeenCalled();
     }
 
-    function it_outputs_broken_progress_on_afterexample_event(SpecificationEvent $specEvent, ExampleEvent $exampleEvent, ExampleNode $example, SpecificationNode $spec, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_broken_progress_on_afterexample_event(
+        SpecificationEvent $specEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        SpecificationNode $spec,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $specEvent->getSpecification()->willReturn($spec);
         $exampleEvent->getExample()->willReturn($example);
         $example->getTitle()->willReturn('foobar');
@@ -131,8 +166,14 @@ class TapFormatterSpec extends ObjectBehavior
         $io->writeln($expected)->shouldHaveBeenCalled();
     }
 
-    function it_outputs_undefined_progress_on_afterexample_event(SpecificationEvent $specEvent, ExampleEvent $exampleEvent, ExampleNode $example, SpecificationNode $spec, IO $io, StatisticsCollector $stats)
-    {
+    function it_outputs_undefined_progress_on_afterexample_event(
+        SpecificationEvent $specEvent,
+        ExampleEvent $exampleEvent,
+        ExampleNode $example,
+        SpecificationNode $spec,
+        IO $io,
+        StatisticsCollector $stats
+    ) {
         $specEvent->getSpecification()->willReturn($spec);
         $exampleEvent->getExample()->willReturn($example);
         $example->getTitle()->willReturn('foobar');

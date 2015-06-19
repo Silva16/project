@@ -28,18 +28,19 @@ class Parser
      */
     public function parse($string)
     {
-        $lines     = preg_split('(\r\n|\r|\n)', $string);
+        $lines = preg_split('(\r\n|\r|\n)', $string);
         $lineCount = count($lines);
-        $diffs     = array();
-        $diff      = null;
+        $diffs = array();
+        $diff = null;
         $collected = array();
 
         for ($i = 0; $i < $lineCount; ++$i) {
             if (preg_match('(^---\\s+(?P<file>\\S+))', $lines[$i], $fromMatch) &&
-                preg_match('(^\\+\\+\\+\\s+(?P<file>\\S+))', $lines[$i + 1], $toMatch)) {
+                preg_match('(^\\+\\+\\+\\s+(?P<file>\\S+))', $lines[$i + 1], $toMatch)
+            ) {
                 if ($diff !== null) {
                     $this->parseFileDiff($diff, $collected);
-                    $diffs[]   = $diff;
+                    $diffs[] = $diff;
                     $collected = array();
                 }
 
@@ -62,7 +63,7 @@ class Parser
     }
 
     /**
-     * @param Diff  $diff
+     * @param Diff $diff
      * @param array $lines
      */
     private function parseFileDiff(Diff $diff, array $lines)
@@ -70,7 +71,8 @@ class Parser
         $chunks = array();
 
         foreach ($lines as $line) {
-            if (preg_match('/^@@\s+-(?P<start>\d+)(?:,\s*(?P<startrange>\d+))?\s+\+(?P<end>\d+)(?:,\s*(?P<endrange>\d+))?\s+@@/', $line, $match)) {
+            if (preg_match('/^@@\s+-(?P<start>\d+)(?:,\s*(?P<startrange>\d+))?\s+\+(?P<end>\d+)(?:,\s*(?P<endrange>\d+))?\s+@@/',
+                $line, $match)) {
                 $chunk = new Chunk(
                     $match['start'],
                     isset($match['startrange']) ? max(1, $match['startrange']) : 1,

@@ -49,9 +49,10 @@ class NameGeneratorSpec extends ObjectBehavior
      * @param \ReflectionClass $interface2
      */
     function its_name_generates_name_based_only_on_class_if_its_available(
-        $class, $interface1, $interface2
-    )
-    {
+        $class,
+        $interface1,
+        $interface2
+    ) {
         $class->getName()->willReturn('Some\Custom\Class');
         $interface1->getShortName()->willReturn('HandlerInterface');
         $interface2->getShortName()->willReturn('LoaderInterface');

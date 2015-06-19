@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Translation\Tests;
 
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\Translator;
 
 class TranslatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -208,11 +208,11 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransWithoutFallbackLocaleFile($format, $loader)
     {
-        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\'.$loader;
+        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\' . $loader;
         $translator = new Translator('en');
         $translator->addLoader($format, new $loaderClass());
-        $translator->addResource($format, __DIR__.'/fixtures/non-existing', 'en');
-        $translator->addResource($format, __DIR__.'/fixtures/resources.'.$format, 'en');
+        $translator->addResource($format, __DIR__ . '/fixtures/non-existing', 'en');
+        $translator->addResource($format, __DIR__ . '/fixtures/resources.' . $format, 'en');
 
         // force catalogue loading
         $translator->trans('foo');
@@ -223,11 +223,11 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransWithFallbackLocaleFile($format, $loader)
     {
-        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\'.$loader;
+        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\' . $loader;
         $translator = new Translator('en_GB');
         $translator->addLoader($format, new $loaderClass());
-        $translator->addResource($format, __DIR__.'/fixtures/non-existing', 'en_GB');
-        $translator->addResource($format, __DIR__.'/fixtures/resources.'.$format, 'en', 'resources');
+        $translator->addResource($format, __DIR__ . '/fixtures/non-existing', 'en_GB');
+        $translator->addResource($format, __DIR__ . '/fixtures/resources.' . $format, 'en', 'resources');
 
         $this->assertEquals('bar', $translator->trans('foo', array(), 'resources'));
     }
@@ -280,7 +280,7 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     {
         $translator = new Translator('en');
         $translator->addLoader('array', new ArrayLoader());
-        $translator->addResource('array', array((string) $id => $translation), $locale, $domain);
+        $translator->addResource('array', array((string)$id => $translation), $locale, $domain);
 
         $this->assertEquals($expected, $translator->trans($id, $parameters, $domain, $locale));
     }
@@ -330,7 +330,7 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     {
         $translator = new Translator('en');
         $translator->addLoader('array', new ArrayLoader());
-        $translator->addResource('array', array((string) $id => $translation), $locale, $domain);
+        $translator->addResource('array', array((string)$id => $translation), $locale, $domain);
 
         $this->assertEquals($expected, $translator->transChoice($id, $number, $parameters, $domain, $locale));
     }
@@ -380,8 +380,22 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('Symfony est super !', 'Symfony is great!', 'Symfony est super !', array(), 'fr', ''),
-            array('Symfony est awesome !', 'Symfony is %what%!', 'Symfony est %what% !', array('%what%' => 'awesome'), 'fr', ''),
-            array('Symfony est super !', new StringClass('Symfony is great!'), 'Symfony est super !', array(), 'fr', ''),
+            array(
+                'Symfony est awesome !',
+                'Symfony is %what%!',
+                'Symfony est %what% !',
+                array('%what%' => 'awesome'),
+                'fr',
+                ''
+            ),
+            array(
+                'Symfony est super !',
+                new StringClass('Symfony is great!'),
+                'Symfony est super !',
+                array(),
+                'fr',
+                ''
+            ),
         );
     }
 
@@ -411,23 +425,123 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     public function getTransChoiceTests()
     {
         return array(
-            array('Il y a 0 pomme', '{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples', '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes', 0, array('%count%' => 0), 'fr', ''),
-            array('Il y a 1 pomme', '{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples', '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes', 1, array('%count%' => 1), 'fr', ''),
-            array('Il y a 10 pommes', '{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples', '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes', 10, array('%count%' => 10), 'fr', ''),
-
-            array('Il y a 0 pomme', 'There is one apple|There is %count% apples', 'Il y a %count% pomme|Il y a %count% pommes', 0, array('%count%' => 0), 'fr', ''),
-            array('Il y a 1 pomme', 'There is one apple|There is %count% apples', 'Il y a %count% pomme|Il y a %count% pommes', 1, array('%count%' => 1), 'fr', ''),
-            array('Il y a 10 pommes', 'There is one apple|There is %count% apples', 'Il y a %count% pomme|Il y a %count% pommes', 10, array('%count%' => 10), 'fr', ''),
-
-            array('Il y a 0 pomme', 'one: There is one apple|more: There is %count% apples', 'one: Il y a %count% pomme|more: Il y a %count% pommes', 0, array('%count%' => 0), 'fr', ''),
-            array('Il y a 1 pomme', 'one: There is one apple|more: There is %count% apples', 'one: Il y a %count% pomme|more: Il y a %count% pommes', 1, array('%count%' => 1), 'fr', ''),
-            array('Il y a 10 pommes', 'one: There is one apple|more: There is %count% apples', 'one: Il y a %count% pomme|more: Il y a %count% pommes', 10, array('%count%' => 10), 'fr', ''),
-
-            array('Il n\'y a aucune pomme', '{0} There are no apples|one: There is one apple|more: There is %count% apples', '{0} Il n\'y a aucune pomme|one: Il y a %count% pomme|more: Il y a %count% pommes', 0, array('%count%' => 0), 'fr', ''),
-            array('Il y a 1 pomme', '{0} There are no apples|one: There is one apple|more: There is %count% apples', '{0} Il n\'y a aucune pomme|one: Il y a %count% pomme|more: Il y a %count% pommes', 1, array('%count%' => 1), 'fr', ''),
-            array('Il y a 10 pommes', '{0} There are no apples|one: There is one apple|more: There is %count% apples', '{0} Il n\'y a aucune pomme|one: Il y a %count% pomme|more: Il y a %count% pommes', 10, array('%count%' => 10), 'fr', ''),
-
-            array('Il y a 0 pomme', new StringClass('{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples'), '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes', 0, array('%count%' => 0), 'fr', ''),
+            array(
+                'Il y a 0 pomme',
+                '{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples',
+                '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes',
+                0,
+                array('%count%' => 0),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 1 pomme',
+                '{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples',
+                '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes',
+                1,
+                array('%count%' => 1),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 10 pommes',
+                '{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples',
+                '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes',
+                10,
+                array('%count%' => 10),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 0 pomme',
+                'There is one apple|There is %count% apples',
+                'Il y a %count% pomme|Il y a %count% pommes',
+                0,
+                array('%count%' => 0),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 1 pomme',
+                'There is one apple|There is %count% apples',
+                'Il y a %count% pomme|Il y a %count% pommes',
+                1,
+                array('%count%' => 1),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 10 pommes',
+                'There is one apple|There is %count% apples',
+                'Il y a %count% pomme|Il y a %count% pommes',
+                10,
+                array('%count%' => 10),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 0 pomme',
+                'one: There is one apple|more: There is %count% apples',
+                'one: Il y a %count% pomme|more: Il y a %count% pommes',
+                0,
+                array('%count%' => 0),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 1 pomme',
+                'one: There is one apple|more: There is %count% apples',
+                'one: Il y a %count% pomme|more: Il y a %count% pommes',
+                1,
+                array('%count%' => 1),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 10 pommes',
+                'one: There is one apple|more: There is %count% apples',
+                'one: Il y a %count% pomme|more: Il y a %count% pommes',
+                10,
+                array('%count%' => 10),
+                'fr',
+                ''
+            ),
+            array(
+                'Il n\'y a aucune pomme',
+                '{0} There are no apples|one: There is one apple|more: There is %count% apples',
+                '{0} Il n\'y a aucune pomme|one: Il y a %count% pomme|more: Il y a %count% pommes',
+                0,
+                array('%count%' => 0),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 1 pomme',
+                '{0} There are no apples|one: There is one apple|more: There is %count% apples',
+                '{0} Il n\'y a aucune pomme|one: Il y a %count% pomme|more: Il y a %count% pommes',
+                1,
+                array('%count%' => 1),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 10 pommes',
+                '{0} There are no apples|one: There is one apple|more: There is %count% apples',
+                '{0} Il n\'y a aucune pomme|one: Il y a %count% pomme|more: Il y a %count% pommes',
+                10,
+                array('%count%' => 10),
+                'fr',
+                ''
+            ),
+            array(
+                'Il y a 0 pomme',
+                new StringClass('{0} There are no appless|{1} There is one apple|]1,Inf] There is %count% apples'),
+                '[0,1] Il y a %count% pomme|]1,Inf] Il y a %count% pommes',
+                0,
+                array('%count%' => 0),
+                'fr',
+                ''
+            ),
         );
     }
 
@@ -549,7 +663,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         );
 
         return array(
-            array($resources, null,
+            array(
+                $resources,
+                null,
                 array(
                     'jsmessages' => array(
                         'foo' => 'foo (EN)',
@@ -563,7 +679,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
-            array($resources, 'en',
+            array(
+                $resources,
+                'en',
                 array(
                     'jsmessages' => array(
                         'foo' => 'foo (EN)',
@@ -577,7 +695,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
-            array($resources, 'pt-PT',
+            array(
+                $resources,
+                'pt-PT',
                 array(
                     'jsmessages' => array(
                         'foo' => 'foo (EN)',
@@ -592,7 +712,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
-            array($resources, 'pt_BR',
+            array(
+                $resources,
+                'pt_BR',
                 array(
                     'jsmessages' => array(
                         'foo' => 'foo (EN)',

@@ -8,7 +8,7 @@ class MethodProphecySpec extends ObjectBehavior
 {
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $objectProphecy
-     * @param \ReflectionClass                  $reflection
+     * @param \ReflectionClass $reflection
      */
     function let($objectProphecy, $reflection)
     {
@@ -29,8 +29,10 @@ class MethodProphecySpec extends ObjectBehavior
         );
     }
 
-    function its_constructor_throws_MethodProphecyException_for_final_methods($objectProphecy, ClassWithFinalMethod $subject)
-    {
+    function its_constructor_throws_MethodProphecyException_for_final_methods(
+        $objectProphecy,
+        ClassWithFinalMethod $subject
+    ) {
         $objectProphecy->reveal()->willReturn($subject);
 
         $this->shouldThrow('Prophecy\Exception\Prophecy\MethodProphecyException')->during(
@@ -40,8 +42,7 @@ class MethodProphecySpec extends ObjectBehavior
 
     function its_constructor_transforms_array_passed_as_3rd_argument_to_ArgumentsWildcard(
         $objectProphecy
-    )
-    {
+    ) {
         $this->beConstructedWith($objectProphecy, 'getName', array(42, 33));
 
         $wildcard = $this->getArgumentsWildcard();
@@ -116,7 +117,8 @@ class MethodProphecySpec extends ObjectBehavior
     {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
 
-        $callback = function () {};
+        $callback = function () {
+        };
 
         $this->will($callback);
         $this->getPromise()->shouldBeAnInstanceOf('Prophecy\Promise\CallbackPromise');
@@ -137,7 +139,8 @@ class MethodProphecySpec extends ObjectBehavior
     {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
 
-        $callback = function () {};
+        $callback = function () {
+        };
 
         $this->callOnWrappedObject('should', array($callback));
         $this->getPrediction()->shouldBeAnInstanceOf('Prophecy\Prediction\CallbackPrediction');
@@ -178,15 +181,18 @@ class MethodProphecySpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
      */
     function it_checks_prediction_via_shouldHave_method_call(
-        $objectProphecy, $arguments, $prediction, $call1, $call2
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction,
+        $call1,
+        $call2
+    ) {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
         $prediction->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->shouldBeCalled();
         $objectProphecy->findProphecyMethodCalls('getName', $arguments)->willReturn(array($call1, $call2));
@@ -196,15 +202,18 @@ class MethodProphecySpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
      */
     function it_sets_return_promise_during_shouldHave_call_if_none_was_set_before(
-        $objectProphecy, $arguments, $prediction, $call1, $call2
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction,
+        $call1,
+        $call2
+    ) {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
         $prediction->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->shouldBeCalled();
         $objectProphecy->findProphecyMethodCalls('getName', $arguments)->willReturn(array($call1, $call2));
@@ -216,16 +225,20 @@ class MethodProphecySpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
-     * @param \Prophecy\Promise\PromiseInterface       $promise
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
+     * @param \Prophecy\Promise\PromiseInterface $promise
      */
     function it_does_not_set_return_promise_during_shouldHave_call_if_it_was_set_before(
-        $objectProphecy, $arguments, $prediction, $call1, $call2, $promise
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction,
+        $call1,
+        $call2,
+        $promise
+    ) {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
         $prediction->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->shouldBeCalled();
         $objectProphecy->findProphecyMethodCalls('getName', $arguments)->willReturn(array($call1, $call2));
@@ -238,17 +251,22 @@ class MethodProphecySpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction1
      * @param \Prophecy\Prediction\PredictionInterface $prediction2
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
-     * @param \Prophecy\Promise\PromiseInterface       $promise
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
+     * @param \Prophecy\Promise\PromiseInterface $promise
      */
     function it_records_checked_predictions(
-        $objectProphecy, $arguments, $prediction1, $prediction2, $call1, $call2, $promise
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction1,
+        $prediction2,
+        $call1,
+        $call2,
+        $promise
+    ) {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
         $prediction1->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->willReturn();
         $prediction2->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->willReturn();
@@ -263,40 +281,49 @@ class MethodProphecySpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
-     * @param \Prophecy\Promise\PromiseInterface       $promise
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
+     * @param \Prophecy\Promise\PromiseInterface $promise
      */
     function it_records_even_failed_checked_predictions(
-        $objectProphecy, $arguments, $prediction, $call1, $call2, $promise
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction,
+        $call1,
+        $call2,
+        $promise
+    ) {
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
-        $prediction->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->willThrow(new \RuntimeException());
+        $prediction->check(array($call1, $call2), $objectProphecy->getWrappedObject(),
+            $this)->willThrow(new \RuntimeException());
         $objectProphecy->findProphecyMethodCalls('getName', $arguments)->willReturn(array($call1, $call2));
 
         $this->will($promise);
         $this->withArguments($arguments);
 
         try {
-          $this->callOnWrappedObject('shouldHave', array($prediction));
-        } catch (\Exception $e) {}
+            $this->callOnWrappedObject('shouldHave', array($prediction));
+        } catch (\Exception $e) {
+        }
 
         $this->getCheckedPredictions()->shouldReturn(array($prediction));
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
      */
     function it_checks_prediction_via_shouldHave_method_call_with_callback(
-        $objectProphecy, $arguments, $prediction, $call1, $call2
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction,
+        $call1,
+        $call2
+    ) {
         $callback = function ($calls, $object, $method) {
             throw new \RuntimeException;
         };
@@ -312,15 +339,18 @@ class MethodProphecySpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Argument\ArgumentsWildcard     $arguments
+     * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      * @param \Prophecy\Prediction\PredictionInterface $prediction
-     * @param \Prophecy\Call\Call                      $call1
-     * @param \Prophecy\Call\Call                      $call2
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
      */
     function it_checks_set_prediction_during_checkPrediction(
-        $objectProphecy, $arguments, $prediction, $call1, $call2
-    )
-    {
+        $objectProphecy,
+        $arguments,
+        $prediction,
+        $call1,
+        $call2
+    ) {
         $prediction->check(array($call1, $call2), $objectProphecy->getWrappedObject(), $this)->shouldBeCalled();
         $objectProphecy->findProphecyMethodCalls('getName', $arguments)->willReturn(array($call1, $call2));
         $objectProphecy->addMethodProphecy($this)->willReturn(null);
@@ -377,5 +407,7 @@ class MethodProphecySpec extends ObjectBehavior
 
 class ClassWithFinalMethod
 {
-    final public function finalMethod() {}
+    final public function finalMethod()
+    {
+    }
 }

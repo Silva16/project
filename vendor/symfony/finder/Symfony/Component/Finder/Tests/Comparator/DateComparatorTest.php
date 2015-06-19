@@ -21,14 +21,16 @@ class DateComparatorTest extends \PHPUnit_Framework_TestCase
             new DateComparator('foobar');
             $this->fail('__construct() throws an \InvalidArgumentException if the test expression is not valid.');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e, '__construct() throws an \InvalidArgumentException if the test expression is not valid.');
+            $this->assertInstanceOf('InvalidArgumentException', $e,
+                '__construct() throws an \InvalidArgumentException if the test expression is not valid.');
         }
 
         try {
             new DateComparator('');
             $this->fail('__construct() throws an \InvalidArgumentException if the test expression is not valid.');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e, '__construct() throws an \InvalidArgumentException if the test expression is not valid.');
+            $this->assertInstanceOf('InvalidArgumentException', $e,
+                '__construct() throws an \InvalidArgumentException if the test expression is not valid.');
         }
     }
 

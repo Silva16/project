@@ -37,11 +37,11 @@ class VarCloner extends AbstractCloner
         $values = array();              // Map of stub objects' hashes to original values
         $maxItems = $this->maxItems;
         $maxString = $this->maxString;
-        $cookie = (object) array();     // Unique object used to detect hard references
+        $cookie = (object)array();     // Unique object used to detect hard references
         $gid = uniqid(mt_rand(), true); // Unique string used to detect the special $GLOBALS variable
         $a = null;                      // Array cast for nested structures
         $stub = null;                   // Stub capturing the main properties of an original item value
-                                        // or null if the original value is used directly
+        // or null if the original value is used directly
         $zval = array(                  // Main properties of the current value
             'type' => null,
             'zval_isref' => null,
@@ -102,7 +102,9 @@ class VarCloner extends AbstractCloner
                             } else {
                                 $stub->value = $v;
                             }
-                        } elseif (0 <= $maxString && isset($v[1 + ($maxString >> 2)]) && 0 < $cut = iconv_strlen($v, 'UTF-8') - $maxString) {
+                        } elseif (0 <= $maxString && isset($v[1 + ($maxString >> 2)]) && 0 < $cut = iconv_strlen($v,
+                                    'UTF-8') - $maxString
+                        ) {
                             $stub = new Stub();
                             $stub->type = Stub::TYPE_STRING;
                             $stub->class = Stub::STRING_UTF8;
@@ -141,7 +143,9 @@ class VarCloner extends AbstractCloner
                         break;
 
                     case 'object':
-                        if (empty($objRefs[$h = $zval['object_handle'] ?: ($hashMask ^ hexdec(substr(spl_object_hash($v), $hashOffset, PHP_INT_SIZE)))])) {
+                        if (empty($objRefs[$h = $zval['object_handle'] ?: ($hashMask ^ hexdec(substr(spl_object_hash($v),
+                                $hashOffset, PHP_INT_SIZE)))])
+                        ) {
                             $stub = new Stub();
                             $stub->type = Stub::TYPE_OBJECT;
                             $stub->class = $zval['object_class'] ?: get_class($v);
@@ -157,7 +161,8 @@ class VarCloner extends AbstractCloner
                                     $zval = symfony_zval_info('type', $zval);
                                     $h = $zval['object_handle'];
                                 } else {
-                                    $h = $hashMask ^ hexdec(substr(spl_object_hash($stub->value), $hashOffset, PHP_INT_SIZE));
+                                    $h = $hashMask ^ hexdec(substr(spl_object_hash($stub->value), $hashOffset,
+                                            PHP_INT_SIZE));
                                 }
                                 $stub->handle = $h;
                             }
@@ -178,7 +183,7 @@ class VarCloner extends AbstractCloner
 
                     case 'resource':
                     case 'unknown type':
-                        if (empty($resRefs[$h = (int) $v])) {
+                        if (empty($resRefs[$h = (int)$v])) {
                             $stub = new Stub();
                             $stub->type = Stub::TYPE_RESOURCE;
                             $stub->class = $zval['resource_type'] ?: get_resource_type($v);
@@ -273,7 +278,7 @@ class VarCloner extends AbstractCloner
 
     private static function initHashMask()
     {
-        $obj = (object) array();
+        $obj = (object)array();
         self::$hashOffset = 16 - PHP_INT_SIZE;
         self::$hashMask = -1;
 
@@ -283,7 +288,9 @@ class VarCloner extends AbstractCloner
             // check if we are nested in an output buffering handler to prevent a fatal error with ob_start() below
             $obFuncs = array('ob_clean', 'ob_end_clean', 'ob_flush', 'ob_end_flush', 'ob_get_contents', 'ob_get_flush');
             foreach (debug_backtrace(PHP_VERSION_ID >= 50400 ? DEBUG_BACKTRACE_IGNORE_ARGS : false) as $frame) {
-                if (isset($frame['function'][0]) && !isset($frame['class']) && 'o' === $frame['function'][0] && in_array($frame['function'], $obFuncs)) {
+                if (isset($frame['function'][0]) && !isset($frame['class']) && 'o' === $frame['function'][0] && in_array($frame['function'],
+                        $obFuncs)
+                ) {
                     $frame['line'] = 0;
                     break;
                 }

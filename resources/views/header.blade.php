@@ -58,7 +58,8 @@
                 </li>
             @endif
             <div class="pull-right">
-                {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@index']]) !!} <li>
+                {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@index']]) !!}
+                <li>
 
                     <input type="text" style="margin-top: -4px" class="search-query" placeholder="Search" name="search">
 

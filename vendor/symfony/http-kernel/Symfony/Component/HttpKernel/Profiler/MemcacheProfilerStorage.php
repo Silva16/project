@@ -34,7 +34,8 @@ class MemcacheProfilerStorage extends BaseMemcacheProfilerStorage
     {
         if (null === $this->memcache) {
             if (!preg_match('#^memcache://(?(?=\[.*\])\[(.*)\]|(.*)):(.*)$#', $this->dsn, $matches)) {
-                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Memcache with an invalid dsn "%s". The expected format is "memcache://[host]:port".', $this->dsn));
+                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Memcache with an invalid dsn "%s". The expected format is "memcache://[host]:port".',
+                    $this->dsn));
             }
 
             $host = $matches[1] ?: $matches[2];
@@ -102,6 +103,6 @@ class MemcacheProfilerStorage extends BaseMemcacheProfilerStorage
         // simulate append in Memcache <3.0
         $content = $memcache->get($key);
 
-        return $memcache->set($key, $content.$value, false, $expiration);
+        return $memcache->set($key, $content . $value, false, $expiration);
     }
 }

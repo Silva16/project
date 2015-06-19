@@ -31,7 +31,7 @@ class Filesystem implements FilesystemInterface
      * Constructor.
      *
      * @param AdapterInterface $adapter
-     * @param Config|array     $config
+     * @param Config|array $config
      */
     public function __construct(AdapterInterface $adapter, $config = null)
     {
@@ -66,7 +66,7 @@ class Filesystem implements FilesystemInterface
     {
         $path = Util::normalizePath($path);
 
-        return (bool) $this->adapter->has($path);
+        return (bool)$this->adapter->has($path);
     }
 
     /**
@@ -78,7 +78,7 @@ class Filesystem implements FilesystemInterface
         $this->assertAbsent($path);
         $config = $this->prepareConfig($config);
 
-        return (bool) $this->adapter->write($path, $contents, $config);
+        return (bool)$this->adapter->write($path, $contents, $config);
     }
 
     /**
@@ -86,8 +86,8 @@ class Filesystem implements FilesystemInterface
      */
     public function writeStream($path, $resource, array $config = [])
     {
-        if (! is_resource($resource)) {
-            throw new InvalidArgumentException(__METHOD__.' expects argument #2 to be a valid resource.');
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException(__METHOD__ . ' expects argument #2 to be a valid resource.');
         }
 
         $path = Util::normalizePath($path);
@@ -96,15 +96,15 @@ class Filesystem implements FilesystemInterface
 
         Util::rewindStream($resource);
 
-        return (bool) $this->adapter->writeStream($path, $resource, $config);
+        return (bool)$this->adapter->writeStream($path, $resource, $config);
     }
 
     /**
      * Create a file or update if exists.
      *
-     * @param string $path     path to file
+     * @param string $path path to file
      * @param string $contents file contents
-     * @param mixed  $config
+     * @param mixed $config
      *
      * @throws FileExistsException
      *
@@ -124,9 +124,9 @@ class Filesystem implements FilesystemInterface
     /**
      * Create a file or update if exists using a stream.
      *
-     * @param string   $path
+     * @param string $path
      * @param resource $resource
-     * @param mixed    $config
+     * @param mixed $config
      *
      * @return bool success boolean
      */
@@ -168,9 +168,9 @@ class Filesystem implements FilesystemInterface
     /**
      * Update a file.
      *
-     * @param string $path     path to file
+     * @param string $path path to file
      * @param string $contents file contents
-     * @param mixed  $config   Config object or visibility setting
+     * @param mixed $config Config object or visibility setting
      *
      * @throws FileNotFoundException
      *
@@ -183,15 +183,15 @@ class Filesystem implements FilesystemInterface
 
         $this->assertPresent($path);
 
-        return (bool) $this->adapter->update($path, $contents, $config);
+        return (bool)$this->adapter->update($path, $contents, $config);
     }
 
     /**
      * Update a file with the contents of a stream.
      *
-     * @param string   $path
+     * @param string $path
      * @param resource $resource
-     * @param mixed    $config   Config object or visibility setting
+     * @param mixed $config Config object or visibility setting
      *
      * @throws InvalidArgumentException
      *
@@ -199,8 +199,8 @@ class Filesystem implements FilesystemInterface
      */
     public function updateStream($path, $resource, array $config = [])
     {
-        if (! is_resource($resource)) {
-            throw new InvalidArgumentException(__METHOD__.' expects argument #2 to be a valid resource.');
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException(__METHOD__ . ' expects argument #2 to be a valid resource.');
         }
 
         $path = Util::normalizePath($path);
@@ -208,7 +208,7 @@ class Filesystem implements FilesystemInterface
         $this->assertPresent($path);
         Util::rewindStream($resource);
 
-        return (bool) $this->adapter->updateStream($path, $resource, $config);
+        return (bool)$this->adapter->updateStream($path, $resource, $config);
     }
 
     /**
@@ -226,7 +226,7 @@ class Filesystem implements FilesystemInterface
         $path = Util::normalizePath($path);
         $this->assertPresent($path);
 
-        if (! ($object = $this->adapter->read($path))) {
+        if (!($object = $this->adapter->read($path))) {
             return false;
         }
 
@@ -245,7 +245,7 @@ class Filesystem implements FilesystemInterface
         $path = Util::normalizePath($path);
         $this->assertPresent($path);
 
-        if (! $object = $this->adapter->readStream($path)) {
+        if (!$object = $this->adapter->readStream($path)) {
             return false;
         }
 
@@ -255,7 +255,7 @@ class Filesystem implements FilesystemInterface
     /**
      * Rename a file.
      *
-     * @param string $path    path to file
+     * @param string $path path to file
      * @param string $newpath new path
      *
      * @throws FileExistsException
@@ -270,7 +270,7 @@ class Filesystem implements FilesystemInterface
         $this->assertPresent($path);
         $this->assertAbsent($newpath);
 
-        return (bool) $this->adapter->rename($path, $newpath);
+        return (bool)$this->adapter->rename($path, $newpath);
     }
 
     /**
@@ -323,7 +323,7 @@ class Filesystem implements FilesystemInterface
             throw new RootViolationException('Root directories can not be deleted.');
         }
 
-        return (bool) $this->adapter->deleteDir($dirname);
+        return (bool)$this->adapter->deleteDir($dirname);
     }
 
     /**
@@ -334,14 +334,14 @@ class Filesystem implements FilesystemInterface
         $dirname = Util::normalizePath($dirname);
         $config = $this->prepareConfig($config);
 
-        return (bool) $this->adapter->createDir($dirname, $config);
+        return (bool)$this->adapter->createDir($dirname, $config);
     }
 
     /**
      * List the filesystem contents.
      *
      * @param string $directory
-     * @param bool   $recursive
+     * @param bool $recursive
      *
      * @return array contents
      */
@@ -352,7 +352,7 @@ class Filesystem implements FilesystemInterface
         $mapper = function ($entry) use ($directory, $recursive) {
             $entry = $entry + Util::pathinfo($entry['path']);
 
-            if (! empty($directory) && strpos($entry['path'], $directory) === false) {
+            if (!empty($directory) && strpos($entry['path'], $directory) === false) {
                 return false;
             }
 
@@ -381,7 +381,7 @@ class Filesystem implements FilesystemInterface
         $path = Util::normalizePath($path);
         $this->assertPresent($path);
 
-        if (! $object = $this->adapter->getMimetype($path)) {
+        if (!$object = $this->adapter->getMimetype($path)) {
             return false;
         }
 
@@ -403,7 +403,7 @@ class Filesystem implements FilesystemInterface
         $path = Util::normalizePath($path);
         $this->assertPresent($path);
 
-        if (! $object = $this->adapter->getTimestamp($path)) {
+        if (!$object = $this->adapter->getTimestamp($path)) {
             return false;
         }
 
@@ -446,13 +446,13 @@ class Filesystem implements FilesystemInterface
             return false;
         }
 
-        return (int) $object['size'];
+        return (int)$object['size'];
     }
 
     /**
      * Get a file's size.
      *
-     * @param string $path       path to file
+     * @param string $path path to file
      * @param string $visibility visibility
      *
      * @return bool success boolean
@@ -461,7 +461,7 @@ class Filesystem implements FilesystemInterface
     {
         $path = Util::normalizePath($path);
 
-        return (bool) $this->adapter->setVisibility($path, $visibility);
+        return (bool)$this->adapter->setVisibility($path, $visibility);
     }
 
     /**
@@ -485,7 +485,7 @@ class Filesystem implements FilesystemInterface
     /**
      * Get a file/directory handler.
      *
-     * @param string  $path
+     * @param string $path
      * @param Handler $handler
      *
      * @return Handler file or directory handler
@@ -494,7 +494,7 @@ class Filesystem implements FilesystemInterface
     {
         $path = Util::normalizePath($path);
 
-        if (! $handler) {
+        if (!$handler) {
             $metadata = $this->getMetadata($path);
             $handler = $metadata['type'] === 'file' ? new File($this, $path) : new Directory($this, $path);
         }
@@ -529,7 +529,7 @@ class Filesystem implements FilesystemInterface
      */
     public function assertPresent($path)
     {
-        if (! $this->has($path)) {
+        if (!$this->has($path)) {
             throw new FileNotFoundException($path);
         }
     }
@@ -552,7 +552,7 @@ class Filesystem implements FilesystemInterface
      * Plugins pass-through.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @throws BadMethodCallException
      *
@@ -565,8 +565,8 @@ class Filesystem implements FilesystemInterface
         } catch (PluginNotFoundException $e) {
             throw new BadMethodCallException(
                 'Call to undefined method '
-                .__CLASS__
-                .'::'.$method
+                . __CLASS__
+                . '::' . $method
             );
         }
     }

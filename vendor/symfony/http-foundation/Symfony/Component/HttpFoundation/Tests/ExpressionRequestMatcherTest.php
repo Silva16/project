@@ -60,9 +60,15 @@ class ExpressionRequestMatcherTest extends \PHPUnit_Framework_TestCase
             array('request.getHost() == host', true),
             array('request.getClientIp() == ip', true),
             array('request.attributes.all() == attributes', true),
-            array('request.getMethod() == method && request.getPathInfo() == path && request.getHost() == host && request.getClientIp() == ip &&  request.attributes.all() == attributes', true),
+            array(
+                'request.getMethod() == method && request.getPathInfo() == path && request.getHost() == host && request.getClientIp() == ip &&  request.attributes.all() == attributes',
+                true
+            ),
             array('request.getMethod() != method', false),
-            array('request.getMethod() != method && request.getPathInfo() == path && request.getHost() == host && request.getClientIp() == ip &&  request.attributes.all() == attributes', false),
+            array(
+                'request.getMethod() != method && request.getPathInfo() == path && request.getHost() == host && request.getClientIp() == ip &&  request.attributes.all() == attributes',
+                false
+            ),
         );
     }
 }

@@ -13,21 +13,21 @@
 
 namespace PhpSpec\Console;
 
-use SebastianBergmann\Exporter\Exporter;
-use PhpSpec\Process\ReRunner;
-use PhpSpec\Util\MethodAnalyser;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use PhpSpec\ServiceContainer;
 use PhpSpec\CodeGenerator;
+use PhpSpec\Config\OptionsConfig;
 use PhpSpec\Formatter as SpecFormatter;
 use PhpSpec\Listener;
 use PhpSpec\Loader;
 use PhpSpec\Locator;
 use PhpSpec\Matcher;
+use PhpSpec\Process\ReRunner;
 use PhpSpec\Runner;
+use PhpSpec\ServiceContainer;
+use PhpSpec\Util\MethodAnalyser;
 use PhpSpec\Wrapper;
-use PhpSpec\Config\OptionsConfig;
 use RuntimeException;
+use SebastianBergmann\Exporter\Exporter;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Process\PhpExecutableFinder;
 
 class ContainerAssembler
@@ -143,13 +143,14 @@ class ContainerAssembler
                 $c->get('code_generator')
             );
         });
-        $container->setShared('event_dispatcher.listeners.collaborator_method_not_found', function (ServiceContainer $c) {
-            return new Listener\CollaboratorMethodNotFoundListener(
-                $c->get('console.io'),
-                $c->get('locator.resource_manager'),
-                $c->get('code_generator')
-            );
-        });
+        $container->setShared('event_dispatcher.listeners.collaborator_method_not_found',
+            function (ServiceContainer $c) {
+                return new Listener\CollaboratorMethodNotFoundListener(
+                    $c->get('console.io'),
+                    $c->get('locator.resource_manager'),
+                    $c->get('code_generator')
+                );
+            });
         $container->setShared('event_dispatcher.listeners.named_constructor_not_found', function (ServiceContainer $c) {
             return new Listener\NamedConstructorNotFoundListener(
                 $c->get('console.io'),
@@ -260,14 +261,14 @@ class ContainerAssembler
         });
 
         if (!empty($_SERVER['HOMEDRIVE']) && !empty($_SERVER['HOMEPATH'])) {
-            $home = $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'];
+            $home = $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'];
         } else {
             $home = $_SERVER['HOME'];
         }
 
         $container->setParam('code_generator.templates.paths', array(
-            rtrim(getcwd(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'.phpspec',
-            rtrim($home, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'.phpspec',
+            rtrim(getcwd(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.phpspec',
+            rtrim($home, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.phpspec',
         ));
     }
 
@@ -325,13 +326,13 @@ class ContainerAssembler
             $suites = $c->getParam('suites', array('main' => ''));
 
             foreach ($suites as $name => $suite) {
-                $suite      = is_array($suite) ? $suite : array('namespace' => $suite);
+                $suite = is_array($suite) ? $suite : array('namespace' => $suite);
                 $defaults = array(
-                    'namespace'     => '',
-                    'spec_prefix'   => 'spec',
-                    'src_path'      => 'src',
-                    'spec_path'     => '.',
-                    'psr4_prefix'   => null
+                    'namespace' => '',
+                    'spec_prefix' => 'spec',
+                    'src_path' => 'src',
+                    'spec_path' => '.',
+                    'psr4_prefix' => null
                 );
 
                 $config = array_merge($defaults, $suite);
@@ -458,7 +459,7 @@ class ContainerAssembler
             ));
 
             try {
-                $formatter = $c->get('formatter.formatters.'.$formatterName);
+                $formatter = $c->get('formatter.formatters.' . $formatterName);
             } catch (\InvalidArgumentException $e) {
                 throw new \RuntimeException(sprintf('Formatter not recognised: "%s"', $formatterName));
             }
@@ -513,6 +514,7 @@ class ContainerAssembler
 
         $container->set('runner.maintainers.matchers', function (ServiceContainer $c) {
             $matchers = $c->getByPrefix('matchers');
+
             return new Runner\Maintainer\MatchersMaintainer(
                 $c->get('formatter.presenter'),
                 $matchers

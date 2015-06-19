@@ -19,7 +19,7 @@ namespace SebastianBergmann\Environment;
  */
 class Console
 {
-    const STDIN  = 0;
+    const STDIN = 0;
     const STDOUT = 1;
     const STDERR = 2;
 
@@ -62,11 +62,11 @@ class Console
         }
 
         if (preg_match('#\d+ (\d+)#', shell_exec('stty size'), $match) === 1) {
-            return (int) $match[1];
+            return (int)$match[1];
         }
 
         if (preg_match('#columns = (\d+);#', shell_exec('stty'), $match) === 1) {
-            return (int) $match[1];
+            return (int)$match[1];
         }
 
         return 80;

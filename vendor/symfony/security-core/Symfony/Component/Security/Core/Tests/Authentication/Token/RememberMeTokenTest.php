@@ -58,8 +58,7 @@ class RememberMeTokenTest extends \PHPUnit_Framework_TestCase
         $user
             ->expects($this->once())
             ->method('getRoles')
-            ->will($this->returnValue($roles))
-        ;
+            ->will($this->returnValue($roles));
 
         return $user;
     }

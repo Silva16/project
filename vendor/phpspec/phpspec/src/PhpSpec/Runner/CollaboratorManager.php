@@ -38,7 +38,7 @@ class CollaboratorManager
     }
 
     /**
-     * @param string       $name
+     * @param string $name
      * @param Collaborator $collaborator
      */
     public function set($name, $collaborator)

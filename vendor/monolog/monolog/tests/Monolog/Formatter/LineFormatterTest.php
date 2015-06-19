@@ -27,7 +27,7 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
             'datetime' => new \DateTime,
             'extra' => array(),
         ));
-        $this->assertEquals('['.date('Y-m-d').'] log.WARNING: foo [] []'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] log.WARNING: foo [] []' . "\n", $message);
     }
 
     public function testDefFormatWithArrayContext()
@@ -46,7 +46,8 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
                 'null' => null,
             )
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foo {"foo":"bar","baz":"qux","bool":false,"null":null} []'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] meh.ERROR: foo {"foo":"bar","baz":"qux","bool":false,"null":null} []' . "\n",
+            $message);
     }
 
     public function testDefFormatExtras()
@@ -60,12 +61,13 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
             'extra' => array('ip' => '127.0.0.1'),
             'message' => 'log',
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log [] {"ip":"127.0.0.1"}'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] meh.ERROR: log [] {"ip":"127.0.0.1"}' . "\n", $message);
     }
 
     public function testFormatExtras()
     {
-        $formatter = new LineFormatter("[%datetime%] %channel%.%level_name%: %message% %context% %extra.file% %extra%\n", 'Y-m-d');
+        $formatter = new LineFormatter("[%datetime%] %channel%.%level_name%: %message% %context% %extra.file% %extra%\n",
+            'Y-m-d');
         $message = $formatter->format(array(
             'level_name' => 'ERROR',
             'channel' => 'meh',
@@ -74,7 +76,7 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
             'extra' => array('ip' => '127.0.0.1', 'file' => 'test'),
             'message' => 'log',
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log [] test {"ip":"127.0.0.1"}'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] meh.ERROR: log [] test {"ip":"127.0.0.1"}' . "\n", $message);
     }
 
     public function testContextAndExtraOptionallyNotShownIfEmpty()
@@ -88,7 +90,7 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
             'extra' => array(),
             'message' => 'log',
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log  '."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] meh.ERROR: log  ' . "\n", $message);
     }
 
     public function testDefFormatWithObject()
@@ -99,11 +101,17 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
             'channel' => 'meh',
             'context' => array(),
             'datetime' => new \DateTime,
-            'extra' => array('foo' => new TestFoo, 'bar' => new TestBar, 'baz' => array(), 'res' => fopen('php://memory', 'rb')),
+            'extra' => array(
+                'foo' => new TestFoo,
+                'bar' => new TestBar,
+                'baz' => array(),
+                'res' => fopen('php://memory', 'rb')
+            ),
             'message' => 'foobar',
         ));
 
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar [] {"foo":"[object] (Monolog\\\\Formatter\\\\TestFoo: {\\"foo\\":\\"foo\\"})","bar":"[object] (Monolog\\\\Formatter\\\\TestBar: {})","baz":[],"res":"[resource]"}'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] meh.ERROR: foobar [] {"foo":"[object] (Monolog\\\\Formatter\\\\TestFoo: {\\"foo\\":\\"foo\\"})","bar":"[object] (Monolog\\\\Formatter\\\\TestBar: {})","baz":[],"res":"[resource]"}' . "\n",
+            $message);
     }
 
     public function testDefFormatWithException()
@@ -120,7 +128,8 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
 
         $path = str_replace('\\/', '/', json_encode(__FILE__));
 
-        $this->assertEquals('['.date('Y-m-d').'] core.CRITICAL: foobar {"exception":"[object] (RuntimeException(code: 0): Foo at '.substr($path, 1, -1).':'.(__LINE__-8).')"} []'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] core.CRITICAL: foobar {"exception":"[object] (RuntimeException(code: 0): Foo at ' . substr($path,
+                1, -1) . ':' . (__LINE__ - 8) . ')"} []' . "\n", $message);
     }
 
     public function testDefFormatWithPreviousException()
@@ -138,7 +147,9 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
 
         $path = str_replace('\\/', '/', json_encode(__FILE__));
 
-        $this->assertEquals('['.date('Y-m-d').'] core.CRITICAL: foobar {"exception":"[object] (RuntimeException(code: 0): Foo at '.substr($path, 1, -1).':'.(__LINE__-8).', LogicException(code: 0): Wut? at '.substr($path, 1, -1).':'.(__LINE__-12).')"} []'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] core.CRITICAL: foobar {"exception":"[object] (RuntimeException(code: 0): Foo at ' . substr($path,
+                1, -1) . ':' . (__LINE__ - 8) . ', LogicException(code: 0): Wut? at ' . substr($path, 1,
+                -1) . ':' . (__LINE__ - 12) . ')"} []' . "\n", $message);
     }
 
     public function testBatchFormat()
@@ -162,7 +173,8 @@ class LineFormatterTest extends \PHPUnit_Framework_TestCase
                 'extra' => array(),
             ),
         ));
-        $this->assertEquals('['.date('Y-m-d').'] test.CRITICAL: bar [] []'."\n".'['.date('Y-m-d').'] log.WARNING: foo [] []'."\n", $message);
+        $this->assertEquals('[' . date('Y-m-d') . '] test.CRITICAL: bar [] []' . "\n" . '[' . date('Y-m-d') . '] log.WARNING: foo [] []' . "\n",
+            $message);
     }
 
     public function testFormatShouldStripInlineLineBreaks()

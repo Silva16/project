@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Formatter;
 
-use PhpSpec\Event\SuiteEvent;
-use PhpSpec\Event\SpecificationEvent;
 use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Event\SpecificationEvent;
+use PhpSpec\Event\SuiteEvent;
 
 class PrettyFormatter extends ConsoleFormatter
 {
@@ -27,7 +27,7 @@ class PrettyFormatter extends ConsoleFormatter
     public function afterExample(ExampleEvent $event)
     {
         $io = $this->getIO();
-        $line  = $event->getExample()->getFunctionReflection()->getStartLine();
+        $line = $event->getExample()->getFunctionReflection()->getStartLine();
         $depth = 2;
         $title = preg_replace('/^it /', '', $event->getExample()->getTitle());
 
@@ -62,10 +62,10 @@ class PrettyFormatter extends ConsoleFormatter
         $io->writeln();
 
         foreach (array(
-            'failed' => $this->getStatisticsCollector()->getFailedEvents(),
-            'broken' => $this->getStatisticsCollector()->getBrokenEvents(),
-            'skipped' => $this->getStatisticsCollector()->getSkippedEvents(),
-        ) as $status => $events) {
+                     'failed' => $this->getStatisticsCollector()->getFailedEvents(),
+                     'broken' => $this->getStatisticsCollector()->getBrokenEvents(),
+                     'skipped' => $this->getStatisticsCollector()->getSkippedEvents(),
+                 ) as $status => $events) {
             if (!count($events)) {
                 continue;
             }

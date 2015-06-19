@@ -31,8 +31,8 @@ class JsonResponse extends Response
     /**
      * Constructor.
      *
-     * @param mixed $data    The response data
-     * @param int   $status  The response status code
+     * @param mixed $data The response data
+     * @param int $status The response status code
      * @param array $headers An array of response headers
      */
     public function __construct($data = null, $status = 200, $headers = array())
@@ -145,7 +145,7 @@ class JsonResponse extends Response
      */
     public function setEncodingOptions($encodingOptions)
     {
-        $this->encodingOptions = (int) $encodingOptions;
+        $this->encodingOptions = (int)$encodingOptions;
 
         return $this->setData(json_decode($this->data));
     }

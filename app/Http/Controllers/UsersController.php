@@ -2,14 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
-use App\Project;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
-use App\Http\Controllers\Controller;
 use App\Institution;
 use App\User;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 
 class UsersController extends Controller
 {
@@ -34,23 +30,29 @@ class UsersController extends Controller
         }
 
         $users = User::with(array('institution'))->orderBy($sort, $order);
-        if(Input::get('name') != '')
-            $users->where('name', 'LIKE', '%'.Input::get('name').'%');
+        if (Input::get('name') != '') {
+            $users->where('name', 'LIKE', '%' . Input::get('name') . '%');
+        }
 
-        if(Input::get('position') != '')
-            $users->where('position', 'LIKE', '%'.Input::get('position').'%');
+        if (Input::get('position') != '') {
+            $users->where('position', 'LIKE', '%' . Input::get('position') . '%');
+        }
 
-        if(Input::get('email') != '')
-            $users->where('email', 'LIKE', '%'.Input::get('email').'%');
+        if (Input::get('email') != '') {
+            $users->where('email', 'LIKE', '%' . Input::get('email') . '%');
+        }
 
-        if(Input::get('id') != 0)
+        if (Input::get('id') != 0) {
             $users->where('id', '=', Input::get('id'));
-        if(Input::get('institution') != 0)
+        }
+        if (Input::get('institution') != 0) {
             $users->where('institution_id', '=', Input::get('institution'));
-        if(Input::get('role') != 0)
+        }
+        if (Input::get('role') != 0) {
             $users->where('role', '=', Input::get('role'));
+        }
 
-        $users = $users ->paginate(10);
+        $users = $users->paginate(10);
 
         foreach ($users as $user) {
             $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
@@ -59,7 +61,7 @@ class UsersController extends Controller
 
         $institutions[0] = "Escolha uma opção...";
         $institutionsAux = Institution::get();
-        foreach($institutionsAux as $institution){
+        foreach ($institutionsAux as $institution) {
             $institutions[$institution->id] = $institution->name;
         }
         $role[0] = "Escolha uma opção...";
@@ -212,17 +214,17 @@ class UsersController extends Controller
         $user->save();
 
 
-
         return redirect('users/admin');
     }
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
         $user = User::find($id);
 
         $user->delete();
@@ -246,28 +248,36 @@ class UsersController extends Controller
         }
 
         $users = User::with(array('institution'))->orderBy($sort, $order);
-        if(Input::get('name') != '')
-            $users->where('name', 'LIKE', '%'.Input::get('name').'%');
+        if (Input::get('name') != '') {
+            $users->where('name', 'LIKE', '%' . Input::get('name') . '%');
+        }
 
-        if(Input::get('position') != '')
-            $users->where('position', 'LIKE', '%'.Input::get('position').'%');
+        if (Input::get('position') != '') {
+            $users->where('position', 'LIKE', '%' . Input::get('position') . '%');
+        }
 
-        if(Input::get('email') != '')
-            $users->where('email', 'LIKE', '%'.Input::get('email').'%');
+        if (Input::get('email') != '') {
+            $users->where('email', 'LIKE', '%' . Input::get('email') . '%');
+        }
 
-        if(Input::get('altemail') != '')
-            $users->where('alt_email', 'LIKE', '%'.Input::get('altemail').'%');
+        if (Input::get('altemail') != '') {
+            $users->where('alt_email', 'LIKE', '%' . Input::get('altemail') . '%');
+        }
 
-        if(Input::get('id') != 0)
+        if (Input::get('id') != 0) {
             $users->where('id', '=', Input::get('id'));
-        if(Input::get('flags') != 0)
+        }
+        if (Input::get('flags') != 0) {
             $users->where('flags', '=', Input::get('flags'));
-        if(Input::get('institution') != 0)
+        }
+        if (Input::get('institution') != 0) {
             $users->where('institution_id', '=', Input::get('institution'));
-        if(Input::get('role') != 0)
+        }
+        if (Input::get('role') != 0) {
             $users->where('role', '=', Input::get('role'));
+        }
 
-        $users = $users ->paginate(10);
+        $users = $users->paginate(10);
 
         foreach ($users as $user) {
             $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
@@ -276,7 +286,7 @@ class UsersController extends Controller
 
         $institutions[0] = "Escolha uma opção...";
         $institutionsAux = Institution::get();
-        foreach($institutionsAux as $institution){
+        foreach ($institutionsAux as $institution) {
             $institutions[$institution->id] = $institution->name;
         }
         $role[0] = "Escolha uma opção...";

@@ -1,7 +1,7 @@
 @extends('header')
 @section('title')
     Lista de Utilizadores
-    @endsection
+@endsection
 @section('content')
     <div class="table-responsive">
         <table class="table">
@@ -51,7 +51,6 @@
         {!! $users->appends(Request::except('page'))->render() !!}
 
 
-
-</div>
+    </div>
 
 @endsection

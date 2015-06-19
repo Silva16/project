@@ -14,9 +14,9 @@ namespace Symfony\Component\Routing\Tests\Matcher;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RequestContext;
 
 class UrlMatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -165,11 +165,13 @@ class UrlMatcherTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new RouteCollection();
         $chars = '!"$%éà &\'()*+,./:;<=>@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[]^_`abcdefghijklmnopqrstuvwxyz{|}~-';
-        $collection->add('foo', new Route('/{foo}/bar', array(), array('foo' => '['.preg_quote($chars).']+')));
+        $collection->add('foo', new Route('/{foo}/bar', array(), array('foo' => '[' . preg_quote($chars) . ']+')));
 
         $matcher = new UrlMatcher($collection, new RequestContext());
-        $this->assertEquals(array('_route' => 'foo', 'foo' => $chars), $matcher->match('/'.rawurlencode($chars).'/bar'));
-        $this->assertEquals(array('_route' => 'foo', 'foo' => $chars), $matcher->match('/'.strtr($chars, array('%' => '%25')).'/bar'));
+        $this->assertEquals(array('_route' => 'foo', 'foo' => $chars),
+            $matcher->match('/' . rawurlencode($chars) . '/bar'));
+        $this->assertEquals(array('_route' => 'foo', 'foo' => $chars),
+            $matcher->match('/' . strtr($chars, array('%' => '%25')) . '/bar'));
     }
 
     public function testMatchWithDotMetacharacterInRequirements()
@@ -178,7 +180,8 @@ class UrlMatcherTest extends \PHPUnit_Framework_TestCase
         $collection->add('foo', new Route('/{foo}/bar', array(), array('foo' => '.+')));
 
         $matcher = new UrlMatcher($collection, new RequestContext());
-        $this->assertEquals(array('_route' => 'foo', 'foo' => "\n"), $matcher->match('/'.urlencode("\n").'/bar'), 'linefeed character is matched');
+        $this->assertEquals(array('_route' => 'foo', 'foo' => "\n"), $matcher->match('/' . urlencode("\n") . '/bar'),
+            'linefeed character is matched');
     }
 
     public function testMatchOverriddenRoute()
@@ -223,7 +226,8 @@ class UrlMatcherTest extends \PHPUnit_Framework_TestCase
         $coll->add('test', new Route('/{page}.{_format}', array('page' => 'index', '_format' => 'html')));
 
         $matcher = new UrlMatcher($coll, new RequestContext());
-        $this->assertEquals(array('page' => 'my-page', '_format' => 'xml', '_route' => 'test'), $matcher->match('/my-page.xml'));
+        $this->assertEquals(array('page' => 'my-page', '_format' => 'xml', '_route' => 'test'),
+            $matcher->match('/my-page.xml'));
     }
 
     public function testMatchingIsEager()
@@ -232,24 +236,47 @@ class UrlMatcherTest extends \PHPUnit_Framework_TestCase
         $coll->add('test', new Route('/{foo}-{bar}-', array(), array('foo' => '.+', 'bar' => '.+')));
 
         $matcher = new UrlMatcher($coll, new RequestContext());
-        $this->assertEquals(array('foo' => 'text1-text2-text3', 'bar' => 'text4', '_route' => 'test'), $matcher->match('/text1-text2-text3-text4-'));
+        $this->assertEquals(array('foo' => 'text1-text2-text3', 'bar' => 'text4', '_route' => 'test'),
+            $matcher->match('/text1-text2-text3-text4-'));
     }
 
     public function testAdjacentVariables()
     {
         $coll = new RouteCollection();
-        $coll->add('test', new Route('/{w}{x}{y}{z}.{_format}', array('z' => 'default-z', '_format' => 'html'), array('y' => 'y|Y')));
+        $coll->add('test',
+            new Route('/{w}{x}{y}{z}.{_format}', array('z' => 'default-z', '_format' => 'html'), array('y' => 'y|Y')));
 
         $matcher = new UrlMatcher($coll, new RequestContext());
         // 'w' eagerly matches as much as possible and the other variables match the remaining chars.
         // This also shows that the variables w-z must all exclude the separating char (the dot '.' in this case) by default requirement.
         // Otherwise they would also consume '.xml' and _format would never match as it's an optional variable.
-        $this->assertEquals(array('w' => 'wwwww', 'x' => 'x', 'y' => 'Y', 'z' => 'Z', '_format' => 'xml', '_route' => 'test'), $matcher->match('/wwwwwxYZ.xml'));
+        $this->assertEquals(array(
+            'w' => 'wwwww',
+            'x' => 'x',
+            'y' => 'Y',
+            'z' => 'Z',
+            '_format' => 'xml',
+            '_route' => 'test'
+        ), $matcher->match('/wwwwwxYZ.xml'));
         // As 'y' has custom requirement and can only be of value 'y|Y', it will leave  'ZZZ' to variable z.
         // So with carefully chosen requirements adjacent variables, can be useful.
-        $this->assertEquals(array('w' => 'wwwww', 'x' => 'x', 'y' => 'y', 'z' => 'ZZZ', '_format' => 'html', '_route' => 'test'), $matcher->match('/wwwwwxyZZZ'));
+        $this->assertEquals(array(
+            'w' => 'wwwww',
+            'x' => 'x',
+            'y' => 'y',
+            'z' => 'ZZZ',
+            '_format' => 'html',
+            '_route' => 'test'
+        ), $matcher->match('/wwwwwxyZZZ'));
         // z and _format are optional.
-        $this->assertEquals(array('w' => 'wwwww', 'x' => 'x', 'y' => 'y', 'z' => 'default-z', '_format' => 'html', '_route' => 'test'), $matcher->match('/wwwwwxy'));
+        $this->assertEquals(array(
+            'w' => 'wwwww',
+            'x' => 'x',
+            'y' => 'y',
+            'z' => 'default-z',
+            '_format' => 'html',
+            '_route' => 'test'
+        ), $matcher->match('/wwwwwxy'));
 
         $this->setExpectedException('Symfony\Component\Routing\Exception\ResourceNotFoundException');
         $matcher->match('/wxy.html');
@@ -285,7 +312,8 @@ class UrlMatcherTest extends \PHPUnit_Framework_TestCase
         $coll->add('test', new Route('/{page}.{_format}'));
         $matcher = new UrlMatcher($coll, new RequestContext());
 
-        $this->assertEquals(array('page' => 'index', '_format' => 'mobile.html', '_route' => 'test'), $matcher->match('/index.mobile.html'));
+        $this->assertEquals(array('page' => 'index', '_format' => 'mobile.html', '_route' => 'test'),
+            $matcher->match('/index.mobile.html'));
     }
 
     /**
@@ -322,6 +350,7 @@ class UrlMatcherTest extends \PHPUnit_Framework_TestCase
         $matcher = new UrlMatcher($coll, new RequestContext());
         $matcher->match('/foo');
     }
+
     /**
      * @expectedException \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */

@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\Security\Core\Authentication\Token;
 
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Base class for Token instances.
@@ -43,7 +43,8 @@ abstract class AbstractToken implements TokenInterface
             if (is_string($role)) {
                 $role = new Role($role);
             } elseif (!$role instanceof RoleInterface) {
-                throw new \InvalidArgumentException(sprintf('$roles must be an array of strings, or RoleInterface instances, but got %s.', gettype($role)));
+                throw new \InvalidArgumentException(sprintf('$roles must be an array of strings, or RoleInterface instances, but got %s.',
+                    gettype($role)));
             }
 
             $this->roles[] = $role;
@@ -67,7 +68,7 @@ abstract class AbstractToken implements TokenInterface
             return $this->user->getUsername();
         }
 
-        return (string) $this->user;
+        return (string)$this->user;
     }
 
     /**
@@ -90,7 +91,9 @@ abstract class AbstractToken implements TokenInterface
      */
     public function setUser($user)
     {
-        if (!($user instanceof UserInterface || (is_object($user) && method_exists($user, '__toString')) || is_string($user))) {
+        if (!($user instanceof UserInterface || (is_object($user) && method_exists($user,
+                    '__toString')) || is_string($user))
+        ) {
             throw new \InvalidArgumentException('$user must be an instanceof UserInterface, an object implementing a __toString method, or a primitive string.');
         }
 
@@ -105,7 +108,7 @@ abstract class AbstractToken implements TokenInterface
         } elseif ($user instanceof UserInterface) {
             $changed = true;
         } else {
-            $changed = (string) $this->user !== (string) $user;
+            $changed = (string)$this->user !== (string)$user;
         }
 
         if ($changed) {
@@ -128,7 +131,7 @@ abstract class AbstractToken implements TokenInterface
      */
     public function setAuthenticated($authenticated)
     {
-        $this->authenticated = (bool) $authenticated;
+        $this->authenticated = (bool)$authenticated;
     }
 
     /**
@@ -217,8 +220,8 @@ abstract class AbstractToken implements TokenInterface
     /**
      * Sets an attribute.
      *
-     * @param string $name  The attribute name
-     * @param mixed  $value The attribute value
+     * @param string $name The attribute name
+     * @param mixed $value The attribute value
      */
     public function setAttribute($name, $value)
     {
@@ -238,7 +241,8 @@ abstract class AbstractToken implements TokenInterface
             $roles[] = $role->getRole();
         }
 
-        return sprintf('%s(user="%s", authenticated=%s, roles="%s")', $class, $this->getUsername(), json_encode($this->authenticated), implode(', ', $roles));
+        return sprintf('%s(user="%s", authenticated=%s, roles="%s")', $class, $this->getUsername(),
+            json_encode($this->authenticated), implode(', ', $roles));
     }
 
     private function hasUserChanged(UserInterface $user)
@@ -248,7 +252,7 @@ abstract class AbstractToken implements TokenInterface
         }
 
         if ($this->user instanceof EquatableInterface) {
-            return !(bool) $this->user->isEqualTo($user);
+            return !(bool)$this->user->isEqualTo($user);
         }
 
         if ($this->user->getPassword() !== $user->getPassword()) {

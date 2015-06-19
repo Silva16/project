@@ -58,9 +58,9 @@ class ContainerAwareEventDispatcher extends EventDispatcher
      * Adds a service as event listener.
      *
      * @param string $eventName Event for which the listener is added
-     * @param array  $callback  The service ID of the listener service & the method
+     * @param array $callback The service ID of the listener service & the method
      *                          name that has to be called
-     * @param int    $priority  The higher this value, the earlier an event listener
+     * @param int $priority The higher this value, the earlier an event listener
      *                          will be triggered in the chain.
      *                          Defaults to 0.
      *
@@ -82,8 +82,12 @@ class ContainerAwareEventDispatcher extends EventDispatcher
         if (isset($this->listenerIds[$eventName])) {
             foreach ($this->listenerIds[$eventName] as $i => $args) {
                 list($serviceId, $method, $priority) = $args;
-                $key = $serviceId.'.'.$method;
-                if (isset($this->listeners[$eventName][$key]) && $listener === array($this->listeners[$eventName][$key], $method)) {
+                $key = $serviceId . '.' . $method;
+                if (isset($this->listeners[$eventName][$key]) && $listener === array(
+                        $this->listeners[$eventName][$key],
+                        $method
+                    )
+                ) {
                     unset($this->listeners[$eventName][$key]);
                     if (empty($this->listeners[$eventName])) {
                         unset($this->listeners[$eventName]);
@@ -105,7 +109,7 @@ class ContainerAwareEventDispatcher extends EventDispatcher
     public function hasListeners($eventName = null)
     {
         if (null === $eventName) {
-            return (bool) count($this->listenerIds) || (bool) count($this->listeners);
+            return (bool)count($this->listenerIds) || (bool)count($this->listeners);
         }
 
         if (isset($this->listenerIds[$eventName])) {
@@ -135,7 +139,7 @@ class ContainerAwareEventDispatcher extends EventDispatcher
      * Adds a service as event subscriber.
      *
      * @param string $serviceId The service ID of the subscriber service
-     * @param string $class     The service's class name (which must implement EventSubscriberInterface)
+     * @param string $class The service's class name (which must implement EventSubscriberInterface)
      */
     public function addSubscriberService($serviceId, $class)
     {
@@ -146,7 +150,11 @@ class ContainerAwareEventDispatcher extends EventDispatcher
                 $this->listenerIds[$eventName][] = array($serviceId, $params[0], isset($params[1]) ? $params[1] : 0);
             } else {
                 foreach ($params as $listener) {
-                    $this->listenerIds[$eventName][] = array($serviceId, $listener[0], isset($listener[1]) ? $listener[1] : 0);
+                    $this->listenerIds[$eventName][] = array(
+                        $serviceId,
+                        $listener[0],
+                        isset($listener[1]) ? $listener[1] : 0
+                    );
                 }
             }
         }
@@ -187,7 +195,7 @@ class ContainerAwareEventDispatcher extends EventDispatcher
                 list($serviceId, $method, $priority) = $args;
                 $listener = $this->container->get($serviceId);
 
-                $key = $serviceId.'.'.$method;
+                $key = $serviceId . '.' . $method;
                 if (!isset($this->listeners[$eventName][$key])) {
                     $this->addListener($eventName, array($listener, $method), $priority);
                 } elseif ($listener !== $this->listeners[$eventName][$key]) {

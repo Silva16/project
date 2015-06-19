@@ -35,12 +35,12 @@ class ExampleNode
     private $isPending = false;
 
     /**
-     * @param string                     $title
+     * @param string $title
      * @param ReflectionFunctionAbstract $function
      */
     public function __construct($title, ReflectionFunctionAbstract $function)
     {
-        $this->title    = $title;
+        $this->title = $title;
         $this->function = $function;
     }
 

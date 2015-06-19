@@ -2,19 +2,24 @@
 
 namespace spec\PhpSpec\Event;
 
-use PhpSpec\ObjectBehavior;
-use PhpSpec\Loader\Suite;
-use PhpSpec\Loader\Node\SpecificationNode;
-use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\Matcher\MatcherInterface;
-use Prophecy\Argument;
 use Exception;
+use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\Loader\Node\SpecificationNode;
+use PhpSpec\Loader\Suite;
+use PhpSpec\Matcher\MatcherInterface;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class ExpectationEventSpec extends ObjectBehavior
 {
-    function let(Suite $suite, SpecificationNode $specification, ExampleNode $example,
-                 MatcherInterface $matcher, $subject, Exception $exception)
-    {
+    function let(
+        Suite $suite,
+        SpecificationNode $specification,
+        ExampleNode $example,
+        MatcherInterface $matcher,
+        $subject,
+        Exception $exception
+    ) {
         $method = 'calledMethod';
         $arguments = array('methodArguments');
 

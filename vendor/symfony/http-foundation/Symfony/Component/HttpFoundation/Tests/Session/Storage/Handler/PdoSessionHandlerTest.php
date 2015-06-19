@@ -36,7 +36,7 @@ class PdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->dbFile = tempnam(sys_get_temp_dir(), 'sf2_sqlite_sessions');
 
-        return 'sqlite:'.$this->dbFile;
+        return 'sqlite:' . $this->dbFile;
     }
 
     protected function getMemorySqlitePdo()
@@ -120,7 +120,7 @@ class PdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testReadWriteReadWithNullByte()
     {
-        $sessionData = 'da'."\0".'ta';
+        $sessionData = 'da' . "\0" . 'ta';
 
         $storage = new PdoSessionHandler($this->getMemorySqlitePdo());
         $storage->open('', 'sid');
@@ -199,7 +199,8 @@ class PdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $storage->close();
 
         $this->assertSame('', $readDataCaseSensitive, 'Retrieval by ID should be case-sensitive (collation setting)');
-        $this->assertSame('', $readDataNoCharFolding, 'Retrieval by ID should not do character folding (collation setting)');
+        $this->assertSame('', $readDataNoCharFolding,
+            'Retrieval by ID should not do character folding (collation setting)');
         $this->assertSame('data', $readDataKeepSpace, 'Retrieval by ID requires spaces as-is');
         $this->assertSame('', $readDataExtraSpace, 'Retrieval by ID requires spaces as-is');
     }
@@ -278,7 +279,8 @@ class PdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
         ini_set('session.gc_maxlifetime', -1); // test that you can set lifetime of a session after it has been read
         $storage->write('gc_id', 'data');
         $storage->close();
-        $this->assertEquals(2, $pdo->query('SELECT COUNT(*) FROM sessions')->fetchColumn(), 'No session pruned because gc not called');
+        $this->assertEquals(2, $pdo->query('SELECT COUNT(*) FROM sessions')->fetchColumn(),
+            'No session pruned because gc not called');
 
         $storage->open('', 'sid');
         $data = $storage->read('gc_id');
@@ -287,8 +289,10 @@ class PdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
 
         ini_set('session.gc_maxlifetime', $previousLifeTime);
 
-        $this->assertSame('', $data, 'Session already considered garbage, so not returning data even if it is not pruned yet');
-        $this->assertEquals(1, $pdo->query('SELECT COUNT(*) FROM sessions')->fetchColumn(), 'Expired session is pruned');
+        $this->assertSame('', $data,
+            'Session already considered garbage, so not returning data even if it is not pruned yet');
+        $this->assertEquals(1, $pdo->query('SELECT COUNT(*) FROM sessions')->fetchColumn(),
+            'Expired session is pruned');
     }
 
     public function testGetConnection()

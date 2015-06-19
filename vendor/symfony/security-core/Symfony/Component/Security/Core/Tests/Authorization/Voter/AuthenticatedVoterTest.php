@@ -42,15 +42,12 @@ class AuthenticatedVoterTest extends \PHPUnit_Framework_TestCase
             array('remembered', array('FOO'), VoterInterface::ACCESS_ABSTAIN),
             array('anonymously', array(), VoterInterface::ACCESS_ABSTAIN),
             array('anonymously', array('FOO'), VoterInterface::ACCESS_ABSTAIN),
-
             array('fully', array('IS_AUTHENTICATED_ANONYMOUSLY'), VoterInterface::ACCESS_GRANTED),
             array('remembered', array('IS_AUTHENTICATED_ANONYMOUSLY'), VoterInterface::ACCESS_GRANTED),
             array('anonymously', array('IS_AUTHENTICATED_ANONYMOUSLY'), VoterInterface::ACCESS_GRANTED),
-
             array('fully', array('IS_AUTHENTICATED_REMEMBERED'), VoterInterface::ACCESS_GRANTED),
             array('remembered', array('IS_AUTHENTICATED_REMEMBERED'), VoterInterface::ACCESS_GRANTED),
             array('anonymously', array('IS_AUTHENTICATED_REMEMBERED'), VoterInterface::ACCESS_DENIED),
-
             array('fully', array('IS_AUTHENTICATED_FULLY'), VoterInterface::ACCESS_GRANTED),
             array('remembered', array('IS_AUTHENTICATED_FULLY'), VoterInterface::ACCESS_DENIED),
             array('anonymously', array('IS_AUTHENTICATED_FULLY'), VoterInterface::ACCESS_DENIED),
@@ -70,9 +67,11 @@ class AuthenticatedVoterTest extends \PHPUnit_Framework_TestCase
         if ('fully' === $authenticated) {
             return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         } elseif ('remembered' === $authenticated) {
-            return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken', array('setPersistent'), array(), '', false);
+            return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken',
+                array('setPersistent'), array(), '', false);
         } else {
-            return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', null, array('', ''));
+            return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', null,
+                array('', ''));
         }
     }
 }

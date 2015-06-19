@@ -11,16 +11,16 @@
 
 namespace Symfony\Component\Debug;
 
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\Debug\Exception\FatalBaseException;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\Debug\Exception\OutOfMemoryException;
-use Symfony\Component\Debug\FatalErrorHandler\UndefinedFunctionFatalErrorHandler;
-use Symfony\Component\Debug\FatalErrorHandler\UndefinedMethodFatalErrorHandler;
 use Symfony\Component\Debug\FatalErrorHandler\ClassNotFoundFatalErrorHandler;
 use Symfony\Component\Debug\FatalErrorHandler\FatalErrorHandlerInterface;
+use Symfony\Component\Debug\FatalErrorHandler\UndefinedFunctionFatalErrorHandler;
+use Symfony\Component\Debug\FatalErrorHandler\UndefinedMethodFatalErrorHandler;
 
 /**
  * A generic ErrorHandler for the PHP engine.
@@ -112,7 +112,7 @@ class ErrorHandler
      * Registers the error handler.
      *
      * @param self|null|int $handler The handler to register, or @deprecated (since 2.6, to be removed in 3.0) bit field of thrown levels
-     * @param bool          $replace Whether to replace or not any existing handler
+     * @param bool $replace Whether to replace or not any existing handler
      *
      * @return self The registered error handler
      */
@@ -120,7 +120,7 @@ class ErrorHandler
     {
         if (null === self::$reservedMemory) {
             self::$reservedMemory = str_repeat('x', 10240);
-            register_shutdown_function(__CLASS__.'::handleFatalError');
+            register_shutdown_function(__CLASS__ . '::handleFatalError');
         }
 
         $levels = -1;
@@ -154,9 +154,9 @@ class ErrorHandler
     /**
      * Sets a logger to non assigned errors levels.
      *
-     * @param LoggerInterface $logger  A PSR-3 logger to put as default for the given levels
-     * @param array|int       $levels  An array map of E_* to LogLevel::* or an integer bit field of E_* constants
-     * @param bool            $replace Whether to replace or not any existing logger
+     * @param LoggerInterface $logger A PSR-3 logger to put as default for the given levels
+     * @param array|int $levels An array map of E_* to LogLevel::* or an integer bit field of E_* constants
+     * @param bool $replace Whether to replace or not any existing logger
      */
     public function setDefaultLogger(LoggerInterface $logger, $levels = null, $replace = false)
     {
@@ -199,7 +199,7 @@ class ErrorHandler
 
         foreach ($loggers as $type => $log) {
             if (!isset($prev[$type])) {
-                throw new \InvalidArgumentException('Unknown error type: '.$type);
+                throw new \InvalidArgumentException('Unknown error type: ' . $type);
             }
             if (!is_array($log)) {
                 $log = array($log);
@@ -243,7 +243,7 @@ class ErrorHandler
     /**
      * Sets the PHP error levels that throw an exception when a PHP error occurs.
      *
-     * @param int  $levels  A bit field of E_* constants for thrown errors
+     * @param int $levels A bit field of E_* constants for thrown errors
      * @param bool $replace Replace or amend the previous value
      *
      * @return int The previous value
@@ -266,7 +266,7 @@ class ErrorHandler
     /**
      * Sets the PHP error levels for which local variables are preserved.
      *
-     * @param int  $levels  A bit field of E_* constants for scoped errors
+     * @param int $levels A bit field of E_* constants for scoped errors
      * @param bool $replace Replace or amend the previous value
      *
      * @return int The previous value
@@ -274,7 +274,7 @@ class ErrorHandler
     public function scopeAt($levels, $replace = false)
     {
         $prev = $this->scopedErrors;
-        $this->scopedErrors = (int) $levels;
+        $this->scopedErrors = (int)$levels;
         if (!$replace) {
             $this->scopedErrors |= $prev;
         }
@@ -285,7 +285,7 @@ class ErrorHandler
     /**
      * Sets the PHP error levels for which the stack trace is preserved.
      *
-     * @param int  $levels  A bit field of E_* constants for traced errors
+     * @param int $levels A bit field of E_* constants for traced errors
      * @param bool $replace Replace or amend the previous value
      *
      * @return int The previous value
@@ -293,7 +293,7 @@ class ErrorHandler
     public function traceAt($levels, $replace = false)
     {
         $prev = $this->tracedErrors;
-        $this->tracedErrors = (int) $levels;
+        $this->tracedErrors = (int)$levels;
         if (!$replace) {
             $this->tracedErrors |= $prev;
         }
@@ -304,7 +304,7 @@ class ErrorHandler
     /**
      * Sets the error levels where the @-operator is ignored.
      *
-     * @param int  $levels  A bit field of E_* constants for screamed errors
+     * @param int $levels A bit field of E_* constants for screamed errors
      * @param bool $replace Replace or amend the previous value
      *
      * @return int The previous value
@@ -312,7 +312,7 @@ class ErrorHandler
     public function screamAt($levels, $replace = false)
     {
         $prev = $this->screamedErrors;
-        $this->screamedErrors = (int) $levels;
+        $this->screamedErrors = (int)$levels;
         if (!$replace) {
             $this->screamedErrors |= $prev;
         }
@@ -339,10 +339,10 @@ class ErrorHandler
     /**
      * Handles errors by filtering then logging them according to the configured bit fields.
      *
-     * @param int    $type    One of the E_* constants
+     * @param int $type One of the E_* constants
      * @param string $file
-     * @param int    $line
-     * @param array  $context
+     * @param int $line
+     * @param array $context
      *
      * @return bool Returns false when no handling happens so that the PHP engine can handle the error itself.
      *
@@ -370,9 +370,10 @@ class ErrorHandler
         if ($throw) {
             if (($this->scopedErrors & $type) && class_exists('Symfony\Component\Debug\Exception\ContextErrorException')) {
                 // Checking for class existence is a work around for https://bugs.php.net/42098
-                $throw = new ContextErrorException($this->levels[$type].': '.$message, 0, $type, $file, $line, $context);
+                $throw = new ContextErrorException($this->levels[$type] . ': ' . $message, 0, $type, $file, $line,
+                    $context);
             } else {
-                $throw = new \ErrorException($this->levels[$type].': '.$message, 0, $type, $file, $line);
+                $throw = new \ErrorException($this->levels[$type] . ': ' . $message, 0, $type, $file, $line);
             }
 
             if (PHP_VERSION_ID <= 50407 && (PHP_VERSION_ID >= 50400 || PHP_VERSION_ID <= 50317)) {
@@ -416,7 +417,8 @@ class ErrorHandler
         } else {
             try {
                 $this->isRecursive = true;
-                $this->loggers[$type][0]->log(($type & $level) ? $this->loggers[$type][1] : LogLevel::DEBUG, $message, $e);
+                $this->loggers[$type][0]->log(($type & $level) ? $this->loggers[$type][1] : LogLevel::DEBUG, $message,
+                    $e);
                 $this->isRecursive = false;
             } catch (\Exception $e) {
                 $this->isRecursive = false;
@@ -432,7 +434,7 @@ class ErrorHandler
      * Handles an exception by logging then forwarding it to an other handler.
      *
      * @param \Exception|\BaseException $exception An exception to handle
-     * @param array                     $error     An array as returned by error_get_last()
+     * @param array $error An array as returned by error_get_last()
      *
      * @internal
      */
@@ -459,14 +461,14 @@ class ErrorHandler
                     'line' => $e['line'],
                 );
             } elseif ($exception instanceof FatalErrorException) {
-                $message = 'Fatal '.$exception->getMessage();
+                $message = 'Fatal ' . $exception->getMessage();
             } elseif ($exception instanceof \ErrorException) {
-                $message = 'Uncaught '.$exception->getMessage();
+                $message = 'Uncaught ' . $exception->getMessage();
                 if ($exception instanceof ContextErrorException) {
                     $e['context'] = $exception->getContext();
                 }
             } else {
-                $message = 'Uncaught Exception: '.$exception->getMessage();
+                $message = 'Uncaught Exception: ' . $exception->getMessage();
             }
             if ($this->loggedErrors & $e['type']) {
                 $this->loggers[$e['type']][0]->log($this->loggers[$e['type']][1], $message, $e);
@@ -530,9 +532,11 @@ class ErrorHandler
             $handler->throwAt(0, true);
 
             if (0 === strpos($error['message'], 'Allowed memory') || 0 === strpos($error['message'], 'Out of memory')) {
-                $exception = new OutOfMemoryException($handler->levels[$error['type']].': '.$error['message'], 0, $error['type'], $error['file'], $error['line'], 2, false);
+                $exception = new OutOfMemoryException($handler->levels[$error['type']] . ': ' . $error['message'], 0,
+                    $error['type'], $error['file'], $error['line'], 2, false);
             } else {
-                $exception = new FatalErrorException($handler->levels[$error['type']].': '.$error['message'], 0, $error['type'], $error['file'], $error['line'], 2, true);
+                $exception = new FatalErrorException($handler->levels[$error['type']] . ': ' . $error['message'], 0,
+                    $error['type'], $error['file'], $error['line'], 2, true);
             }
         } elseif (!isset($exception)) {
             return;
@@ -636,8 +640,8 @@ class ErrorHandler
     /**
      * Sets a logger for the given channel.
      *
-     * @param LoggerInterface $logger  A logger interface
-     * @param string          $channel The channel associated with the logger (deprecation, emergency or scream)
+     * @param LoggerInterface $logger A logger interface
+     * @param string $channel The channel associated with the logger (deprecation, emergency or scream)
      *
      * @deprecated since 2.6, to be removed in 3.0. Use setLoggers() or setDefaultLogger() instead.
      */
@@ -666,7 +670,7 @@ class ErrorHandler
      */
     public function handle($level, $message, $file = 'unknown', $line = 0, $context = array())
     {
-        return $this->handleError($level, $message, $file, $line, (array) $context);
+        return $this->handleError($level, $message, $file, $line, (array)$context);
     }
 
     /**

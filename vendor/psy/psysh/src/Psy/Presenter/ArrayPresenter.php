@@ -92,8 +92,8 @@ class ArrayPresenter extends RecursivePresenter
      * Present the array.
      *
      * @param object $value
-     * @param int    $depth   (default: null)
-     * @param int    $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
@@ -102,7 +102,7 @@ class ArrayPresenter extends RecursivePresenter
         $prefix = '';
         if ($this->isArrayObject($value)) {
             $prefix = $this->presentArrayObjectRef($value) . ' ';
-            $value  = $this->getArrayObjectValue($value);
+            $value = $this->getArrayObjectValue($value);
         }
 
         if (empty($value) || $depth === 0) {
@@ -124,7 +124,7 @@ class ArrayPresenter extends RecursivePresenter
         }
 
         $template = sprintf('%s[%s%s%%s%s]', $prefix, PHP_EOL, self::INDENT, PHP_EOL);
-        $glue     = sprintf(',%s%s', PHP_EOL, self::INDENT);
+        $glue = sprintf(',%s%s', PHP_EOL, self::INDENT);
 
         return sprintf($template, implode($glue, $formatted));
     }
@@ -154,16 +154,16 @@ class ArrayPresenter extends RecursivePresenter
     /**
      * Format a key => value pair.
      *
-     * @param mixed   $key
-     * @param string  $value
-     * @param integer $pad   Maximum key width, to align the hashrockets.
+     * @param mixed $key
+     * @param string $value
+     * @param integer $pad Maximum key width, to align the hashrockets.
      *
      * @return string
      */
     protected function formatKeyAndValue($key, $value, $pad = 0)
     {
         $type = is_string($value) ? 'string' : 'number';
-        $tpl  = "<$type>%-${pad}s</$type> => %s";
+        $tpl = "<$type>%-${pad}s</$type> => %s";
 
         return sprintf(
             $tpl,

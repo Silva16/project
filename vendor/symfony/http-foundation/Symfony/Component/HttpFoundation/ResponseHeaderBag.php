@@ -64,12 +64,12 @@ class ResponseHeaderBag extends HeaderBag
     {
         $cookies = '';
         foreach ($this->getCookies() as $cookie) {
-            $cookies .= 'Set-Cookie: '.$cookie."\r\n";
+            $cookies .= 'Set-Cookie: ' . $cookie . "\r\n";
         }
 
         ksort($this->headerNames);
 
-        return parent::__toString().$cookies;
+        return parent::__toString() . $cookies;
     }
 
     /**
@@ -204,7 +204,8 @@ class ResponseHeaderBag extends HeaderBag
     public function getCookies($format = self::COOKIES_FLAT)
     {
         if (!in_array($format, array(self::COOKIES_FLAT, self::COOKIES_ARRAY))) {
-            throw new \InvalidArgumentException(sprintf('Format "%s" invalid (%s).', $format, implode(', ', array(self::COOKIES_FLAT, self::COOKIES_ARRAY))));
+            throw new \InvalidArgumentException(sprintf('Format "%s" invalid (%s).', $format,
+                implode(', ', array(self::COOKIES_FLAT, self::COOKIES_ARRAY))));
         }
 
         if (self::COOKIES_ARRAY === $format) {
@@ -229,8 +230,8 @@ class ResponseHeaderBag extends HeaderBag
      * @param string $name
      * @param string $path
      * @param string $domain
-     * @param bool   $secure
-     * @param bool   $httpOnly
+     * @param bool $secure
+     * @param bool $httpOnly
      *
      * @api
      */
@@ -242,8 +243,8 @@ class ResponseHeaderBag extends HeaderBag
     /**
      * Generates a HTTP Content-Disposition field-value.
      *
-     * @param string $disposition      One of "inline" or "attachment"
-     * @param string $filename         A unicode string
+     * @param string $disposition One of "inline" or "attachment"
+     * @param string $filename A unicode string
      * @param string $filenameFallback A string containing only ASCII characters that
      *                                 is semantically equivalent to $filename. If the filename is already ASCII,
      *                                 it can be omitted, or just copied from $filename
@@ -257,7 +258,8 @@ class ResponseHeaderBag extends HeaderBag
     public function makeDisposition($disposition, $filename, $filenameFallback = '')
     {
         if (!in_array($disposition, array(self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE))) {
-            throw new \InvalidArgumentException(sprintf('The disposition must be either "%s" or "%s".', self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE));
+            throw new \InvalidArgumentException(sprintf('The disposition must be either "%s" or "%s".',
+                self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE));
         }
 
         if ('' == $filenameFallback) {
@@ -275,7 +277,9 @@ class ResponseHeaderBag extends HeaderBag
         }
 
         // path separators aren't allowed in either.
-        if (false !== strpos($filename, '/') || false !== strpos($filename, '\\') || false !== strpos($filenameFallback, '/') || false !== strpos($filenameFallback, '\\')) {
+        if (false !== strpos($filename, '/') || false !== strpos($filename, '\\') || false !== strpos($filenameFallback,
+                '/') || false !== strpos($filenameFallback, '\\')
+        ) {
             throw new \InvalidArgumentException('The filename and the fallback cannot contain the "/" and "\\" characters.');
         }
 
@@ -314,7 +318,7 @@ class ResponseHeaderBag extends HeaderBag
 
         // public if s-maxage is defined, private otherwise
         if (!isset($this->cacheControl['s-maxage'])) {
-            return $header.', private';
+            return $header . ', private';
         }
 
         return $header;

@@ -37,9 +37,9 @@ final class Question implements Prompter
     private $helper;
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
-     * @param QuestionHelper  $helper
+     * @param QuestionHelper $helper
      */
     public function __construct(InputInterface $input, OutputInterface $output, QuestionHelper $helper)
     {
@@ -49,7 +49,7 @@ final class Question implements Prompter
     }
 
     /**
-     * @param string  $question
+     * @param string $question
      * @param boolean $default
      * @return boolean
      */

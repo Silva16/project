@@ -131,7 +131,7 @@ class MongoDbSessionHandlerTest extends \PHPUnit_Framework_TestCase
                 $data = $updateData['$set'];
             }));
 
-        $expectedExpiry = time() + (int) ini_get('session.gc_maxlifetime');
+        $expectedExpiry = time() + (int)ini_get('session.gc_maxlifetime');
         $this->assertTrue($this->storage->write('foo', 'bar'));
 
         $this->assertEquals('bar', $data[$this->options['data_field']]->bin);

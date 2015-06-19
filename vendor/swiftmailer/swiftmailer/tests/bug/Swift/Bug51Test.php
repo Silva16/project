@@ -9,15 +9,15 @@ class Swift_Bug51Test extends \SwiftMailerTestCase
     {
         if (!defined('SWIFT_TMP_DIR') || !is_writable(SWIFT_TMP_DIR)) {
             $this->markTestSkipped(
-                'Cannot run test without a writable directory to use ('.
+                'Cannot run test without a writable directory to use (' .
                 'define SWIFT_TMP_DIR in tests/config.php if you wish to run this test)'
-             );
+            );
         }
 
-        $this->_attachmentFile = SWIFT_TMP_DIR.'/attach.rand.bin';
+        $this->_attachmentFile = SWIFT_TMP_DIR . '/attach.rand.bin';
         file_put_contents($this->_attachmentFile, '');
 
-        $this->_outputFile = SWIFT_TMP_DIR.'/attach.out.bin';
+        $this->_outputFile = SWIFT_TMP_DIR . '/attach.out.bin';
         file_put_contents($this->_outputFile, '');
     }
 
@@ -113,8 +113,7 @@ class Swift_Bug51Test extends \SwiftMailerTestCase
             ->setBody('test')
             ->setFrom('a@b.c')
             ->setTo('d@e.f')
-            ->attach(Swift_Attachment::fromPath($attachmentPath))
-            ;
+            ->attach(Swift_Attachment::fromPath($attachmentPath));
 
         return $message;
     }

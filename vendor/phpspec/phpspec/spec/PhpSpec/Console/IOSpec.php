@@ -2,12 +2,10 @@
 
 namespace spec\PhpSpec\Console;
 
+use PhpSpec\Config\OptionsConfig;
 use PhpSpec\Console\Prompter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use PhpSpec\Config\OptionsConfig;
-
-use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -147,8 +145,10 @@ class IOSpec extends ObjectBehavior
         $this->getBootstrapPath()->shouldReturn('/path/to/bootstrap.php');
     }
 
-    function it_will_report_bootstrap_path_from_cli_when_different_paths_are_specified_in_config_and_cli($input, $config)
-    {
+    function it_will_report_bootstrap_path_from_cli_when_different_paths_are_specified_in_config_and_cli(
+        $input,
+        $config
+    ) {
         $input->getOption('bootstrap')->willReturn('/path/to/bootstrap.php');
         $config->getBootstrapPath()->willReturn('/path/to/different.php');
 

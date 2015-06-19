@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Finder\Tests\Iterator;
 
-use Symfony\Component\Finder\Iterator\SizeRangeFilterIterator;
 use Symfony\Component\Finder\Comparator\NumberComparator;
+use Symfony\Component\Finder\Iterator\SizeRangeFilterIterator;
 
 class SizeRangeFilterIteratorTest extends RealIteratorTestCase
 {
@@ -39,7 +39,10 @@ class SizeRangeFilterIteratorTest extends RealIteratorTestCase
         );
 
         return array(
-            array(array(new NumberComparator('< 1K'), new NumberComparator('> 0.5K')), $this->toAbsolute($lessThan1KGreaterThan05K)),
+            array(
+                array(new NumberComparator('< 1K'), new NumberComparator('> 0.5K')),
+                $this->toAbsolute($lessThan1KGreaterThan05K)
+            ),
         );
     }
 }

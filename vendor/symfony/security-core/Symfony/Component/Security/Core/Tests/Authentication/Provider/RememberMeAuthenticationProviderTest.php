@@ -63,8 +63,8 @@ class RememberMeAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
     {
         $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
         $user->expects($this->exactly(2))
-             ->method('getRoles')
-             ->will($this->returnValue(array('ROLE_FOO')));
+            ->method('getRoles')
+            ->will($this->returnValue(array('ROLE_FOO')));
 
         $provider = $this->getProvider();
 
@@ -87,7 +87,8 @@ class RememberMeAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue(array()));
         }
 
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken', array('getProviderKey'), array($user, 'foo', $key));
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken',
+            array('getProviderKey'), array($user, 'foo', $key));
         $token
             ->expects($this->once())
             ->method('getProviderKey')

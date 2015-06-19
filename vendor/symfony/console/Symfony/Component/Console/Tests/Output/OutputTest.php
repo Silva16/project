@@ -11,15 +11,16 @@
 
 namespace Symfony\Component\Console\Tests\Output;
 
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Output\Output;
 
 class OutputTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
         $output = new TestOutput(Output::VERBOSITY_QUIET, true);
-        $this->assertEquals(Output::VERBOSITY_QUIET, $output->getVerbosity(), '__construct() takes the verbosity as its first argument');
+        $this->assertEquals(Output::VERBOSITY_QUIET, $output->getVerbosity(),
+            '__construct() takes the verbosity as its first argument');
         $this->assertTrue($output->isDecorated(), '__construct() takes the decorated flag as its second argument');
     }
 
@@ -103,7 +104,8 @@ class OutputTest extends \PHPUnit_Framework_TestCase
         $output = new TestOutput();
         $output->setDecorated(false);
         $output->writeln('<info>foo</info>');
-        $this->assertEquals("foo\n", $output->output, '->writeln() strips decoration tags if decoration is set to false');
+        $this->assertEquals("foo\n", $output->output,
+            '->writeln() strips decoration tags if decoration is set to false');
     }
 
     public function testWriteDecoratedMessage()
@@ -151,6 +153,6 @@ class TestOutput extends Output
 
     protected function doWrite($message, $newline)
     {
-        $this->output .= $message.($newline ? "\n" : '');
+        $this->output .= $message . ($newline ? "\n" : '');
     }
 }

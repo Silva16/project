@@ -74,7 +74,8 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
         $bag = new ParameterBag(array('foo' => 'bar', 'null' => null));
 
         $this->assertEquals('bar', $bag->get('foo'), '->get() gets the value of a parameter');
-        $this->assertEquals('default', $bag->get('unknown', 'default'), '->get() returns second argument as default if a parameter is not defined');
+        $this->assertEquals('default', $bag->get('unknown', 'default'),
+            '->get() returns second argument as default if a parameter is not defined');
         $this->assertNull($bag->get('null', 'default'), '->get() returns null if null is set');
     }
 
@@ -149,7 +150,8 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
         $bag = new ParameterBag(array('word' => 'foo_BAR_012'));
 
         $this->assertEquals('fooBAR', $bag->getAlpha('word'), '->getAlpha() gets only alphabetic characters');
-        $this->assertEquals('', $bag->getAlpha('unknown'), '->getAlpha() returns empty string if a parameter is not defined');
+        $this->assertEquals('', $bag->getAlpha('unknown'),
+            '->getAlpha() returns empty string if a parameter is not defined');
     }
 
     /**
@@ -160,7 +162,8 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
         $bag = new ParameterBag(array('word' => 'foo_BAR_012'));
 
         $this->assertEquals('fooBAR012', $bag->getAlnum('word'), '->getAlnum() gets only alphanumeric characters');
-        $this->assertEquals('', $bag->getAlnum('unknown'), '->getAlnum() returns empty string if a parameter is not defined');
+        $this->assertEquals('', $bag->getAlnum('unknown'),
+            '->getAlnum() returns empty string if a parameter is not defined');
     }
 
     /**
@@ -171,7 +174,8 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
         $bag = new ParameterBag(array('word' => 'foo_BAR_012'));
 
         $this->assertEquals('012', $bag->getDigits('word'), '->getDigits() gets only digits as string');
-        $this->assertEquals('', $bag->getDigits('unknown'), '->getDigits() returns empty string if a parameter is not defined');
+        $this->assertEquals('', $bag->getDigits('unknown'),
+            '->getDigits() returns empty string if a parameter is not defined');
     }
 
     /**
@@ -197,18 +201,24 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
             'dec' => '256',
             'hex' => '0x100',
             'array' => array('bang'),
-            ));
+        ));
 
         $this->assertEmpty($bag->filter('nokey'), '->filter() should return empty by default if no key is found');
 
-        $this->assertEquals('0123', $bag->filter('digits', '', false, FILTER_SANITIZE_NUMBER_INT), '->filter() gets a value of parameter as integer filtering out invalid characters');
+        $this->assertEquals('0123', $bag->filter('digits', '', false, FILTER_SANITIZE_NUMBER_INT),
+            '->filter() gets a value of parameter as integer filtering out invalid characters');
 
-        $this->assertEquals('example@example.com', $bag->filter('email', '', false, FILTER_VALIDATE_EMAIL), '->filter() gets a value of parameter as email');
+        $this->assertEquals('example@example.com', $bag->filter('email', '', false, FILTER_VALIDATE_EMAIL),
+            '->filter() gets a value of parameter as email');
 
-        $this->assertEquals('http://example.com/foo', $bag->filter('url', '', false, FILTER_VALIDATE_URL, array('flags' => FILTER_FLAG_PATH_REQUIRED)), '->filter() gets a value of parameter as URL with a path');
+        $this->assertEquals('http://example.com/foo',
+            $bag->filter('url', '', false, FILTER_VALIDATE_URL, array('flags' => FILTER_FLAG_PATH_REQUIRED)),
+            '->filter() gets a value of parameter as URL with a path');
 
         // This test is repeated for code-coverage
-        $this->assertEquals('http://example.com/foo', $bag->filter('url', '', false, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED), '->filter() gets a value of parameter as URL with a path');
+        $this->assertEquals('http://example.com/foo',
+            $bag->filter('url', '', false, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED),
+            '->filter() gets a value of parameter as URL with a path');
 
         $this->assertFalse($bag->filter('dec', '', false, FILTER_VALIDATE_INT, array(
             'flags' => FILTER_FLAG_ALLOW_HEX,
@@ -220,7 +230,8 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
             'options' => array('min_range' => 1, 'max_range' => 0xff),
         )), '->filter() gets a value of parameter as integer between boundaries');
 
-        $this->assertEquals(array('bang'), $bag->filter('array', '', false), '->filter() gets a value of parameter as an array');
+        $this->assertEquals(array('bang'), $bag->filter('array', '', false),
+            '->filter() gets a value of parameter as an array');
     }
 
     /**

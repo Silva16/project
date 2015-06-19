@@ -30,7 +30,7 @@ class SuiteRunner
     private $specRunner;
 
     /**
-     * @param EventDispatcher     $dispatcher
+     * @param EventDispatcher $dispatcher
      * @param SpecificationRunner $specRunner
      */
     public function __construct(EventDispatcher $dispatcher, SpecificationRunner $specRunner)
@@ -63,7 +63,7 @@ class SuiteRunner
         $endTime = microtime(true);
         $this->dispatcher->dispatch(
             'afterSuite',
-            new SuiteEvent($suite, $endTime-$startTime, $result)
+            new SuiteEvent($suite, $endTime - $startTime, $result)
         );
 
         return $result;

@@ -17,13 +17,13 @@ abstract class ClosureAnalyzer
     {
         $data = [
             'reflection' => new \ReflectionFunction($closure),
-            'code'       => null,
-            'hasThis'    => false,
-            'context'    => [],
-            'hasRefs'    => false,
-            'binding'    => null,
-            'scope'      => null,
-            'isStatic'   => $this->isClosureStatic($closure),
+            'code' => null,
+            'hasThis' => false,
+            'context' => [],
+            'hasRefs' => false,
+            'binding' => null,
+            'scope' => null,
+            'isStatic' => $this->isClosureStatic($closure),
         ];
 
         $this->determineCode($data);

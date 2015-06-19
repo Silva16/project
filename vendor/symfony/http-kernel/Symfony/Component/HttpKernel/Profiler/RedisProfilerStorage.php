@@ -37,15 +37,15 @@ class RedisProfilerStorage implements ProfilerStorageInterface
     /**
      * Constructor.
      *
-     * @param string $dsn      A data source name
+     * @param string $dsn A data source name
      * @param string $username Not used
      * @param string $password Not used
-     * @param int    $lifetime The lifetime to use for the purge
+     * @param int $lifetime The lifetime to use for the purge
      */
     public function __construct($dsn, $username = '', $password = '', $lifetime = 86400)
     {
         $this->dsn = $dsn;
-        $this->lifetime = (int) $lifetime;
+        $this->lifetime = (int)$lifetime;
     }
 
     /**
@@ -73,9 +73,11 @@ class RedisProfilerStorage implements ProfilerStorageInterface
 
             list($itemToken, $itemIp, $itemMethod, $itemUrl, $itemTime, $itemParent) = explode("\t", $item, 6);
 
-            $itemTime = (int) $itemTime;
+            $itemTime = (int)$itemTime;
 
-            if ($ip && false === strpos($itemIp, $ip) || $url && false === strpos($itemUrl, $url) || $method && false === strpos($itemMethod, $method)) {
+            if ($ip && false === strpos($itemIp, $ip) || $url && false === strpos($itemUrl,
+                    $url) || $method && false === strpos($itemMethod, $method)
+            ) {
                 continue;
             }
 
@@ -160,7 +162,9 @@ class RedisProfilerStorage implements ProfilerStorageInterface
         $data = array(
             'token' => $profile->getToken(),
             'parent' => $profile->getParentToken(),
-            'children' => array_map(function ($p) { return $p->getToken(); }, $profile->getChildren()),
+            'children' => array_map(function ($p) {
+                return $p->getToken();
+            }, $profile->getChildren()),
             'data' => $profile->getCollectors(),
             'ip' => $profile->getIp(),
             'method' => $profile->getMethod(),
@@ -170,19 +174,21 @@ class RedisProfilerStorage implements ProfilerStorageInterface
 
         $profileIndexed = false !== $this->getValue($this->getItemName($profile->getToken()));
 
-        if ($this->setValue($this->getItemName($profile->getToken()), $data, $this->lifetime, self::REDIS_SERIALIZER_PHP)) {
+        if ($this->setValue($this->getItemName($profile->getToken()), $data, $this->lifetime,
+            self::REDIS_SERIALIZER_PHP)
+        ) {
             if (!$profileIndexed) {
                 // Add to index
                 $indexName = $this->getIndexName();
 
                 $indexRow = implode("\t", array(
-                    $profile->getToken(),
-                    $profile->getIp(),
-                    $profile->getMethod(),
-                    $profile->getUrl(),
-                    $profile->getTime(),
-                    $profile->getParentToken(),
-                ))."\n";
+                        $profile->getToken(),
+                        $profile->getIp(),
+                        $profile->getMethod(),
+                        $profile->getUrl(),
+                        $profile->getTime(),
+                        $profile->getParentToken(),
+                    )) . "\n";
 
                 return $this->appendValue($indexName, $indexRow, $this->lifetime);
             }
@@ -206,7 +212,8 @@ class RedisProfilerStorage implements ProfilerStorageInterface
             $data = parse_url($this->dsn);
 
             if (false === $data || !isset($data['scheme']) || $data['scheme'] !== 'redis' || !isset($data['host']) || !isset($data['port'])) {
-                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Redis with an invalid dsn "%s". The minimal expected format is "redis://[host]:port".', $this->dsn));
+                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Redis with an invalid dsn "%s". The minimal expected format is "redis://[host]:port".',
+                    $this->dsn));
             }
 
             if (!extension_loaded('redis')) {
@@ -313,7 +320,8 @@ class RedisProfilerStorage implements ProfilerStorageInterface
         $length = strlen($name);
 
         if ($length > 2147483648) {
-            throw new \RuntimeException(sprintf('The Redis item key "%s" is too long (%s bytes). Allowed maximum size is 2^31 bytes.', $name, $length));
+            throw new \RuntimeException(sprintf('The Redis item key "%s" is too long (%s bytes). Allowed maximum size is 2^31 bytes.',
+                $name, $length));
         }
 
         return true;
@@ -323,7 +331,7 @@ class RedisProfilerStorage implements ProfilerStorageInterface
      * Retrieves an item from the Redis server.
      *
      * @param string $key
-     * @param int    $serializer
+     * @param int $serializer
      *
      * @return mixed
      */
@@ -339,9 +347,9 @@ class RedisProfilerStorage implements ProfilerStorageInterface
      * Stores an item on the Redis server under the specified key.
      *
      * @param string $key
-     * @param mixed  $value
-     * @param int    $expiration
-     * @param int    $serializer
+     * @param mixed $value
+     * @param int $expiration
+     * @param int $serializer
      *
      * @return bool
      */
@@ -358,7 +366,7 @@ class RedisProfilerStorage implements ProfilerStorageInterface
      *
      * @param string $key
      * @param string $value
-     * @param int    $expiration
+     * @param int $expiration
      *
      * @return bool
      */
@@ -385,6 +393,6 @@ class RedisProfilerStorage implements ProfilerStorageInterface
      */
     private function delete(array $keys)
     {
-        return (bool) $this->getRedis()->delete($keys);
+        return (bool)$this->getRedis()->delete($keys);
     }
 }

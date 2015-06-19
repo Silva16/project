@@ -138,8 +138,14 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
     /**
      * {@inheritdoc}
      */
-    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
-    {
+    protected function getProcess(
+        $commandline,
+        $cwd = null,
+        array $env = null,
+        $input = null,
+        $timeout = 60,
+        array $options = array()
+    ) {
         $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
         $process->setEnhanceSigchildCompatibility(true);
 

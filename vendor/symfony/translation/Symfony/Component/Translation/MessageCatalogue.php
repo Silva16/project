@@ -32,8 +32,8 @@ class MessageCatalogue implements MessageCatalogueInterface, MetadataAwareInterf
     /**
      * Constructor.
      *
-     * @param string $locale   The locale
-     * @param array  $messages An array of messages classified by domain
+     * @param string $locale The locale
+     * @param array $messages An array of messages classified by domain
      *
      * @api
      */
@@ -165,7 +165,8 @@ class MessageCatalogue implements MessageCatalogueInterface, MetadataAwareInterf
     public function addCatalogue(MessageCatalogueInterface $catalogue)
     {
         if ($catalogue->getLocale() !== $this->locale) {
-            throw new \LogicException(sprintf('Cannot add a catalogue for locale "%s" as the current locale for this catalogue is "%s"', $catalogue->getLocale(), $this->locale));
+            throw new \LogicException(sprintf('Cannot add a catalogue for locale "%s" as the current locale for this catalogue is "%s"',
+                $catalogue->getLocale(), $this->locale));
         }
 
         foreach ($catalogue->all() as $domain => $messages) {
@@ -193,7 +194,8 @@ class MessageCatalogue implements MessageCatalogueInterface, MetadataAwareInterf
         $c = $this;
         do {
             if ($c->getLocale() === $catalogue->getLocale()) {
-                throw new \LogicException(sprintf('Circular reference detected when adding a fallback catalogue for locale "%s".', $catalogue->getLocale()));
+                throw new \LogicException(sprintf('Circular reference detected when adding a fallback catalogue for locale "%s".',
+                    $catalogue->getLocale()));
             }
         } while ($c = $c->parent);
 

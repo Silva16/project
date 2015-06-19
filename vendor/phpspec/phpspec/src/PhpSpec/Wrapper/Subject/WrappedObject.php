@@ -14,9 +14,9 @@
 namespace PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Exception\Fracture\FactoryDoesNotReturnObjectException;
+use PhpSpec\Exception\Wrapper\SubjectException;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Wrapper\Unwrapper;
-use PhpSpec\Exception\Wrapper\SubjectException;
 
 class WrappedObject
 {
@@ -46,7 +46,7 @@ class WrappedObject
     private $isInstantiated = false;
 
     /**
-     * @param object|null        $instance
+     * @param object|null $instance
      * @param PresenterInterface $presenter
      */
     public function __construct($instance, PresenterInterface $presenter)
@@ -61,7 +61,7 @@ class WrappedObject
 
     /**
      * @param string $classname
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @throws \PhpSpec\Exception\Wrapper\SubjectException
      */
@@ -74,11 +74,11 @@ class WrappedObject
             ));
         }
 
-        $this->classname      = $classname;
-        $unwrapper            = new Unwrapper();
-        $this->arguments      = $unwrapper->unwrapAll($arguments);
+        $this->classname = $classname;
+        $unwrapper = new Unwrapper();
+        $this->arguments = $unwrapper->unwrapAll($arguments);
         $this->isInstantiated = false;
-        $this->factoryMethod  = null;
+        $this->factoryMethod = null;
     }
 
     /**
@@ -104,7 +104,7 @@ class WrappedObject
 
     /**
      * @param callable|string|null $factoryMethod
-     * @param array                $arguments
+     * @param array $arguments
      */
     public function beConstructedThrough($factoryMethod, array $arguments = array())
     {
@@ -120,8 +120,8 @@ class WrappedObject
         }
 
         $this->factoryMethod = $factoryMethod;
-        $unwrapper           = new Unwrapper();
-        $this->arguments     = $unwrapper->unwrapAll($arguments);
+        $unwrapper = new Unwrapper();
+        $this->arguments = $unwrapper->unwrapAll($arguments);
     }
 
     /**

@@ -30,15 +30,15 @@ class SocketHandler extends AbstractProcessingHandler
     private $errstr;
 
     /**
-     * @param string  $connectionString Socket connection string
-     * @param integer $level            The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble           Whether the messages that are handled can bubble up the stack or not
+     * @param string $connectionString Socket connection string
+     * @param integer $level The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($connectionString, $level = Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
         $this->connectionString = $connectionString;
-        $this->connectionTimeout = (float) ini_get('default_socket_timeout');
+        $this->connectionTimeout = (float)ini_get('default_socket_timeout');
     }
 
     /**
@@ -84,7 +84,7 @@ class SocketHandler extends AbstractProcessingHandler
      */
     public function setPersistent($boolean)
     {
-        $this->persistent = (boolean) $boolean;
+        $this->persistent = (boolean)$boolean;
     }
 
     /**
@@ -97,7 +97,7 @@ class SocketHandler extends AbstractProcessingHandler
     public function setConnectionTimeout($seconds)
     {
         $this->validateTimeout($seconds);
-        $this->connectionTimeout = (float) $seconds;
+        $this->connectionTimeout = (float)$seconds;
     }
 
     /**
@@ -110,7 +110,7 @@ class SocketHandler extends AbstractProcessingHandler
     public function setTimeout($seconds)
     {
         $this->validateTimeout($seconds);
-        $this->timeout = (float) $seconds;
+        $this->timeout = (float)$seconds;
     }
 
     /**
@@ -163,7 +163,7 @@ class SocketHandler extends AbstractProcessingHandler
     public function isConnected()
     {
         return is_resource($this->resource)
-            && !feof($this->resource);  // on TCP - other party can close connection.
+        && !feof($this->resource);  // on TCP - other party can close connection.
     }
 
     /**
@@ -190,7 +190,7 @@ class SocketHandler extends AbstractProcessingHandler
     protected function streamSetTimeout()
     {
         $seconds = floor($this->timeout);
-        $microseconds = round(($this->timeout - $seconds)*1e6);
+        $microseconds = round(($this->timeout - $seconds) * 1e6);
 
         return stream_set_timeout($this->resource, $seconds, $microseconds);
     }
@@ -229,7 +229,7 @@ class SocketHandler extends AbstractProcessingHandler
 
     protected function generateDataStream($record)
     {
-        return (string) $record['formatted'];
+        return (string)$record['formatted'];
     }
 
     private function connect()

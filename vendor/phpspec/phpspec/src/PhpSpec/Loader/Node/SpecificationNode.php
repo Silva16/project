@@ -41,14 +41,14 @@ class SpecificationNode implements \Countable
     private $examples = array();
 
     /**
-     * @param string            $title
-     * @param ReflectionClass   $class
+     * @param string $title
+     * @param ReflectionClass $class
      * @param ResourceInterface $resource
      */
     public function __construct($title, ReflectionClass $class, ResourceInterface $resource)
     {
-        $this->title    = $title;
-        $this->class    = $class;
+        $this->title = $title;
+        $this->class = $class;
         $this->resource = $resource;
     }
 

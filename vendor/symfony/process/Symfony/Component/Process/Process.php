@@ -89,11 +89,9 @@ class Process
         0 => 'OK',
         1 => 'General error',
         2 => 'Misuse of shell builtins',
-
         126 => 'Invoked command cannot execute',
         127 => 'Command not found',
         128 => 'Invalid exit argument',
-
         // signals
         129 => 'Hangup',
         130 => 'Interrupt',
@@ -131,19 +129,25 @@ class Process
     /**
      * Constructor.
      *
-     * @param string         $commandline The command line to run
-     * @param string|null    $cwd         The working directory or null to use the working dir of the current PHP process
-     * @param array|null     $env         The environment variables or null to inherit
-     * @param string|null    $input       The input
-     * @param int|float|null $timeout     The timeout in seconds or null to disable
-     * @param array          $options     An array of options for proc_open
+     * @param string $commandline The command line to run
+     * @param string|null $cwd The working directory or null to use the working dir of the current PHP process
+     * @param array|null $env The environment variables or null to inherit
+     * @param string|null $input The input
+     * @param int|float|null $timeout The timeout in seconds or null to disable
+     * @param array $options An array of options for proc_open
      *
      * @throws RuntimeException When proc_open is not installed
      *
      * @api
      */
-    public function __construct($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
-    {
+    public function __construct(
+        $commandline,
+        $cwd = null,
+        array $env = null,
+        $input = null,
+        $timeout = 60,
+        array $options = array()
+    ) {
         if (!function_exists('proc_open')) {
             throw new RuntimeException('The Process class relies on proc_open, which is not available on your PHP installation.');
         }
@@ -275,9 +279,9 @@ class Process
         $commandline = $this->commandline;
 
         if ('\\' === DIRECTORY_SEPARATOR && $this->enhanceWindowsCompatibility) {
-            $commandline = 'cmd /V:ON /E:ON /C "('.$commandline.')';
+            $commandline = 'cmd /V:ON /E:ON /C "(' . $commandline . ')';
             foreach ($this->processPipes->getFiles() as $offset => $filename) {
-                $commandline .= ' '.$offset.'>'.ProcessUtils::escapeArgument($filename);
+                $commandline .= ' ' . $offset . '>' . ProcessUtils::escapeArgument($filename);
             }
             $commandline .= '"';
 
@@ -286,7 +290,8 @@ class Process
             }
         }
 
-        $this->process = proc_open($commandline, $descriptors, $this->processPipes->pipes, $this->cwd, $this->env, $this->options);
+        $this->process = proc_open($commandline, $descriptors, $this->processPipes->pipes, $this->cwd, $this->env,
+            $this->options);
 
         if (!is_resource($this->process)) {
             throw new RuntimeException('Unable to launch a new process.');
@@ -364,7 +369,8 @@ class Process
         }
 
         if ($this->processInformation['signaled'] && $this->processInformation['termsig'] !== $this->latestSignal) {
-            throw new RuntimeException(sprintf('The process has been signaled with signal "%s".', $this->processInformation['termsig']));
+            throw new RuntimeException(sprintf('The process has been signaled with signal "%s".',
+                $this->processInformation['termsig']));
         }
 
         return $this->exitcode;
@@ -785,7 +791,7 @@ class Process
      * Stops the process.
      *
      * @param int|float $timeout The timeout in seconds
-     * @param int       $signal  A POSIX signal to send in case the process has not stop at timeout, default is SIGKILL
+     * @param int $signal A POSIX signal to send in case the process has not stop at timeout, default is SIGKILL
      *
      * @return int The exit-code of the process
      *
@@ -951,7 +957,7 @@ class Process
             throw new RuntimeException('TTY mode requires /dev/tty to be readable.');
         }
 
-        $this->tty = (bool) $tty;
+        $this->tty = (bool)$tty;
 
         return $this;
     }
@@ -975,7 +981,7 @@ class Process
      */
     public function setPty($bool)
     {
-        $this->pty = (bool) $bool;
+        $this->pty = (bool)$bool;
 
         return $this;
     }
@@ -1052,7 +1058,7 @@ class Process
 
         $this->env = array();
         foreach ($env as $key => $value) {
-            $this->env[(binary) $key] = (binary) $value;
+            $this->env[(binary)$key] = (binary)$value;
         }
 
         return $this;
@@ -1166,7 +1172,7 @@ class Process
      */
     public function setEnhanceWindowsCompatibility($enhance)
     {
-        $this->enhanceWindowsCompatibility = (bool) $enhance;
+        $this->enhanceWindowsCompatibility = (bool)$enhance;
 
         return $this;
     }
@@ -1194,7 +1200,7 @@ class Process
      */
     public function setEnhanceSigchildCompatibility($enhance)
     {
-        $this->enhanceSigchildCompatibility = (bool) $enhance;
+        $this->enhanceSigchildCompatibility = (bool)$enhance;
 
         return $this;
     }
@@ -1271,7 +1277,7 @@ class Process
             // last exit code is output on the fourth pipe and caught to work around --enable-sigchild
             $descriptors = array_merge($descriptors, array(array('pipe', 'w')));
 
-            $this->commandline = '('.$this->commandline.') 3>/dev/null; code=$?; echo $code >&3; exit $code';
+            $this->commandline = '(' . $this->commandline . ') 3>/dev/null; code=$?; echo $code >&3; exit $code';
         }
 
         return $descriptors;
@@ -1359,7 +1365,7 @@ class Process
      */
     private function validateTimeout($timeout)
     {
-        $timeout = (float) $timeout;
+        $timeout = (float)$timeout;
 
         if (0.0 === $timeout) {
             $timeout = null;
@@ -1374,7 +1380,7 @@ class Process
      * Reads pipes, executes callback.
      *
      * @param bool $blocking Whether to use blocking calls or not.
-     * @param bool $close    Whether to close file handles or not.
+     * @param bool $close Whether to close file handles or not.
      */
     private function readPipes($blocking, $close)
     {
@@ -1383,7 +1389,7 @@ class Process
         $callback = $this->callback;
         foreach ($result as $type => $data) {
             if (3 == $type) {
-                $this->fallbackExitcode = (int) $data;
+                $this->fallbackExitcode = (int)$data;
             } else {
                 $callback($type === self::STDOUT ? self::OUT : self::ERR, $data);
             }
@@ -1449,7 +1455,7 @@ class Process
     /**
      * Sends a POSIX signal to the process.
      *
-     * @param int  $signal         A valid POSIX signal (see http://www.php.net/manual/en/pcntl.constants.php)
+     * @param int $signal A valid POSIX signal (see http://www.php.net/manual/en/pcntl.constants.php)
      * @param bool $throwException Whether to throw exception in case signal failed
      *
      * @return bool True if the signal was sent successfully, false otherwise

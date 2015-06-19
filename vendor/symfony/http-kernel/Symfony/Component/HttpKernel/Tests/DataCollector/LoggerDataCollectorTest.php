@@ -18,8 +18,14 @@ class LoggerDataCollectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getCollectTestData
      */
-    public function testCollect($nb, $logs, $expectedLogs, $expectedDeprecationCount, $expectedScreamCount, $expectedPriorities = null)
-    {
+    public function testCollect(
+        $nb,
+        $logs,
+        $expectedLogs,
+        $expectedDeprecationCount,
+        $expectedScreamCount,
+        $expectedPriorities = null
+    ) {
         $logger = $this->getMock('Symfony\Component\HttpKernel\Log\DebugLoggerInterface');
         $logger->expects($this->once())->method('countErrors')->will($this->returnValue($nb));
         $logger->expects($this->exactly(2))->method('getLogs')->will($this->returnValue($logs));
@@ -50,23 +56,61 @@ class LoggerDataCollectorTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 1,
-                array(array('message' => 'foo', 'context' => array('foo' => fopen(__FILE__, 'r')), 'priority' => 100, 'priorityName' => 'DEBUG')),
-                array(array('message' => 'foo', 'context' => array('foo' => 'Resource(stream)'), 'priority' => 100, 'priorityName' => 'DEBUG')),
-                0,
-                0,
-            ),
-            array(
-                1,
-                array(array('message' => 'foo', 'context' => array('foo' => new \stdClass()), 'priority' => 100, 'priorityName' => 'DEBUG')),
-                array(array('message' => 'foo', 'context' => array('foo' => 'Object(stdClass)'), 'priority' => 100, 'priorityName' => 'DEBUG')),
+                array(
+                    array(
+                        'message' => 'foo',
+                        'context' => array('foo' => fopen(__FILE__, 'r')),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    )
+                ),
+                array(
+                    array(
+                        'message' => 'foo',
+                        'context' => array('foo' => 'Resource(stream)'),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    )
+                ),
                 0,
                 0,
             ),
             array(
                 1,
                 array(
-                    array('message' => 'foo', 'context' => array('type' => E_DEPRECATED, 'level' => E_ALL), 'priority' => 100, 'priorityName' => 'DEBUG'),
-                    array('message' => 'foo2', 'context' => array('type' => E_USER_DEPRECATED, 'level' => E_ALL), 'priority' => 100, 'priorityName' => 'DEBUG'),
+                    array(
+                        'message' => 'foo',
+                        'context' => array('foo' => new \stdClass()),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    )
+                ),
+                array(
+                    array(
+                        'message' => 'foo',
+                        'context' => array('foo' => 'Object(stdClass)'),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    )
+                ),
+                0,
+                0,
+            ),
+            array(
+                1,
+                array(
+                    array(
+                        'message' => 'foo',
+                        'context' => array('type' => E_DEPRECATED, 'level' => E_ALL),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    ),
+                    array(
+                        'message' => 'foo2',
+                        'context' => array('type' => E_USER_DEPRECATED, 'level' => E_ALL),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    ),
                 ),
                 null,
                 2,
@@ -75,8 +119,22 @@ class LoggerDataCollectorTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 1,
-                array(array('message' => 'foo3', 'context' => array('type' => E_USER_WARNING, 'level' => 0), 'priority' => 100, 'priorityName' => 'DEBUG')),
-                array(array('message' => 'foo3', 'context' => array('type' => E_USER_WARNING, 'level' => 0, 'scream' => true), 'priority' => 100, 'priorityName' => 'DEBUG')),
+                array(
+                    array(
+                        'message' => 'foo3',
+                        'context' => array('type' => E_USER_WARNING, 'level' => 0),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    )
+                ),
+                array(
+                    array(
+                        'message' => 'foo3',
+                        'context' => array('type' => E_USER_WARNING, 'level' => 0, 'scream' => true),
+                        'priority' => 100,
+                        'priorityName' => 'DEBUG'
+                    )
+                ),
                 0,
                 1,
             ),

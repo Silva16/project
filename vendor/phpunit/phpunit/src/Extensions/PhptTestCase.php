@@ -56,7 +56,7 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
     /**
      * Constructs a test case with the given filename.
      *
-     * @param  string                      $filename
+     * @param  string $filename
      * @throws PHPUnit_Framework_Exception
      */
     public function __construct($filename)
@@ -96,13 +96,13 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
     public function run(PHPUnit_Framework_TestResult $result = null)
     {
         $sections = $this->parse();
-        $code     = $this->render($sections['FILE']);
+        $code = $this->render($sections['FILE']);
 
         if ($result === null) {
             $result = new PHPUnit_Framework_TestResult;
         }
 
-        $php  = PHPUnit_Util_PHP::factory();
+        $php = PHPUnit_Util_PHP::factory();
         $skip = false;
         $time = 0;
 
@@ -131,10 +131,10 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
 
             if (isset($sections['EXPECT'])) {
                 $assertion = 'assertEquals';
-                $expected  = $sections['EXPECT'];
+                $expected = $sections['EXPECT'];
             } else {
                 $assertion = 'assertStringMatchesFormat';
-                $expected  = $sections['EXPECTF'];
+                $expected = $sections['EXPECTF'];
             }
 
             $output = preg_replace('/\r\n/', "\n", trim($jobResult['stdout']));
@@ -181,11 +181,11 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
     private function parse()
     {
         $sections = array();
-        $section  = '';
+        $section = '';
 
         foreach (file($this->filename) as $line) {
             if (preg_match('/^--([_A-Z]+)--/', $line, $result)) {
-                $section            = $result[1];
+                $section = $result[1];
                 $sections[$section] = '';
                 continue;
             } elseif (empty($section)) {
@@ -196,7 +196,8 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
         }
 
         if (!isset($sections['FILE']) ||
-            (!isset($sections['EXPECT']) && !isset($sections['EXPECTF']))) {
+            (!isset($sections['EXPECT']) && !isset($sections['EXPECTF']))
+        ) {
             throw new PHPUnit_Framework_Exception('Invalid PHPT file');
         }
 
@@ -211,12 +212,12 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
     {
         return str_replace(
             array(
-            '__DIR__',
-            '__FILE__'
+                '__DIR__',
+                '__FILE__'
             ),
             array(
-            "'" . dirname($this->filename) . "'",
-            "'" . $this->filename . "'"
+                "'" . dirname($this->filename) . "'",
+                "'" . $this->filename . "'"
             ),
             $code
         );

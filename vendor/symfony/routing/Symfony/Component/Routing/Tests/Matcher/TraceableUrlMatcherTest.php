@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Routing\Tests\Matcher;
 
+use Symfony\Component\Routing\Matcher\TraceableUrlMatcher;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Matcher\TraceableUrlMatcher;
 
 class TraceableUrlMatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +26,8 @@ class TraceableUrlMatcherTest extends \PHPUnit_Framework_TestCase
         $coll->add('bar1', new Route('/bar/{name}', array(), array('id' => '\w+', '_method' => 'POST')));
         $coll->add('bar2', new Route('/foo', array(), array(), array(), 'baz'));
         $coll->add('bar3', new Route('/foo1', array(), array(), array(), 'baz'));
-        $coll->add('bar4', new Route('/foo2', array(), array(), array(), 'baz', array(), array(), 'context.getMethod() == "GET"'));
+        $coll->add('bar4',
+            new Route('/foo2', array(), array(), array(), 'baz', array(), array(), 'context.getMethod() == "GET"'));
 
         $context = new RequestContext();
         $context->setHost('baz');

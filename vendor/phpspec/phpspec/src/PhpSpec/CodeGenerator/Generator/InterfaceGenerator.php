@@ -23,8 +23,8 @@ class InterfaceGenerator extends PromptingGenerator
 {
     /**
      * @param ResourceInterface $resource
-     * @param string            $generation
-     * @param array             $data
+     * @param string $generation
+     * @param array $data
      *
      * @return bool
      */
@@ -43,18 +43,18 @@ class InterfaceGenerator extends PromptingGenerator
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      *
      * @return string
      */
     protected function renderTemplate(ResourceInterface $resource, $filepath)
     {
         $values = array(
-            '%filepath%'        => $filepath,
-            '%name%'            => $resource->getName(),
-            '%namespace%'       => $resource->getSrcNamespace(),
+            '%filepath%' => $filepath,
+            '%name%' => $resource->getName(),
+            '%namespace%' => $resource->getSrcNamespace(),
             '%namespace_block%' => '' !== $resource->getSrcNamespace()
-                ?  sprintf("\n\nnamespace %s;", $resource->getSrcNamespace())
+                ? sprintf("\n\nnamespace %s;", $resource->getSrcNamespace())
                 : '',
         );
 
@@ -72,7 +72,7 @@ class InterfaceGenerator extends PromptingGenerator
      */
     protected function getTemplate()
     {
-        return file_get_contents(__DIR__.'/templates/interface.template');
+        return file_get_contents(__DIR__ . '/templates/interface.template');
     }
 
     /**
@@ -87,7 +87,7 @@ class InterfaceGenerator extends PromptingGenerator
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      *
      * @return string
      */

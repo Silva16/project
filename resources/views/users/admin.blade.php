@@ -75,7 +75,6 @@
         {!! $users->appends(Request::except('page'))->render() !!}
 
 
-
     </div>
 
 @endsection

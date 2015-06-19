@@ -31,7 +31,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
 
     public function testAll()
     {
-        $catalogue = new MessageCatalogue('en', $messages = array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en',
+            $messages = array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
 
         $this->assertEquals(array('foo' => 'foo'), $catalogue->all('domain1'));
         $this->assertEquals(array(), $catalogue->all('domain88'));
@@ -40,7 +41,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
 
     public function testHas()
     {
-        $catalogue = new MessageCatalogue('en', array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en',
+            array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
 
         $this->assertTrue($catalogue->has('foo', 'domain1'));
         $this->assertFalse($catalogue->has('bar', 'domain1'));
@@ -49,7 +51,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSet()
     {
-        $catalogue = new MessageCatalogue('en', array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en',
+            array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
         $catalogue->set('foo1', 'foo1', 'domain1');
 
         $this->assertEquals('foo', $catalogue->get('foo', 'domain1'));
@@ -58,7 +61,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
 
     public function testAdd()
     {
-        $catalogue = new MessageCatalogue('en', array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en',
+            array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
         $catalogue->add(array('foo1' => 'foo1'), 'domain1');
 
         $this->assertEquals('foo', $catalogue->get('foo', 'domain1'));
@@ -74,7 +78,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
 
     public function testReplace()
     {
-        $catalogue = new MessageCatalogue('en', array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en',
+            array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
         $catalogue->replace($messages = array('foo1' => 'foo1'), 'domain1');
 
         $this->assertEquals($messages, $catalogue->all('domain1'));
@@ -88,7 +93,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
         $r1 = $this->getMock('Symfony\Component\Config\Resource\ResourceInterface');
         $r1->expects($this->any())->method('__toString')->will($this->returnValue('r1'));
 
-        $catalogue = new MessageCatalogue('en', array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en',
+            array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
         $catalogue->addResource($r);
 
         $catalogue1 = new MessageCatalogue('en', array('domain1' => array('foo1' => 'foo1')));
@@ -110,7 +116,8 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
         $r1 = $this->getMock('Symfony\Component\Config\Resource\ResourceInterface');
         $r1->expects($this->any())->method('__toString')->will($this->returnValue('r1'));
 
-        $catalogue = new MessageCatalogue('en_US', array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
+        $catalogue = new MessageCatalogue('en_US',
+            array('domain1' => array('foo' => 'foo'), 'domain2' => array('bar' => 'bar')));
         $catalogue->addResource($r);
 
         $catalogue1 = new MessageCatalogue('en', array('domain1' => array('foo' => 'bar', 'foo1' => 'foo1')));
@@ -188,13 +195,16 @@ class MessageCatalogueTest extends \PHPUnit_Framework_TestCase
     {
         $cat1 = new MessageCatalogue('en');
         $cat1->setMetadata('a', 'b');
-        $this->assertEquals(array('messages' => array('a' => 'b')), $cat1->getMetadata('', ''), 'Cat1 contains messages metadata.');
+        $this->assertEquals(array('messages' => array('a' => 'b')), $cat1->getMetadata('', ''),
+            'Cat1 contains messages metadata.');
 
         $cat2 = new MessageCatalogue('en');
         $cat2->setMetadata('b', 'c', 'domain');
-        $this->assertEquals(array('domain' => array('b' => 'c')), $cat2->getMetadata('', ''), 'Cat2 contains domain metadata.');
+        $this->assertEquals(array('domain' => array('b' => 'c')), $cat2->getMetadata('', ''),
+            'Cat2 contains domain metadata.');
 
         $cat1->addCatalogue($cat2);
-        $this->assertEquals(array('messages' => array('a' => 'b'), 'domain' => array('b' => 'c')), $cat1->getMetadata('', ''), 'Cat1 contains merged metadata.');
+        $this->assertEquals(array('messages' => array('a' => 'b'), 'domain' => array('b' => 'c')),
+            $cat1->getMetadata('', ''), 'Cat1 contains merged metadata.');
     }
 }

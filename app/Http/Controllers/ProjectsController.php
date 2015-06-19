@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
-use App\Media;
+use App\Http\Requests\ProjectRequest;
 use App\Project;
 use App\User;
-use App\Http\Requests\ProjectRequest;
+use Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation;
-use Auth;
 
 class ProjectsController extends Controller
 {
@@ -178,7 +177,7 @@ class ProjectsController extends Controller
 
         $project = Project::findOrFail($id);
         $media = $project->media->first();
-        $comments = Comment::where("state","=",1)->where("project_id","=",$id)->orderBy("created_at")->get();
+        $comments = Comment::where("state", "=", 1)->where("project_id", "=", $id)->orderBy("created_at")->get();
 
         if ($media != null) {
             $image = action('MediaController@showProject', basename($media->int_file));
@@ -188,7 +187,7 @@ class ProjectsController extends Controller
 
         $keywords = explode(',', $project->keywords);
 
-        return view('projects.show', compact('project', 'keywords', 'image','comments'));
+        return view('projects.show', compact('project', 'keywords', 'image', 'comments'));
 
     }
 
@@ -311,7 +310,8 @@ class ProjectsController extends Controller
         return redirect('dashboard');
     }
 
-    public function approve($id){
+    public function approve($id)
+    {
 
         $project = Project::find($id);
         $state = '1';
@@ -320,14 +320,16 @@ class ProjectsController extends Controller
         return redirect('dashboard');
     }
 
-    public function refuse($id){
+    public function refuse($id)
+    {
 
         $project = Project::find($id);
 
         return view('projects.refusal', compact('project'));
     }
 
-    public function refuseMessage($id){
+    public function refuseMessage($id)
+    {
 
         $project = Project::find($id);
         $state = '0';
@@ -338,9 +340,10 @@ class ProjectsController extends Controller
         return redirect('dashboard');
     }
 
-    private function editState($project, $state, $message = null){
+    private function editState($project, $state, $message = null)
+    {
 
-        if ($state == 1){
+        if ($state == 1) {
             $project->state = $state;
             $project->approved_by = Auth::user()->id;
         } elseif ($state == 0) {

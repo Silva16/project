@@ -3,22 +3,23 @@
 namespace spec\PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Exception\ExceptionFactory;
+use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\ObjectBehavior;
+use PhpSpec\Wrapper\Subject;
 use PhpSpec\Wrapper\Subject\WrappedObject;
 use PhpSpec\Wrapper\Wrapper;
-use PhpSpec\Wrapper\Subject;
-
-use PhpSpec\Loader\Node\ExampleNode;
-
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
-
-use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 class CallerSpec extends ObjectBehavior
 {
-    function let(WrappedObject $wrappedObject, ExampleNode $example,
-                 Dispatcher $dispatcher, ExceptionFactory $exceptions, Wrapper $wrapper)
-    {
+    function let(
+        WrappedObject $wrappedObject,
+        ExampleNode $example,
+        Dispatcher $dispatcher,
+        ExceptionFactory $exceptions,
+        Wrapper $wrapper
+    ) {
         $this->beConstructedWith($wrappedObject, $example, $dispatcher,
             $exceptions, $wrapper);
     }
@@ -76,8 +77,10 @@ class CallerSpec extends ObjectBehavior
             ->duringGetWrappedObject();
     }
 
-    function it_delegates_throwing_method_not_found_exception(WrappedObject $wrappedObject, ExceptionFactory $exceptions)
-    {
+    function it_delegates_throwing_method_not_found_exception(
+        WrappedObject $wrappedObject,
+        ExceptionFactory $exceptions
+    ) {
         $obj = new \ArrayObject();
 
         $wrappedObject->isInstantiated()->willReturn(true);
@@ -97,8 +100,11 @@ class CallerSpec extends ObjectBehavior
             ->duringCall('foo');
     }
 
-    function it_delegates_throwing_method_not_found_exception_for_constructor(WrappedObject $wrappedObject, ExceptionFactory $exceptions, \stdClass $argument)
-    {
+    function it_delegates_throwing_method_not_found_exception_for_constructor(
+        WrappedObject $wrappedObject,
+        ExceptionFactory $exceptions,
+        \stdClass $argument
+    ) {
         $obj = new ExampleClass();
 
         $wrappedObject->isInstantiated()->willReturn(false);
@@ -109,19 +115,21 @@ class CallerSpec extends ObjectBehavior
 
         $exceptions->methodNotFound('spec\PhpSpec\Wrapper\Subject\ExampleClass', '__construct', array($argument))
             ->willReturn(new \PhpSpec\Exception\Fracture\MethodNotFoundException(
-                    'Method "__construct" not found.',
-                    $obj,
-                    '"ExampleClass::__construct"',
-                    array()
-                ))
+                'Method "__construct" not found.',
+                $obj,
+                '"ExampleClass::__construct"',
+                array()
+            ))
             ->shouldBeCalled();
 
         $this->shouldThrow('\PhpSpec\Exception\Fracture\MethodNotFoundException')
             ->duringCall('__construct');
     }
 
-    function it_delegates_throwing_named_constructor_not_found_exception(WrappedObject $wrappedObject, ExceptionFactory $exceptions)
-    {
+    function it_delegates_throwing_named_constructor_not_found_exception(
+        WrappedObject $wrappedObject,
+        ExceptionFactory $exceptions
+    ) {
         $obj = new \ArrayObject();
         $arguments = array('firstname', 'lastname');
 
@@ -144,8 +152,10 @@ class CallerSpec extends ObjectBehavior
             ->duringCall('foo');
     }
 
-    function it_delegates_throwing_method_not_visible_exception(WrappedObject $wrappedObject, ExceptionFactory $exceptions)
-    {
+    function it_delegates_throwing_method_not_visible_exception(
+        WrappedObject $wrappedObject,
+        ExceptionFactory $exceptions
+    ) {
         $obj = new ExampleClass();
 
         $wrappedObject->isInstantiated()->willReturn(true);
@@ -165,8 +175,10 @@ class CallerSpec extends ObjectBehavior
             ->duringCall('privateMethod');
     }
 
-    function it_delegates_throwing_property_not_found_exception(WrappedObject $wrappedObject, ExceptionFactory $exceptions)
-    {
+    function it_delegates_throwing_property_not_found_exception(
+        WrappedObject $wrappedObject,
+        ExceptionFactory $exceptions
+    ) {
         $obj = new ExampleClass();
 
         $wrappedObject->isInstantiated()->willReturn(true);

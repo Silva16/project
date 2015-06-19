@@ -35,7 +35,7 @@ class SerializableClosure implements \Serializable
     /**
      * Create a new serializable closure instance.
      *
-     * @param \Closure                 $closure
+     * @param \Closure $closure
      * @param SerializerInterface|null $serializer
      */
     public function __construct(
@@ -85,6 +85,7 @@ class SerializableClosure implements \Serializable
     {
         try {
             $this->data = $this->data ?: $this->serializer->getData($this->closure, true);
+
             return serialize($this->data);
         } catch (\Exception $e) {
             trigger_error(

@@ -86,7 +86,7 @@ class Regex implements ValueInterface
     {
         if (null !== $delimiter) {
             // removes delimiter escaping
-            $pattern = str_replace('\\'.$delimiter, $delimiter, $pattern);
+            $pattern = str_replace('\\' . $delimiter, $delimiter, $pattern);
         }
 
         $this->parsePattern($pattern);
@@ -107,9 +107,9 @@ class Regex implements ValueInterface
     public function render()
     {
         return self::BOUNDARY
-            .$this->renderPattern()
-            .self::BOUNDARY
-            .$this->options;
+        . $this->renderPattern()
+        . self::BOUNDARY
+        . $this->options;
     }
 
     /**
@@ -118,10 +118,10 @@ class Regex implements ValueInterface
     public function renderPattern()
     {
         return ($this->startFlag ? self::START_FLAG : '')
-            .($this->startJoker ? self::JOKER : '')
-            .str_replace(self::BOUNDARY, '\\'.self::BOUNDARY, $this->pattern)
-            .($this->endJoker ? self::JOKER : '')
-            .($this->endFlag ? self::END_FLAG : '');
+        . ($this->startJoker ? self::JOKER : '')
+        . str_replace(self::BOUNDARY, '\\' . self::BOUNDARY, $this->pattern)
+        . ($this->endJoker ? self::JOKER : '')
+        . ($this->endFlag ? self::END_FLAG : '');
     }
 
     /**
@@ -145,7 +145,7 @@ class Regex implements ValueInterface
      */
     public function prepend($expr)
     {
-        $this->pattern = $expr.$this->pattern;
+        $this->pattern = $expr . $this->pattern;
 
         return $this;
     }
@@ -223,7 +223,7 @@ class Regex implements ValueInterface
      */
     public function setEndFlag($endFlag)
     {
-        $this->endFlag = (bool) $endFlag;
+        $this->endFlag = (bool)$endFlag;
 
         return $this;
     }
@@ -263,7 +263,7 @@ class Regex implements ValueInterface
      */
     public function setEndJoker($endJoker)
     {
-        $this->endJoker = (bool) $endJoker;
+        $this->endJoker = (bool)$endJoker;
 
         return $this;
     }

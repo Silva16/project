@@ -30,15 +30,20 @@ class StreamHandler extends AbstractProcessingHandler
 
     /**
      * @param resource|string $stream
-     * @param integer         $level          The minimum logging level at which this handler will be triggered
-     * @param Boolean         $bubble         Whether the messages that are handled can bubble up the stack or not
-     * @param int|null        $filePermission Optional file permissions (default (0644) are only for owner read/write)
-     * @param Boolean         $useLocking     Try to lock log file before doing any writes
+     * @param integer $level The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param int|null $filePermission Optional file permissions (default (0644) are only for owner read/write)
+     * @param Boolean $useLocking Try to lock log file before doing any writes
      *
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    public function __construct($stream, $level = Logger::DEBUG, $bubble = true, $filePermission = null, $useLocking = false)
-    {
+    public function __construct(
+        $stream,
+        $level = Logger::DEBUG,
+        $bubble = true,
+        $filePermission = null,
+        $useLocking = false
+    ) {
         parent::__construct($level, $bubble);
         if (is_resource($stream)) {
             $this->stream = $stream;
@@ -81,7 +86,8 @@ class StreamHandler extends AbstractProcessingHandler
             restore_error_handler();
             if (!is_resource($this->stream)) {
                 $this->stream = null;
-                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: '.$this->errorMessage, $this->url));
+                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: ' . $this->errorMessage,
+                    $this->url));
             }
         }
 
@@ -90,7 +96,7 @@ class StreamHandler extends AbstractProcessingHandler
             flock($this->stream, LOCK_EX);
         }
 
-        fwrite($this->stream, (string) $record['formatted']);
+        fwrite($this->stream, (string)$record['formatted']);
 
         if ($this->useLocking) {
             flock($this->stream, LOCK_UN);

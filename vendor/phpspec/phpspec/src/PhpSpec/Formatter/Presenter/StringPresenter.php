@@ -14,10 +14,10 @@
 namespace PhpSpec\Formatter\Presenter;
 
 use Exception;
-use PhpSpec\Exception\Exception as PhpSpecException;
-use PhpSpec\Exception\Example\NotEqualException;
 use PhpSpec\Exception\Example\ErrorException;
+use PhpSpec\Exception\Example\NotEqualException;
 use PhpSpec\Exception\Example\PendingException;
+use PhpSpec\Exception\Exception as PhpSpecException;
 use Prophecy\Argument\Token\ExactValueToken;
 use Prophecy\Exception\Call\UnexpectedCallException;
 use Prophecy\Exception\Exception as ProphecyException;
@@ -56,7 +56,7 @@ class StringPresenter implements PresenterInterface
         $this->differ = $differ;
 
         $this->phpspecPath = dirname(dirname(__DIR__));
-        $this->runnerPath  = $this->phpspecPath.DIRECTORY_SEPARATOR.'Runner';
+        $this->runnerPath = $this->phpspecPath . DIRECTORY_SEPARATOR . 'Runner';
     }
 
     /**
@@ -102,7 +102,7 @@ class StringPresenter implements PresenterInterface
 
     /**
      * @param Exception $exception
-     * @param bool      $verbose
+     * @param bool $verbose
      *
      * @return string
      */
@@ -122,14 +122,14 @@ class StringPresenter implements PresenterInterface
 
         if ($exception instanceof NotEqualException) {
             if ($diff = $this->presentExceptionDifference($exception)) {
-                $presentation .= "\n".$diff;
+                $presentation .= "\n" . $diff;
             }
         }
 
         if ($exception instanceof PhpSpecException && !$exception instanceof ErrorException) {
             list($file, $line) = $this->getExceptionExamplePosition($exception);
 
-            $presentation .= "\n".$this->presentFileCode($file, $line);
+            $presentation .= "\n" . $this->presentFileCode($file, $line);
         }
 
         if ($exception instanceof UnexpectedCallException) {
@@ -137,7 +137,7 @@ class StringPresenter implements PresenterInterface
         }
 
         if (trim($trace = $this->presentExceptionStackTrace($exception))) {
-            $presentation .= "\n".$trace;
+            $presentation .= "\n" . $trace;
         }
 
         return $presentation;
@@ -154,7 +154,7 @@ class StringPresenter implements PresenterInterface
     }
 
     /**
-     * @param string  $file
+     * @param string $file
      * @param integer $lineno
      * @param integer $context
      *
@@ -162,16 +162,16 @@ class StringPresenter implements PresenterInterface
      */
     protected function presentFileCode($file, $lineno, $context = 6)
     {
-        $lines  = explode("\n", file_get_contents($file));
+        $lines = explode("\n", file_get_contents($file));
         $offset = max(0, $lineno - ceil($context / 2));
-        $lines  = array_slice($lines, $offset, $context);
+        $lines = array_slice($lines, $offset, $context);
 
         $text = "\n";
         foreach ($lines as $line) {
             $offset++;
 
             if ($offset == $lineno) {
-                $text .= $this->presentHighlight(sprintf('%4d', $offset).' '.$line);
+                $text .= $this->presentHighlight(sprintf('%4d', $offset) . ' ' . $line);
             } else {
                 $text .= $this->presentCodeLine(sprintf('%4d', $offset), $line);
             }
@@ -190,7 +190,7 @@ class StringPresenter implements PresenterInterface
      */
     protected function presentCodeLine($number, $line)
     {
-        return $number.' '.$line;
+        return $number . ' ' . $line;
     }
 
     /**
@@ -221,11 +221,11 @@ class StringPresenter implements PresenterInterface
     protected function presentExceptionStackTrace(Exception $exception)
     {
         $offset = 0;
-        $text   = "\n";
+        $text = "\n";
 
         $text .= $this->presentExceptionTraceLocation($offset++, $exception->getFile(), $exception->getLine());
         $text .= $this->presentExceptionTraceFunction(
-            'throw new '.get_class($exception),
+            'throw new ' . get_class($exception),
             array($exception->getMessage())
         );
 
@@ -269,14 +269,14 @@ class StringPresenter implements PresenterInterface
      */
     protected function presentExceptionTraceHeader($header)
     {
-        return $header."\n";
+        return $header . "\n";
     }
 
     /**
      * @param string $class
      * @param string $type
      * @param string $method
-     * @param array  $args
+     * @param array $args
      *
      * @return string
      */
@@ -289,7 +289,7 @@ class StringPresenter implements PresenterInterface
 
     /**
      * @param string $function
-     * @param array  $args
+     * @param array $args
      *
      * @return string
      */
@@ -322,9 +322,9 @@ class StringPresenter implements PresenterInterface
     }
 
     /**
-     * @param int    $offset
+     * @param int $offset
      * @param string $file
-     * @param int    $line
+     * @param int $line
      *
      * @return string
      */
@@ -333,7 +333,7 @@ class StringPresenter implements PresenterInterface
         return $this->presentExceptionTraceHeader(sprintf(
             "%2d %s:%d",
             $offset,
-            str_replace(getcwd().DIRECTORY_SEPARATOR, '', $file),
+            str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $file),
             $line
         ));
     }
@@ -361,6 +361,7 @@ class StringPresenter implements PresenterInterface
     {
         if (is_array($value)) {
             $type = is_object($value[0]) ? $this->presentValue($value[0]) : $value[0];
+
             return sprintf('%s::%s()', $type, $value[1]);
         }
 
@@ -389,7 +390,8 @@ class StringPresenter implements PresenterInterface
             return '';
         }
 
-        $presentedMethodProphecy = $this->findMethodProphecyOfFirstNotExpectedArgumentsCall($methodProphecies, $exception);
+        $presentedMethodProphecy = $this->findMethodProphecyOfFirstNotExpectedArgumentsCall($methodProphecies,
+            $exception);
         $expectedTokens = $presentedMethodProphecy->getArgumentsWildcard()->getTokens();
 
         if ($this->parametersCountMismatch($expectedTokens, $actualArguments)) {
@@ -414,8 +416,10 @@ class StringPresenter implements PresenterInterface
      *
      * @return MethodProphecy
      */
-    private function findMethodProphecyOfFirstNotExpectedArgumentsCall(array $methodProphecies, UnexpectedCallException $exception)
-    {
+    private function findMethodProphecyOfFirstNotExpectedArgumentsCall(
+        array $methodProphecies,
+        UnexpectedCallException $exception
+    ) {
         $objectProphecy = $exception->getObjectProphecy();
         foreach ($methodProphecies as $methodProphecy) {
             $calls = $objectProphecy->findProphecyMethodCalls(
@@ -470,7 +474,7 @@ class StringPresenter implements PresenterInterface
     private function generateArgumentsDifferenceText(array $actualArguments, array $expectedArguments)
     {
         $text = '';
-        foreach($actualArguments as $i => $actualArgument) {
+        foreach ($actualArguments as $i => $actualArgument) {
             $expectedArgument = $expectedArguments[$i];
             $actualArgument = is_null($actualArgument) ? 'null' : $actualArgument;
             $expectedArgument = is_null($expectedArgument) ? 'null' : $expectedArgument;

@@ -29,9 +29,15 @@ class ExpressionVoterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getVoteTests
      */
-    public function testVote($roles, $attributes, $expected, $tokenExpectsGetRoles = true, $expressionLanguageExpectsEvaluate = true)
-    {
-        $voter = new ExpressionVoter($this->createExpressionLanguage($expressionLanguageExpectsEvaluate), $this->createTrustResolver());
+    public function testVote(
+        $roles,
+        $attributes,
+        $expected,
+        $tokenExpectsGetRoles = true,
+        $expressionLanguageExpectsEvaluate = true
+    ) {
+        $voter = new ExpressionVoter($this->createExpressionLanguage($expressionLanguageExpectsEvaluate),
+            $this->createTrustResolver());
 
         $this->assertSame($expected, $voter->vote($this->getToken($roles, $tokenExpectsGetRoles), null, $attributes));
     }
@@ -41,10 +47,12 @@ class ExpressionVoterTest extends \PHPUnit_Framework_TestCase
         return array(
             array(array(), array(), VoterInterface::ACCESS_ABSTAIN, false, false),
             array(array(), array('FOO'), VoterInterface::ACCESS_ABSTAIN, false, false),
-
             array(array(), array($this->createExpression()), VoterInterface::ACCESS_DENIED, true, false),
-
-            array(array('ROLE_FOO'), array($this->createExpression(), $this->createExpression()), VoterInterface::ACCESS_GRANTED),
+            array(
+                array('ROLE_FOO'),
+                array($this->createExpression(), $this->createExpression()),
+                VoterInterface::ACCESS_GRANTED
+            ),
             array(array('ROLE_BAR', 'ROLE_FOO'), array($this->createExpression()), VoterInterface::ACCESS_GRANTED),
         );
     }

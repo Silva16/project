@@ -18,21 +18,23 @@
                 height: auto;
             }
 
-           #owl-example .text{
-                position:absolute;
-                color:#FFF;
-                display:block;
-                bottom:0;
+            #owl-example .text {
+                position: absolute;
+                color: #FFF;
+                display: block;
+                bottom: 0;
                 left: 5%;
             }
         </style>
         <h1>Projectos em Destaque</h1>
+
         <div id="owl-example" class="owl-carousel">
 
             @foreach($featured as $project)
                 <div class="item">
                     <a href="{{url("projects/".$project->id)}}">
                         <img src="{{$featuredImage[$project->id]}}" alt="{{$project->name}}"/>
+
                         <p class="text">{{$project->name}}</p>
 
                     </a>

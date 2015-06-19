@@ -20,15 +20,15 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
     /**
      * Constructor.
      *
-     * @param string $dsn      A data source name
+     * @param string $dsn A data source name
      * @param string $username Not used
      * @param string $password Not used
-     * @param int    $lifetime The lifetime to use for the purge
+     * @param int $lifetime The lifetime to use for the purge
      */
     public function __construct($dsn, $username = '', $password = '', $lifetime = 86400)
     {
         $this->dsn = $dsn;
-        $this->lifetime = (int) $lifetime;
+        $this->lifetime = (int)$lifetime;
     }
 
     /**
@@ -36,7 +36,8 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
      */
     public function find($ip, $url, $limit, $method, $start = null, $end = null)
     {
-        $cursor = $this->getMongo()->find($this->buildQuery($ip, $url, $method, $start, $end), array('_id', 'parent', 'ip', 'method', 'url', 'time'))->sort(array('time' => -1))->limit($limit);
+        $cursor = $this->getMongo()->find($this->buildQuery($ip, $url, $method, $start, $end),
+            array('_id', 'parent', 'ip', 'method', 'url', 'time'))->sort(array('time' => -1))->limit($limit);
 
         $tokens = array();
         foreach ($cursor as $profile) {
@@ -85,9 +86,11 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
             'time' => $profile->getTime(),
         );
 
-        $result = $this->getMongo()->update(array('_id' => $profile->getToken()), array_filter($record, function ($v) { return !empty($v); }), array('upsert' => true));
+        $result = $this->getMongo()->update(array('_id' => $profile->getToken()), array_filter($record, function ($v) {
+            return !empty($v);
+        }), array('upsert' => true));
 
-        return (bool) (isset($result['ok']) ? $result['ok'] : $result);
+        return (bool)(isset($result['ok']) ? $result['ok'] : $result);
     }
 
     /**
@@ -104,7 +107,8 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
         }
 
         if (!$parsedDsn = $this->parseDsn($this->dsn)) {
-            throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use MongoDB with an invalid dsn "%s". The expected format is "mongodb://[user:pass@]host/database/collection"', $this->dsn));
+            throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use MongoDB with an invalid dsn "%s". The expected format is "mongodb://[user:pass@]host/database/collection"',
+                $this->dsn));
         }
 
         list($server, $database, $collection) = $parsedDsn;
@@ -161,8 +165,8 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
      * @param string $ip
      * @param string $url
      * @param string $method
-     * @param int    $start
-     * @param int    $end
+     * @param int $start
+     * @param int $end
      *
      * @return array
      */
@@ -249,7 +253,7 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
         preg_match('#^mongodb://(([^:]+):?(.*)(?=@))?@?([^/]*)(.*)$#', $server, $matchesServer);
 
         if ('' == $matchesServer[5] && '' != $matches[2]) {
-            $server .= '/'.$matches[2];
+            $server .= '/' . $matches[2];
         }
 
         return array($server, $database, $collection);

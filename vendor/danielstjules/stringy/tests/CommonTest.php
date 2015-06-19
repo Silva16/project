@@ -142,8 +142,12 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return array(
             array('Testing The Method', 'testing the method'),
             array('Testing the Method', 'testing the method', $ignore, 'UTF-8'),
-            array('I Like to Watch DVDs at Home', 'i like to watch DVDs at home',
-                $ignore, 'UTF-8'),
+            array(
+                'I Like to Watch DVDs at Home',
+                'i like to watch DVDs at home',
+                $ignore,
+                'UTF-8'
+            ),
             array('Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', null, 'UTF-8')
         );
     }
@@ -215,17 +219,14 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('foo bar', 'foo bar', -1),
             array('foo bar', 'foo bar', 7),
             array('fòô bàř', 'fòô bàř', 7, ' ', 'right', 'UTF-8'),
-
             // right
             array('foo bar  ', 'foo bar', 9),
             array('foo bar_*', 'foo bar', 9, '_*', 'right'),
             array('fòô bàř¬ø¬', 'fòô bàř', 10, '¬ø', 'right', 'UTF-8'),
-
             // left
             array('  foo bar', 'foo bar', 9, ' ', 'left'),
             array('_*foo bar', 'foo bar', 9, '_*', 'left'),
             array('¬ø¬fòô bàř', 'fòô bàř', 10, '¬ø', 'left', 'UTF-8'),
-
             // both
             array('foo bar ', 'foo bar', 8, ' ', 'both'),
             array('¬fòô bàř¬ø', 'fòô bàř', 10, '¬ø', 'both', 'UTF-8'),
@@ -391,7 +392,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(true, 'Str contains foo bar', 'foo bar'),
-            array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'),
+            array(true, '12398!@(*%!@# @!%#*&^%', ' @!%#*&^%'),
             array(true, 'Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', true, 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å˚ ∆', true, 'UTF-8'),
@@ -402,7 +403,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', true, 'UTF-8'),
             array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', true, 'UTF-8'),
             array(true, 'Str contains foo bar', 'Foo bar', false),
-            array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%', false),
+            array(true, '12398!@(*%!@# @!%#*&^%', ' @!%#*&^%', false),
             array(true, 'Ο συγγραφέας είπε', 'ΣΥΓΓΡΑΦΈΑΣ', false, 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å´¥©', false, 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å˚ ∆', false, 'UTF-8'),
@@ -419,6 +420,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         // One needle
         $singleNeedle = array_map(function ($array) {
             $array[2] = array($array[2]);
+
             return $array;
         }, $this->containsProvider());
 
@@ -457,6 +459,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         // One needle
         $singleNeedle = array_map(function ($array) {
             $array[2] = array($array[2]);
+
             return $array;
         }, $this->containsProvider());
 

@@ -31,20 +31,27 @@ class Cookie
     /**
      * Constructor.
      *
-     * @param string               $name     The name of the cookie
-     * @param string               $value    The value of the cookie
-     * @param int|string|\DateTime $expire   The time the cookie expires
-     * @param string               $path     The path on the server in which the cookie will be available on
-     * @param string               $domain   The domain that the cookie is available to
-     * @param bool                 $secure   Whether the cookie should only be transmitted over a secure HTTPS connection from the client
-     * @param bool                 $httpOnly Whether the cookie will be made accessible only through the HTTP protocol
+     * @param string $name The name of the cookie
+     * @param string $value The value of the cookie
+     * @param int|string|\DateTime $expire The time the cookie expires
+     * @param string $path The path on the server in which the cookie will be available on
+     * @param string $domain The domain that the cookie is available to
+     * @param bool $secure Whether the cookie should only be transmitted over a secure HTTPS connection from the client
+     * @param bool $httpOnly Whether the cookie will be made accessible only through the HTTP protocol
      *
      * @throws \InvalidArgumentException
      *
      * @api
      */
-    public function __construct($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true)
-    {
+    public function __construct(
+        $name,
+        $value = null,
+        $expire = 0,
+        $path = '/',
+        $domain = null,
+        $secure = false,
+        $httpOnly = true
+    ) {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
             throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
@@ -70,8 +77,8 @@ class Cookie
         $this->domain = $domain;
         $this->expire = $expire;
         $this->path = empty($path) ? '/' : $path;
-        $this->secure = (bool) $secure;
-        $this->httpOnly = (bool) $httpOnly;
+        $this->secure = (bool)$secure;
+        $this->httpOnly = (bool)$httpOnly;
     }
 
     /**
@@ -81,24 +88,24 @@ class Cookie
      */
     public function __toString()
     {
-        $str = urlencode($this->getName()).'=';
+        $str = urlencode($this->getName()) . '=';
 
-        if ('' === (string) $this->getValue()) {
-            $str .= 'deleted; expires='.gmdate('D, d-M-Y H:i:s T', time() - 31536001);
+        if ('' === (string)$this->getValue()) {
+            $str .= 'deleted; expires=' . gmdate('D, d-M-Y H:i:s T', time() - 31536001);
         } else {
             $str .= urlencode($this->getValue());
 
             if ($this->getExpiresTime() !== 0) {
-                $str .= '; expires='.gmdate('D, d-M-Y H:i:s T', $this->getExpiresTime());
+                $str .= '; expires=' . gmdate('D, d-M-Y H:i:s T', $this->getExpiresTime());
             }
         }
 
         if ($this->path) {
-            $str .= '; path='.$this->path;
+            $str .= '; path=' . $this->path;
         }
 
         if ($this->getDomain()) {
-            $str .= '; domain='.$this->getDomain();
+            $str .= '; domain=' . $this->getDomain();
         }
 
         if (true === $this->isSecure()) {

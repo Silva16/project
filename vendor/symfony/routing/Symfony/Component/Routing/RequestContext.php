@@ -42,19 +42,27 @@ class RequestContext
     /**
      * Constructor.
      *
-     * @param string $baseUrl     The base URL
-     * @param string $method      The HTTP method
-     * @param string $host        The HTTP host name
-     * @param string $scheme      The HTTP scheme
-     * @param int    $httpPort    The HTTP port
-     * @param int    $httpsPort   The HTTPS port
-     * @param string $path        The path
+     * @param string $baseUrl The base URL
+     * @param string $method The HTTP method
+     * @param string $host The HTTP host name
+     * @param string $scheme The HTTP scheme
+     * @param int $httpPort The HTTP port
+     * @param int $httpsPort The HTTPS port
+     * @param string $path The path
      * @param string $queryString The query string
      *
      * @api
      */
-    public function __construct($baseUrl = '', $method = 'GET', $host = 'localhost', $scheme = 'http', $httpPort = 80, $httpsPort = 443, $path = '/', $queryString = '')
-    {
+    public function __construct(
+        $baseUrl = '',
+        $method = 'GET',
+        $host = 'localhost',
+        $scheme = 'http',
+        $httpPort = 80,
+        $httpsPort = 443,
+        $path = '/',
+        $queryString = ''
+    ) {
         $this->setBaseUrl($baseUrl);
         $this->setMethod($method);
         $this->setHost($host);
@@ -239,7 +247,7 @@ class RequestContext
      */
     public function setHttpPort($httpPort)
     {
-        $this->httpPort = (int) $httpPort;
+        $this->httpPort = (int)$httpPort;
 
         return $this;
     }
@@ -265,7 +273,7 @@ class RequestContext
      */
     public function setHttpsPort($httpsPort)
     {
-        $this->httpsPort = (int) $httpsPort;
+        $this->httpsPort = (int)$httpsPort;
 
         return $this;
     }
@@ -292,7 +300,7 @@ class RequestContext
     public function setQueryString($queryString)
     {
         // string cast to be fault-tolerant, accepting null
-        $this->queryString = (string) $queryString;
+        $this->queryString = (string)$queryString;
 
         return $this;
     }
@@ -348,8 +356,8 @@ class RequestContext
     /**
      * Sets a parameter value.
      *
-     * @param string $name      A parameter name
-     * @param mixed  $parameter The parameter value
+     * @param string $name A parameter name
+     * @param mixed $parameter The parameter value
      *
      * @return RequestContext The current instance, implementing a fluent interface
      *

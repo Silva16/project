@@ -36,7 +36,7 @@ class ApplicationOutputMatcher implements MatcherInterface
         $actual = $this->normalize($subject->getDisplay());
         if (strpos($actual, $expected) === false) {
             throw new FailureException(sprintf(
-                "Application output did not contain expected '%s'. Actual output:\n'%s'" ,
+                "Application output did not contain expected '%s'. Actual output:\n'%s'",
                 $expected,
                 $subject->getDisplay()
             ));

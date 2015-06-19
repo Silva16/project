@@ -65,10 +65,16 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getStrategyTests
      */
-    public function testStrategies($strategy, $voters, $allowIfAllAbstainDecisions, $allowIfEqualGrantedDeniedDecisions, $expected)
-    {
+    public function testStrategies(
+        $strategy,
+        $voters,
+        $allowIfAllAbstainDecisions,
+        $allowIfEqualGrantedDeniedDecisions,
+        $expected
+    ) {
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $manager = new AccessDecisionManager($voters, $strategy, $allowIfAllAbstainDecisions, $allowIfEqualGrantedDeniedDecisions);
+        $manager = new AccessDecisionManager($voters, $strategy, $allowIfAllAbstainDecisions,
+            $allowIfEqualGrantedDeniedDecisions);
 
         $this->assertSame($expected, $manager->decide($token, array('ROLE_FOO')));
     }
@@ -90,14 +96,32 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array($token, 'affirmative', $this->getVoter(VoterInterface::ACCESS_DENIED), false),
             array($token, 'affirmative', $this->getVoter(VoterInterface::ACCESS_GRANTED), true),
-
             array($token, 'consensus', $this->getVoter(VoterInterface::ACCESS_DENIED), false),
             array($token, 'consensus', $this->getVoter(VoterInterface::ACCESS_GRANTED), true),
-
-            array($token, 'unanimous', $this->getVoterFor2Roles($token, VoterInterface::ACCESS_DENIED, VoterInterface::ACCESS_DENIED), false),
-            array($token, 'unanimous', $this->getVoterFor2Roles($token, VoterInterface::ACCESS_DENIED, VoterInterface::ACCESS_GRANTED), false),
-            array($token, 'unanimous', $this->getVoterFor2Roles($token, VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_DENIED), false),
-            array($token, 'unanimous', $this->getVoterFor2Roles($token, VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_GRANTED), true),
+            array(
+                $token,
+                'unanimous',
+                $this->getVoterFor2Roles($token, VoterInterface::ACCESS_DENIED, VoterInterface::ACCESS_DENIED),
+                false
+            ),
+            array(
+                $token,
+                'unanimous',
+                $this->getVoterFor2Roles($token, VoterInterface::ACCESS_DENIED, VoterInterface::ACCESS_GRANTED),
+                false
+            ),
+            array(
+                $token,
+                'unanimous',
+                $this->getVoterFor2Roles($token, VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_DENIED),
+                false
+            ),
+            array(
+                $token,
+                'unanimous',
+                $this->getVoterFor2Roles($token, VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_GRANTED),
+                true
+            ),
         );
     }
 
@@ -105,12 +129,11 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     {
         $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
         $voter->expects($this->exactly(2))
-              ->method('vote')
-              ->will($this->returnValueMap(array(
-                  array($token, null, array('ROLE_FOO'), $vote1),
-                  array($token, null, array('ROLE_BAR'), $vote2),
-              )))
-        ;
+            ->method('vote')
+            ->will($this->returnValueMap(array(
+                array($token, null, array('ROLE_FOO'), $vote1),
+                array($token, null, array('ROLE_BAR'), $vote2),
+            )));
 
         return $voter;
     }
@@ -124,27 +147,20 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
             array(AccessDecisionManager::STRATEGY_AFFIRMATIVE, $this->getVoters(0, 1, 0), false, true, false),
             array(AccessDecisionManager::STRATEGY_AFFIRMATIVE, $this->getVoters(0, 0, 1), false, true, false),
             array(AccessDecisionManager::STRATEGY_AFFIRMATIVE, $this->getVoters(0, 0, 1), true, true, true),
-
             // consensus
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(1, 0, 0), false, true, true),
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(1, 2, 0), false, true, false),
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(2, 1, 0), false, true, true),
-
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(0, 0, 1), false, true, false),
-
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(0, 0, 1), true, true, true),
-
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(2, 2, 0), false, true, true),
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(2, 2, 1), false, true, true),
-
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(2, 2, 0), false, false, false),
             array(AccessDecisionManager::STRATEGY_CONSENSUS, $this->getVoters(2, 2, 1), false, false, false),
-
             // unanimous
             array(AccessDecisionManager::STRATEGY_UNANIMOUS, $this->getVoters(1, 0, 0), false, true, true),
             array(AccessDecisionManager::STRATEGY_UNANIMOUS, $this->getVoters(1, 0, 1), false, true, true),
             array(AccessDecisionManager::STRATEGY_UNANIMOUS, $this->getVoters(1, 1, 0), false, true, false),
-
             array(AccessDecisionManager::STRATEGY_UNANIMOUS, $this->getVoters(0, 0, 2), false, true, false),
             array(AccessDecisionManager::STRATEGY_UNANIMOUS, $this->getVoters(0, 0, 2), true, true, true),
         );
@@ -170,8 +186,8 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     {
         $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
         $voter->expects($this->any())
-              ->method('vote')
-              ->will($this->returnValue($vote));
+            ->method('vote')
+            ->will($this->returnValue($vote));
 
         return $voter;
     }
@@ -180,8 +196,8 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     {
         $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
         $voter->expects($this->any())
-              ->method('supportsClass')
-              ->will($this->returnValue($ret));
+            ->method('supportsClass')
+            ->will($this->returnValue($ret));
 
         return $voter;
     }
@@ -190,8 +206,8 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     {
         $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
         $voter->expects($this->any())
-              ->method('supportsAttribute')
-              ->will($this->returnValue($ret));
+            ->method('supportsAttribute')
+            ->will($this->returnValue($ret));
 
         return $voter;
     }

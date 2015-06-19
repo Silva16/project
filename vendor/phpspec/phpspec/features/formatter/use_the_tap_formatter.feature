@@ -5,7 +5,7 @@ Feature: Use the TAP formatter
 
   Scenario: A spec which causes various result states
     Given the spec file "spec/Formatter/TapExample1/TapSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Formatter\TapExample1;
@@ -41,7 +41,7 @@ Feature: Use the TAP formatter
       }
       """
     And the class file "src/Formatter/TapExample1/Tap.php" contains:
-      """
+    """
       <?php
 
       namespace Formatter\TapExample1;
@@ -65,7 +65,7 @@ Feature: Use the TAP formatter
       """
     When I run phpspec using the "tap" format
     Then I should see:
-      """
+    """
       TAP version 13
       not ok 1 - Formatter\TapExample1\Tap: is most definitely pending # TODO todo: write pending example
         ---

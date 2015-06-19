@@ -249,7 +249,8 @@ class Command
         if (null === $errorHandler = $this->errorHandler) {
             exec($this->join(), $output);
         } else {
-            $process = proc_open($this->join(), array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w')), $pipes);
+            $process = proc_open($this->join(),
+                array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w')), $pipes);
             $output = preg_split('~(\r\n|\r|\n)~', stream_get_contents($pipes[1]), -1, PREG_SPLIT_NO_EMPTY);
 
             if ($error = stream_get_contents($pipes[2])) {
@@ -273,7 +274,9 @@ class Command
             array_map(function ($bit) {
                 return $bit instanceof Command ? $bit->join() : ($bit ?: null);
             }, $this->bits),
-            function ($bit) { return null !== $bit; }
+            function ($bit) {
+                return null !== $bit;
+            }
         ));
     }
 
@@ -281,7 +284,7 @@ class Command
      * Insert a string or a Command instance before the bit at given position $index (index starts from 0).
      *
      * @param string|Command $bit
-     * @param int            $index
+     * @param int $index
      *
      * @return Command The current Command instance
      */

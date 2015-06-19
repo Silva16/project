@@ -13,29 +13,29 @@
 
 namespace PhpSpec\Listener;
 
-use PhpSpec\Event\SuiteEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use PhpSpec\Event\ExampleEvent;
 use PhpSpec\Event\SpecificationEvent;
+use PhpSpec\Event\SuiteEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StatisticsCollector implements EventSubscriberInterface
 {
-    private $globalResult    = 0;
-    private $totalSpecs      = 0;
+    private $globalResult = 0;
+    private $totalSpecs = 0;
     private $totalSpecsCount = 0;
 
-    private $passedEvents  = array();
+    private $passedEvents = array();
     private $pendingEvents = array();
     private $skippedEvents = array();
-    private $failedEvents  = array();
-    private $brokenEvents  = array();
+    private $failedEvents = array();
+    private $brokenEvents = array();
 
     public static function getSubscribedEvents()
     {
         return array(
             'afterSpecification' => array('afterSpecification', 10),
-            'afterExample'       => array('afterExample', 10),
-            'beforeSuite'       => array('beforeSuite', 10),
+            'afterExample' => array('afterExample', 10),
+            'beforeSuite' => array('beforeSuite', 10),
 
         );
     }
@@ -117,11 +117,11 @@ class StatisticsCollector implements EventSubscriberInterface
     public function getCountsHash()
     {
         return array(
-            'passed'  => count($this->getPassedEvents()),
+            'passed' => count($this->getPassedEvents()),
             'pending' => count($this->getPendingEvents()),
             'skipped' => count($this->getSkippedEvents()),
-            'failed'  => count($this->getFailedEvents()),
-            'broken'  => count($this->getBrokenEvents()),
+            'failed' => count($this->getFailedEvents()),
+            'broken' => count($this->getBrokenEvents()),
         );
     }
 

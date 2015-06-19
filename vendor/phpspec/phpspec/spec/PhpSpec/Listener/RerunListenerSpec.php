@@ -20,8 +20,10 @@ class RerunListenerSpec extends ObjectBehavior
         $this->getSubscribedEvents()->shouldHaveKey('afterSuite');
     }
 
-    function it_does_not_tell_the_rerunner_to_rerun_if_it_is_not_worth_doing_so(SuiteEvent $suiteEvent, ReRunner $reRunner)
-    {
+    function it_does_not_tell_the_rerunner_to_rerun_if_it_is_not_worth_doing_so(
+        SuiteEvent $suiteEvent,
+        ReRunner $reRunner
+    ) {
         $suiteEvent->isWorthRerunning()->willReturn(false);
 
         $this->afterSuite($suiteEvent);

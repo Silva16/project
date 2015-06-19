@@ -14,9 +14,8 @@
 namespace PhpSpec\Formatter;
 
 use PhpSpec\Console\IO;
-use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Event\ExampleEvent;
-use PhpSpec\Listener\StatisticsCollector;
+use PhpSpec\Event\SuiteEvent;
 
 class ProgressFormatter extends ConsoleFormatter
 {
@@ -29,7 +28,7 @@ class ProgressFormatter extends ConsoleFormatter
         $this->printException($event);
 
         $now = microtime(true);
-        if (!$this->lastDraw || ($now - $this->lastDraw) > 1/self::FPS) {
+        if (!$this->lastDraw || ($now - $this->lastDraw) > 1 / self::FPS) {
             $this->lastDraw = $now;
             $this->drawStats();
         }
@@ -105,8 +104,8 @@ class ProgressFormatter extends ConsoleFormatter
     }
 
     /**
-     * @param  array   $barLengths
-     * @param  array   $percents
+     * @param  array $barLengths
+     * @param  array $percents
      * @param  boolean $isDecorated
      * @return array
      */
@@ -116,7 +115,7 @@ class ProgressFormatter extends ConsoleFormatter
         $progress = array();
         foreach ($barLengths as $status => $length) {
             $percent = $percents[$status];
-            $text = $percent.'%';
+            $text = $percent . '%';
             $length = ($size - $length) >= 0 ? $length : $size;
             $size = $size - $length;
 
@@ -143,18 +142,18 @@ class ProgressFormatter extends ConsoleFormatter
     }
 
     /**
-     * @param IO    $io
+     * @param IO $io
      * @param array $progress
-     * @param int   $total
+     * @param int $total
      */
     private function updateProgressBar(IO $io, array $progress, $total)
     {
         if ($io->isDecorated()) {
             $progressBar = implode('', $progress);
             $pad = $this->getIO()->getBlockWidth() - strlen(strip_tags($progressBar));
-            $io->writeTemp($progressBar.str_repeat(' ', $pad + 1).$total);
+            $io->writeTemp($progressBar . str_repeat(' ', $pad + 1) . $total);
         } else {
-            $io->writeTemp('/'.implode('/', $progress).'/  '.$total.' examples');
+            $io->writeTemp('/' . implode('/', $progress) . '/  ' . $total . ' examples');
         }
     }
 
