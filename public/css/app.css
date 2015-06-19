@@ -2232,7 +2232,7 @@ table th[class*="col-"] {
   background-color: #ebcccc;
 }
 .table-responsive {
-    width: 100% margin-bottom: 15px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; -ms-overflow-style: -ms-autohiding-scrollbar; border: 1px solid 000000;
+    width: 100% margin-bottom: 15px; overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; -ms-overflow-style: -ms-autohiding-scrollbar; border: 1px solid 000000;
 }
 @media screen and (max-width: 767px) {
   .table-responsive {

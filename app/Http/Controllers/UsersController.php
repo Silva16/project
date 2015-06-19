@@ -235,4 +235,58 @@ class UsersController extends Controller
 
 
     }
+
+    public function admin()
+    {
+        if (($sort = Input::get('sort')) == null) {
+            $sort = 'id';
+        }
+        if (($order = Input::get('order')) == null) {
+            $order = 'asc';
+        }
+
+        $users = User::with(array('institution'))->orderBy($sort, $order);
+        if(Input::get('name') != '')
+            $users->where('name', 'LIKE', '%'.Input::get('name').'%');
+
+        if(Input::get('position') != '')
+            $users->where('position', 'LIKE', '%'.Input::get('position').'%');
+
+        if(Input::get('email') != '')
+            $users->where('email', 'LIKE', '%'.Input::get('email').'%');
+
+        if(Input::get('altemail') != '')
+            $users->where('alt_email', 'LIKE', '%'.Input::get('altemail').'%');
+
+        if(Input::get('id') != 0)
+            $users->where('id', '=', Input::get('id'));
+        if(Input::get('flags') != 0)
+            $users->where('flags', '=', Input::get('flags'));
+        if(Input::get('institution') != 0)
+            $users->where('institution_id', '=', Input::get('institution'));
+        if(Input::get('role') != 0)
+            $users->where('role', '=', Input::get('role'));
+
+        $users = $users ->paginate(10);
+
+        foreach ($users as $user) {
+            $image[$user->id] = action('MediaController@showProfile', $user->photo_url);
+
+        }
+
+        $institutions[0] = "Escolha uma opção...";
+        $institutionsAux = Institution::get();
+        foreach($institutionsAux as $institution){
+            $institutions[$institution->id] = $institution->name;
+        }
+        $role[0] = "Escolha uma opção...";
+
+        $role[1] = "Author";
+
+        $role[2] = "Editor";
+
+        $role[4] = "Administrator";
+
+        return view('users.admin', compact('users', 'image', 'role', 'institutions'));
+    }
 }
