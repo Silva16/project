@@ -27,6 +27,10 @@ Route::patch('comments/refuseMsg/{id}', 'CommentsController@refuseMessage');
 
 Route::resource('dashboard', 'DashboardController');
 
+Route::post('project/approve/{id}', 'ProjectsController@approve');
+
+Route::post('project/refuse/{id}', 'ProjectsController@refuse');
+
 Route::resource('projects', 'ProjectsController');
 
 Route::get('users/admin', ['as' => 'users.admin', 'uses' =>'UsersController@admin']);

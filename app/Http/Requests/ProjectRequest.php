@@ -29,7 +29,7 @@ class ProjectRequest extends Request {
             'keywords' => 'min:3',
             'theme' => 'required|min:3',
             'started_at' => 'required|after:01 January 1987|before:now',
-            'finished_at' => 'after:01 January 1987|before:now',
+            'finished_at' => 'after:now',
             'observations' => 'min:10'
 		];
 	}
