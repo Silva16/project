@@ -22,7 +22,9 @@ class MediaRequest extends Request {
 	public function rules()
 	{
 		return [
-			//
+            'title' => 'required|min:3',
+            'description' => 'required|min:10',
+            'ext_url' => 'min:8',
 		];
 	}
 

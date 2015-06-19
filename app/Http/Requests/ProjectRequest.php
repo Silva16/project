@@ -22,7 +22,7 @@ class ProjectRequest extends Request {
 	public function rules()
 	{
 		return [
-            //'name' => array('required' , 'min:3', 'regex:/^[a-zA-Z ]+$/'),
+            
             'name' => 'required|min:3',
             'type' => 'required|min:3',
             'description' => 'required|min:10',

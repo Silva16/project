@@ -31,7 +31,7 @@
 
     <div class="form-group @if ($errors->has('ext_url')) has-error @endif">
          {!! Form::label('ext_url', 'Referência Externa:') !!}</br>
-         {!! Form::text('ext_url', null, array('class' => 'form-control')) !!}
+         {!! Form::url('ext_url', null, array('class' => 'form-control')) !!}
          @if ($errors->has('ext_url'))
              <span class="alert alert-danger">
                  {{ $errors->first('ext_url') }}

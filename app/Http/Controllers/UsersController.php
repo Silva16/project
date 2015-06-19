@@ -132,7 +132,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        return redirect('admin.users');
+        return redirect('users/admin');
     }
 
     /**
@@ -213,7 +213,7 @@ class UsersController extends Controller
 
 
 
-        return redirect('admin.users');
+        return redirect('users/admin');
     }
 	/**
 	 * Remove the specified resource from storage.
@@ -227,7 +227,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        return redirect('admin.users');
+        return redirect('users/admin');
     }
 
     public function status()

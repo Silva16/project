@@ -83,7 +83,7 @@
                 {!! Form::submit('Rejeitar') !!}
                 {!! Form::close() !!}
             </td>
-            @else
+            @elseif ($user->role == 2)
                 <td><hr width="82%"></td>
             @endif
             <td>{{$media->title}}</td>

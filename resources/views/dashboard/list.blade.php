@@ -90,6 +90,9 @@
                     {!! Form::submit('Rejeitar') !!}
                     {!! Form::close() !!}
                 </td>
+                @elseif ($user->role == 2)
+                    <td><hr width="82%"></td>
+                @endif
                 @endif
                 <td>{{$project->name}}</td>
                 <td>{{$project->acronym}}</td>

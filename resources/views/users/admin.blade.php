@@ -20,6 +20,8 @@
                 <th>Criado em:</th>
                 <th>Ultimo update:</th>
                 <th></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -54,6 +56,16 @@
                     <td>{{$user->created_at}}</td>
                     <td>{{$user->updated_at}}</td>
                     <td><a href="projects?created_by={{$user->id}}">Mostrar Projectos</a></td>
+                    <td>
+                        {!! Form::open(['method' => 'GET', 'action' => ['UsersController@edit', $user->id]]) !!}
+                        {!! Form::submit('Editar') !!}
+                        {!! Form::close() !!}
+                    </td>
+                    <td>
+                        {!! Form::open(['method' => 'DELETE', 'action' => ['UsersController@destroy', $user->id]]) !!}
+                        {!! Form::submit('Apagar') !!}
+                        {!! Form::close() !!}
+                    </td>
                 </tr>
             @endforeach
         </table>
