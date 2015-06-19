@@ -137,7 +137,13 @@
                 @elseif($project->state == 1)
                     <td style="color: green; font-weight: bold">Aprovado</td>
                 @elseif($project->state == 2)
-                    <td style="color: #FFCC00; font-weight: bold">Pendente</td>
+                    <td ><p style="color: #FFCC00; font-weight: bold">Pendente</p>
+                        @if(Auth::user()->role == 1)
+                            {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectsController@destroy', $project->id]]) !!}
+                            {!! Form::submit('Apagar') !!}
+                            {!! Form::close() !!}
+                        @endif
+                    </td>
                 @endif
                 @if (array_key_exists($project->id, $approved_by))
                     <td>{{$approved_by[$project->id]}}</td>
