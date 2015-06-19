@@ -46,7 +46,7 @@
 
     </div>
 
-    <div class="table-responsive" style="overflow-x: scroll">
+    <div class="table-responsive" style="overflow-x: scroll; overflow-y: auto">
     <table class="table">
         <thead>
             <tr>
