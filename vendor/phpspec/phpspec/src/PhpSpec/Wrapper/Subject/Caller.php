@@ -13,17 +13,17 @@
 
 namespace PhpSpec\Wrapper\Subject;
 
+use PhpSpec\Event\MethodCallEvent;
 use PhpSpec\Exception\ExceptionFactory;
 use PhpSpec\Loader\Node\ExampleNode;
 use PhpSpec\Wrapper\Subject;
-use PhpSpec\Wrapper\Wrapper;
 use PhpSpec\Wrapper\Unwrapper;
-use PhpSpec\Event\MethodCallEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
+use PhpSpec\Wrapper\Wrapper;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
 use ReflectionProperty;
-use ReflectionException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 class Caller
 {
@@ -49,11 +49,11 @@ class Caller
     private $exceptionFactory;
 
     /**
-     * @param WrappedObject    $wrappedObject
-     * @param ExampleNode      $example
-     * @param Dispatcher       $dispatcher
+     * @param WrappedObject $wrappedObject
+     * @param ExampleNode $example
+     * @param Dispatcher $dispatcher
      * @param ExceptionFactory $exceptions
-     * @param Wrapper          $wrapper
+     * @param Wrapper $wrapper
      */
     public function __construct(
         WrappedObject $wrappedObject,
@@ -62,16 +62,16 @@ class Caller
         ExceptionFactory $exceptions,
         Wrapper $wrapper
     ) {
-        $this->wrappedObject    = $wrappedObject;
-        $this->example          = $example;
-        $this->dispatcher       = $dispatcher;
-        $this->wrapper          = $wrapper;
+        $this->wrappedObject = $wrappedObject;
+        $this->example = $example;
+        $this->dispatcher = $dispatcher;
+        $this->wrapper = $wrapper;
         $this->exceptionFactory = $exceptions;
     }
 
     /**
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return Subject
      *
@@ -85,7 +85,7 @@ class Caller
             throw $this->callingMethodOnNonObject($method);
         }
 
-        $subject   = $this->wrappedObject->getInstance();
+        $subject = $this->wrappedObject->getInstance();
         $unwrapper = new Unwrapper();
         $arguments = $unwrapper->unwrapAll($arguments);
 
@@ -98,7 +98,7 @@ class Caller
 
     /**
      * @param string $property
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return mixed
      *
@@ -132,7 +132,7 @@ class Caller
     public function get($property)
     {
         if ($this->lookingForConstants($property) && $this->constantDefined($property)) {
-            return constant($this->wrappedObject->getClassName().'::'.$property);
+            return constant($this->wrappedObject->getClassName() . '::' . $property);
         }
 
         if (null === $this->getWrappedObject()) {
@@ -179,7 +179,7 @@ class Caller
 
     /**
      * @param string $property
-     * @param bool   $withValue
+     * @param bool $withValue
      *
      * @return bool
      */
@@ -247,7 +247,7 @@ class Caller
     /**
      * @param object $subject
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return Subject
      */
@@ -348,7 +348,7 @@ class Caller
 
     /**
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return \PhpSpec\Exception\Fracture\MethodNotFoundException|\PhpSpec\Exception\Fracture\MethodNotVisibleException
      */
@@ -423,7 +423,7 @@ class Caller
     private function lookingForConstants($property)
     {
         return null !== $this->wrappedObject->getClassName() &&
-            $property === strtoupper($property);
+        $property === strtoupper($property);
     }
 
     /**
@@ -433,6 +433,6 @@ class Caller
      */
     public function constantDefined($property)
     {
-        return defined($this->wrappedObject->getClassName().'::'.$property);
+        return defined($this->wrappedObject->getClassName() . '::' . $property);
     }
 }

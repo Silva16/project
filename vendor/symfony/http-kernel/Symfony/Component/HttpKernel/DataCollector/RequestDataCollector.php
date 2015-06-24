@@ -11,14 +11,14 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * RequestDataCollector.
@@ -42,7 +42,8 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
         $responseHeaders = $response->headers->all();
         $cookies = array();
         foreach ($response->headers->getCookies() as $cookie) {
-            $cookies[] = $this->getCookieHeader($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(), $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
+            $cookies[] = $this->getCookieHeader($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(),
+                $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
         }
         if (count($cookies) > 0) {
             $responseHeaders['Set-Cookie'] = $cookies;
@@ -156,7 +157,7 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
                     'line' => $r->getStartLine(),
                 );
             } else {
-                $this->data['controller'] = (string) $controller ?: 'n/a';
+                $this->data['controller'] = (string)$controller ?: 'n/a';
             }
             unset($this->controllers[$request]);
         }
@@ -305,25 +306,27 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
 
         if (0 !== $expires) {
             if (is_numeric($expires)) {
-                $expires = (int) $expires;
+                $expires = (int)$expires;
             } elseif ($expires instanceof \DateTime) {
                 $expires = $expires->getTimestamp();
             } else {
                 $tmp = strtotime($expires);
                 if (false === $tmp || -1 == $tmp) {
-                    throw new \InvalidArgumentException(sprintf('The "expires" cookie parameter is not valid (%s).', $expires));
+                    throw new \InvalidArgumentException(sprintf('The "expires" cookie parameter is not valid (%s).',
+                        $expires));
                 }
                 $expires = $tmp;
             }
 
-            $cookie .= '; expires='.str_replace('+0000', '', \DateTime::createFromFormat('U', $expires, new \DateTimeZone('GMT'))->format('D, d-M-Y H:i:s T'));
+            $cookie .= '; expires=' . str_replace('+0000', '',
+                    \DateTime::createFromFormat('U', $expires, new \DateTimeZone('GMT'))->format('D, d-M-Y H:i:s T'));
         }
 
         if ($domain) {
-            $cookie .= '; domain='.$domain;
+            $cookie .= '; domain=' . $domain;
         }
 
-        $cookie .= '; path='.$path;
+        $cookie .= '; path=' . $path;
 
         if ($secure) {
             $cookie .= '; secure';

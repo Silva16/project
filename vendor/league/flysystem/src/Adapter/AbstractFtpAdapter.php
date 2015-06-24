@@ -42,10 +42,10 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     public function setConfig(array $config)
     {
         foreach ($this->configurable as $setting) {
-            if (! isset($config[$setting])) {
+            if (!isset($config[$setting])) {
                 continue;
             }
-            $this->{'set'.ucfirst($setting)}($config[$setting]);
+            $this->{'set' . ucfirst($setting)}($config[$setting]);
         }
 
         return $this;
@@ -132,7 +132,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function setPort($port)
     {
-        $this->port = (int) $port;
+        $this->port = (int)$port;
 
         return $this;
     }
@@ -146,7 +146,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function setRoot($root)
     {
-        $this->root = rtrim($root, '\\/').$this->separator;
+        $this->root = rtrim($root, '\\/') . $this->separator;
 
         return $this;
     }
@@ -218,7 +218,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function setTimeout($timeout)
     {
-        $this->timeout = (int) $timeout;
+        $this->timeout = (int)$timeout;
 
         return $this;
     }
@@ -234,7 +234,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     /**
      * Normalize a directory listing.
      *
-     * @param array  $listing
+     * @param array $listing
      * @param string $prefix
      *
      * @return array directory listing
@@ -286,9 +286,10 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     protected function normalizeObject($item, $base)
     {
         $item = preg_replace('#\s+#', ' ', trim($item), 7);
-        list($permissions, /* $number */, /* $owner */, /* $group */, $size, /* $month */, /* $day */, /* $time*/, $name) = explode(' ', $item, 9);
+        list($permissions, /* $number */, /* $owner */, /* $group */, $size, /* $month */, /* $day */, /* $time*/, $name) = explode(' ',
+            $item, 9);
         $type = $this->detectType($permissions);
-        $path = empty($base) ? $name : $base.$this->separator.$name;
+        $path = empty($base) ? $name : $base . $this->separator . $name;
 
         if ($type === 'dir') {
             return compact('type', 'path');
@@ -296,7 +297,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
 
         $permissions = $this->normalizePermissions($permissions);
         $visibility = $permissions & 0044 ? AdapterInterface::VISIBILITY_PUBLIC : AdapterInterface::VISIBILITY_PRIVATE;
-        $size = (int) $size;
+        $size = (int)$size;
 
         return compact('type', 'path', 'visibility', 'size');
     }
@@ -351,7 +352,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     public function removeDotDirectories(array $list)
     {
         $filter = function ($line) {
-            if (! empty($line) && ! preg_match('#.* \.(\.)?$|^total#', $line)) {
+            if (!empty($line) && !preg_match('#.* \.(\.)?$|^total#', $line)) {
                 return true;
             }
 
@@ -402,7 +403,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function ensureDirectory($dirname)
     {
-        if (! empty($dirname) && ! $this->has($dirname)) {
+        if (!empty($dirname) && !$this->has($dirname)) {
             $this->createDir($dirname, new Config());
         }
     }
@@ -412,7 +413,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function getConnection()
     {
-        if (! $this->connection) {
+        if (!$this->connection) {
             $this->connect();
         }
 

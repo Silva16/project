@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Fragment;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer;
 use Symfony\Component\HttpKernel\HttpCache\Esi;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\UriSigner;
 
 class EsiFragmentRendererTest extends \PHPUnit_Framework_TestCase
@@ -40,8 +40,10 @@ class EsiFragmentRendererTest extends \PHPUnit_Framework_TestCase
         $request->headers->set('Surrogate-Capability', 'ESI/1.0');
 
         $this->assertEquals('<esi:include src="/" />', $strategy->render('/', $request)->getContent());
-        $this->assertEquals("<esi:comment text=\"This is a comment\" />\n<esi:include src=\"/\" />", $strategy->render('/', $request, array('comment' => 'This is a comment'))->getContent());
-        $this->assertEquals('<esi:include src="/" alt="foo" />', $strategy->render('/', $request, array('alt' => 'foo'))->getContent());
+        $this->assertEquals("<esi:comment text=\"This is a comment\" />\n<esi:include src=\"/\" />",
+            $strategy->render('/', $request, array('comment' => 'This is a comment'))->getContent());
+        $this->assertEquals('<esi:include src="/" alt="foo" />',
+            $strategy->render('/', $request, array('alt' => 'foo'))->getContent());
     }
 
     public function testRenderControllerReference()

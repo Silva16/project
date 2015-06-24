@@ -12,9 +12,9 @@
 namespace Symfony\Component\HttpKernel\Fragment;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
 /**
@@ -44,9 +44,9 @@ class FragmentHandler
      *
      * RequestStack will become required in 3.0.
      *
-     * @param FragmentRendererInterface[] $renderers    An array of FragmentRendererInterface instances
-     * @param bool                        $debug        Whether the debug mode is enabled or not
-     * @param RequestStack|null           $requestStack The Request stack that controls the lifecycle of requests
+     * @param FragmentRendererInterface[] $renderers An array of FragmentRendererInterface instances
+     * @param bool $debug Whether the debug mode is enabled or not
+     * @param RequestStack|null $requestStack The Request stack that controls the lifecycle of requests
      */
     public function __construct(array $renderers = array(), $debug = false, RequestStack $requestStack = null)
     {
@@ -90,9 +90,9 @@ class FragmentHandler
      *
      *  * ignore_errors: true to return an empty string in case of an error
      *
-     * @param string|ControllerReference $uri      A URI as a string or a ControllerReference instance
-     * @param string                     $renderer The renderer name
-     * @param array                      $options  An array of options
+     * @param string|ControllerReference $uri A URI as a string or a ControllerReference instance
+     * @param string $renderer The renderer name
+     * @param array $options An array of options
      *
      * @return string|null The Response content or null when the Response is streamed
      *
@@ -131,7 +131,8 @@ class FragmentHandler
     protected function deliver(Response $response)
     {
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException(sprintf('Error when rendering "%s" (Status code is %s).', $this->getRequest()->getUri(), $response->getStatusCode()));
+            throw new \RuntimeException(sprintf('Error when rendering "%s" (Status code is %s).',
+                $this->getRequest()->getUri(), $response->getStatusCode()));
         }
 
         if (!$response instanceof StreamedResponse) {

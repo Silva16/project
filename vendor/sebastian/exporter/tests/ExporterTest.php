@@ -30,7 +30,7 @@ class ExporterTest extends \PHPUnit_Framework_TestCase
         $obj2 = new \stdClass;
         $obj2->foo = 'bar';
 
-        $obj3 = (object)array(1,2,"Test\r\n",4,5,6,7,8);
+        $obj3 = (object)array(1, 2, "Test\r\n", 4, 5, 6, 7, 8);
 
         $obj = new \stdClass;
         //@codingStandardsIgnoreStart
@@ -59,9 +59,10 @@ class ExporterTest extends \PHPUnit_Framework_TestCase
             array(1.2, '1.2'),
             array(fopen('php://memory', 'r'), 'resource(%d) of type (stream)'),
             array('1', "'1'"),
-            array(array(array(1,2,3), array(3,4,5)),
-        <<<EOF
-Array &0 (
+            array(
+                array(array(1, 2, 3), array(3, 4, 5)),
+                <<<EOF
+        Array &0 (
     0 => Array &1 (
         0 => 1
         1 => 2
@@ -76,9 +77,10 @@ Array &0 (
 EOF
             ),
             // \n\r and \r is converted to \n
-            array("this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext",
-            <<<EOF
-'this
+            array(
+                "this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext",
+                <<<EOF
+    'this
 is
 a
 very
@@ -92,9 +94,10 @@ text'
 EOF
             ),
             array(new \stdClass, 'stdClass Object &%x ()'),
-            array($obj,
-            <<<EOF
-stdClass Object &%x (
+            array(
+                $obj,
+                <<<EOF
+    stdClass Object &%x (
     'null' => null
     'boolean' => true
     'integer' => 1
@@ -123,9 +126,10 @@ text'
 EOF
             ),
             array(array(), 'Array &%d ()'),
-            array($storage,
-            <<<EOF
-SplObjectStorage Object &%x (
+            array(
+                $storage,
+                <<<EOF
+    SplObjectStorage Object &%x (
     'foo' => stdClass Object &%x (
         'foo' => 'bar'
     )
@@ -136,9 +140,10 @@ SplObjectStorage Object &%x (
 )
 EOF
             ),
-            array($obj3,
-            <<<EOF
-stdClass Object &%x (
+            array(
+                $obj3,
+                <<<EOF
+    stdClass Object &%x (
     0 => 1
     1 => 2
     2 => 'Test\n'
@@ -281,7 +286,10 @@ EOF;
             array(1.2, '1.2'),
             array('1', "'1'"),
             // \n\r and \r is converted to \n
-            array("this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext", "'this\\nis\\na\\nvery\\nvery\\nvery\\nvery...g\\ntext'"),
+            array(
+                "this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext",
+                "'this\\nis\\na\\nvery\\nvery\\nvery\\nvery...g\\ntext'"
+            ),
             array(new \stdClass, 'stdClass Object ()'),
             array($obj, 'stdClass Object (...)'),
             array(array(), 'Array ()'),

@@ -13,10 +13,10 @@
 
 namespace PhpSpec\CodeGenerator\Generator;
 
-use PhpSpec\Console\IO;
 use PhpSpec\CodeGenerator\TemplateRenderer;
-use PhpSpec\Util\Filesystem;
+use PhpSpec\Console\IO;
 use PhpSpec\Locator\ResourceInterface;
+use PhpSpec\Util\Filesystem;
 
 /**
  * Base class with common behaviour for generating class and spec class
@@ -39,20 +39,20 @@ abstract class PromptingGenerator implements GeneratorInterface
     private $filesystem;
 
     /**
-     * @param IO               $io
+     * @param IO $io
      * @param TemplateRenderer $templates
-     * @param Filesystem       $filesystem
+     * @param Filesystem $filesystem
      */
     public function __construct(IO $io, TemplateRenderer $templates, Filesystem $filesystem = null)
     {
-        $this->io         = $io;
-        $this->templates  = $templates;
+        $this->io = $io;
+        $this->templates = $templates;
         $this->filesystem = $filesystem ?: new Filesystem();
     }
 
     /**
      * @param ResourceInterface $resource
-     * @param array             $data
+     * @param array $data
      */
     public function generate(ResourceInterface $resource, array $data = array())
     {
@@ -87,7 +87,7 @@ abstract class PromptingGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      *
      * @return string
      */
@@ -95,7 +95,7 @@ abstract class PromptingGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      *
      * @return string
      */
@@ -136,7 +136,7 @@ abstract class PromptingGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      */
     private function generateFileAndRenderTemplate(ResourceInterface $resource, $filepath)
     {

@@ -82,7 +82,9 @@ class Util_TestDox_NamePrettifierTest extends PHPUnit_Framework_TestCase
      */
     public function testTestNameIsNotGroupedWhenNotInSequence()
     {
-        $this->assertEquals('Sets redirect header on 301', $this->namePrettifier->prettifyTestMethod('testSetsRedirectHeaderOn301'));
-        $this->assertEquals('Sets redirect header on 302', $this->namePrettifier->prettifyTestMethod('testSetsRedirectHeaderOn302'));
+        $this->assertEquals('Sets redirect header on 301',
+            $this->namePrettifier->prettifyTestMethod('testSetsRedirectHeaderOn301'));
+        $this->assertEquals('Sets redirect header on 302',
+            $this->namePrettifier->prettifyTestMethod('testSetsRedirectHeaderOn302'));
     }
 }

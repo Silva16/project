@@ -6,7 +6,7 @@ class Swift_Plugins_PopBeforeSmtpPluginTest extends \PHPUnit_Framework_TestCase
     {
         $connection = $this->_createConnection();
         $connection->expects($this->once())
-                   ->method('connect');
+            ->method('connect');
 
         $plugin = $this->_createPlugin('pop.host.tld', 110);
         $plugin->setConnection($connection);
@@ -21,7 +21,7 @@ class Swift_Plugins_PopBeforeSmtpPluginTest extends \PHPUnit_Framework_TestCase
     {
         $connection = $this->_createConnection();
         $connection->expects($this->once())
-                   ->method('disconnect');
+            ->method('disconnect');
 
         $plugin = $this->_createPlugin('pop.host.tld', 110);
         $plugin->setConnection($connection);
@@ -36,9 +36,9 @@ class Swift_Plugins_PopBeforeSmtpPluginTest extends \PHPUnit_Framework_TestCase
     {
         $connection = $this->_createConnection();
         $connection->expects($this->never())
-                   ->method('disconnect');
+            ->method('disconnect');
         $connection->expects($this->never())
-                   ->method('connect');
+            ->method('connect');
 
         $smtp = $this->_createTransport();
 
@@ -56,7 +56,7 @@ class Swift_Plugins_PopBeforeSmtpPluginTest extends \PHPUnit_Framework_TestCase
     {
         $connection = $this->_createConnection();
         $connection->expects($this->once())
-                   ->method('connect');
+            ->method('connect');
 
         $smtp = $this->_createTransport();
 
@@ -79,8 +79,8 @@ class Swift_Plugins_PopBeforeSmtpPluginTest extends \PHPUnit_Framework_TestCase
     private function _createTransportChangeEvent($transport)
     {
         $evt = $this->getMockBuilder('Swift_Events_TransportChangeEvent')
-                    ->disableOriginalConstructor()
-                    ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
         $evt->expects($this->any())
             ->method('getSource')
             ->will($this->returnValue($transport));

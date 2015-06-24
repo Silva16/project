@@ -149,8 +149,10 @@ LONGDESC;
         $this->assertSame('.', $parsedContents[2]);
 
         $this->assertSame(
-            array('inline tag that has { that
-is literal'),
+            array(
+                'inline tag that has { that
+is literal'
+            ),
             $parsedContents[1]->getParsedDescription()
         );
     }
@@ -193,8 +195,10 @@ LONGDESC;
         $this->assertSame('.', $parsedContents[2]);
 
         $this->assertSame(
-            array('inline tag with } that is not an
-inline tag'),
+            array(
+                'inline tag with } that is not an
+inline tag'
+            ),
             $parsedContents[1]->getParsedDescription()
         );
     }
@@ -237,8 +241,10 @@ LONGDESC;
         $this->assertSame('.', $parsedContents[2]);
 
         $this->assertSame(
-            array('inline tag with literal
-{@link} in it'),
+            array(
+                'inline tag with literal
+{@link} in it'
+            ),
             $parsedContents[1]->getParsedDescription()
         );
     }

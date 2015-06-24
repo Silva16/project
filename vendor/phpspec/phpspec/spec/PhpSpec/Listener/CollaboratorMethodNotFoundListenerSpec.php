@@ -19,10 +19,13 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
 {
     function let(
-        IO $io, ResourceManagerInterface $resources, ExampleEvent $event,
-        MethodNotFoundException $exception, ResourceInterface $resource, GeneratorManager $generator
-    )
-    {
+        IO $io,
+        ResourceManagerInterface $resources,
+        ExampleEvent $event,
+        MethodNotFoundException $exception,
+        ResourceInterface $resource,
+        GeneratorManager $generator
+    ) {
         $this->beConstructedWith($io, $resources, $generator);
         $event->getException()->willReturn($exception);
 
@@ -58,9 +61,11 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 
     function it_prompts_the_user_when_a_prophecy_method_exception_is_thrown(
-        IO $io, ExampleEvent $event, SuiteEvent $suiteEvent, MethodNotFoundException $exception
-    )
-    {
+        IO $io,
+        ExampleEvent $event,
+        SuiteEvent $suiteEvent,
+        MethodNotFoundException $exception
+    ) {
         $exception->getClassname()->willReturn('spec\PhpSpec\Listener\DoubleOfInterface');
         $exception->getMethodName()->willReturn('aMethod');
 
@@ -81,9 +86,11 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 
     function it_does_not_prompt_when_collaborator_is_not_an_interface(
-        IO $io, ExampleEvent $event, SuiteEvent $suiteEvent, MethodNotFoundException $exception
-    )
-    {
+        IO $io,
+        ExampleEvent $event,
+        SuiteEvent $suiteEvent,
+        MethodNotFoundException $exception
+    ) {
         $exception->getClassname()->willReturn('spec\PhpSpec\Listener\DoubleOfStdClass');
         $exception->getMethodName()->willReturn('aMethod');
 
@@ -94,9 +101,11 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 
     function it_does_not_prompt_when_code_generation_is_disabled(
-        IO $io, ExampleEvent $event, SuiteEvent $suiteEvent, MethodNotFoundException $exception
-    )
-    {
+        IO $io,
+        ExampleEvent $event,
+        SuiteEvent $suiteEvent,
+        MethodNotFoundException $exception
+    ) {
         $io->isCodeGenerationEnabled()->willReturn(false);
 
         $exception->getClassname()->willReturn('spec\PhpSpec\Listener\DoubleOfInterface');
@@ -109,9 +118,12 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 
     function it_does_not_prompt_if_it_cannot_generate_the_resource(
-        IO $io, ResourceManager $resources, ExampleEvent $event, SuiteEvent $suiteEvent, MethodNotFoundException $exception
-    )
-    {
+        IO $io,
+        ResourceManager $resources,
+        ExampleEvent $event,
+        SuiteEvent $suiteEvent,
+        MethodNotFoundException $exception
+    ) {
         $resources->createResource(Argument::any())->willThrow(new ResourceCreationException());
 
         $exception->getClassname()->willReturn('spec\PhpSpec\Listener\DoubleOfInterface');
@@ -124,10 +136,13 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 
     function it_generates_the_method_signature_when_user_says_yes_at_prompt(
-        IO $io, ExampleEvent $event, SuiteEvent $suiteEvent, MethodNotFoundException $exception,
-        ResourceInterface $resource, GeneratorManager $generator
-    )
-    {
+        IO $io,
+        ExampleEvent $event,
+        SuiteEvent $suiteEvent,
+        MethodNotFoundException $exception,
+        ResourceInterface $resource,
+        GeneratorManager $generator
+    ) {
         $io->askConfirmation(Argument::any())->willReturn(true);
 
         $exception->getClassname()->willReturn('spec\PhpSpec\Listener\DoubleOfInterface');
@@ -140,9 +155,11 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 
     function it_marks_the_suite_as_being_worth_rerunning_when_generation_happens(
-        IO $io, ExampleEvent $event, SuiteEvent $suiteEvent, MethodNotFoundException $exception
-    )
-    {
+        IO $io,
+        ExampleEvent $event,
+        SuiteEvent $suiteEvent,
+        MethodNotFoundException $exception
+    ) {
         $io->askConfirmation(Argument::any())->willReturn(true);
 
         $exception->getClassname()->willReturn('spec\PhpSpec\Listener\DoubleOfInterface');
@@ -155,8 +172,14 @@ class CollaboratorMethodNotFoundListenerSpec extends ObjectBehavior
     }
 }
 
-interface ExampleInterface {}
+interface ExampleInterface
+{
+}
 
-class DoubleOfInterface extends \stdClass implements ExampleInterface, DoubleInterface {}
+class DoubleOfInterface extends \stdClass implements ExampleInterface, DoubleInterface
+{
+}
 
-class DoubleOfStdClass extends \stdClass implements DoubleInterface {}
+class DoubleOfStdClass extends \stdClass implements DoubleInterface
+{
+}

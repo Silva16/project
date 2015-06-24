@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\Security\Core\Tests\Authorization;
 
-use Symfony\Component\Security\Core\Authorization\ExpressionLanguage;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authorization\ExpressionLanguage;
 use Symfony\Component\Security\Core\User\User;
 
 class ExpressionLanguageTest extends \PHPUnit_Framework_TestCase
@@ -54,20 +54,17 @@ class ExpressionLanguageTest extends \PHPUnit_Framework_TestCase
             array($noToken, 'is_fully_authenticated()', false),
             array($noToken, 'is_remember_me()', false),
             array($noToken, "has_role('ROLE_USER')", false),
-
             array($anonymousToken, 'is_anonymous()', true),
             array($anonymousToken, 'is_authenticated()', false),
             array($anonymousToken, 'is_fully_authenticated()', false),
             array($anonymousToken, 'is_remember_me()', false),
             array($anonymousToken, "has_role('ROLE_USER')", false),
-
             array($rememberMeToken, 'is_anonymous()', false),
             array($rememberMeToken, 'is_authenticated()', true),
             array($rememberMeToken, 'is_fully_authenticated()', false),
             array($rememberMeToken, 'is_remember_me()', true),
             array($rememberMeToken, "has_role('ROLE_FOO')", false, $roles),
             array($rememberMeToken, "has_role('ROLE_USER')", true, $roles),
-
             array($usernamePasswordToken, 'is_anonymous()', false),
             array($usernamePasswordToken, 'is_authenticated()', true),
             array($usernamePasswordToken, 'is_fully_authenticated()', true),

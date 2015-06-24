@@ -21,9 +21,14 @@ if (empty($files)) {
     showHelp("Must specify at least one file.");
 }
 
-$lexer = new PhpParser\Lexer\Emulative(array('usedAttributes' => array(
-    'startLine', 'endLine', 'startFilePos', 'endFilePos'
-)));
+$lexer = new PhpParser\Lexer\Emulative(array(
+    'usedAttributes' => array(
+        'startLine',
+        'endLine',
+        'startFilePos',
+        'endFilePos'
+    )
+));
 $parser = new PhpParser\Parser($lexer);
 $dumper = new PhpParser\NodeDumper;
 $prettyPrinter = new PhpParser\PrettyPrinter\Standard;
@@ -52,7 +57,7 @@ foreach ($files as $file) {
             $startLine = $e->getStartLine();
             $endLine = $e->getEndLine();
             $startColumn = $e->getStartColumn($code);
-            $endColumn   = $e->getEndColumn($code);
+            $endColumn = $e->getEndColumn($code);
             $message .= $e->getRawMessage() . " from $startLine:$startColumn to $endLine:$endColumn";
         } else {
             $message = $e->getMessage();
@@ -81,7 +86,8 @@ foreach ($files as $file) {
     }
 }
 
-function showHelp($error) {
+function showHelp($error)
+{
     die($error . "\n\n" .
         <<<OUTPUT
 Usage:
@@ -112,7 +118,8 @@ OUTPUT
     );
 }
 
-function parseArgs($args) {
+function parseArgs($args)
+{
     $operations = array();
     $files = array();
     $attributes = array(

@@ -44,7 +44,7 @@ class Exporter
      *  - Carriage returns and newlines are normalized to \n
      *  - Recursion and repeated rendering is treated properly
      *
-     * @param  mixed   $value
+     * @param  mixed $value
      * @param  integer $indentation The indentation level of the 2nd+ line
      * @return string
      */
@@ -54,7 +54,7 @@ class Exporter
     }
 
     /**
-     * @param  mixed   $data
+     * @param  mixed $data
      * @param  Context $context
      * @return string
      */
@@ -73,17 +73,13 @@ class Exporter
             if (is_array($value)) {
                 if ($context->contains($data[$key]) !== false) {
                     $result[] = '*RECURSION*';
-                }
-
-                else {
+                } else {
                     $result[] = sprintf(
                         'array(%s)',
                         $this->shortenedRecursiveExport($data[$key], $context)
                     );
                 }
-            }
-
-            else {
+            } else {
                 $result[] = $exporter->shortenedExport($value);
             }
         }
@@ -251,7 +247,7 @@ class Exporter
                 return 'Array &' . $key;
             }
 
-            $key    = $processed->add($value);
+            $key = $processed->add($value);
             $values = '';
 
             if (count($value) > 0) {
@@ -277,9 +273,9 @@ class Exporter
                 return sprintf('%s Object &%s', $class, $hash);
             }
 
-            $hash   = $processed->add($value);
+            $hash = $processed->add($value);
             $values = '';
-            $array  = $this->toArray($value);
+            $array = $this->toArray($value);
 
             if (count($array) > 0) {
                 foreach ($array as $k => $v) {

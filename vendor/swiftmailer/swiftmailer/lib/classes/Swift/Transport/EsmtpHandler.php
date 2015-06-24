@@ -53,13 +53,19 @@ interface Swift_Transport_EsmtpHandler
     /**
      * Runs when a command is due to be sent.
      *
-     * @param Swift_Transport_SmtpAgent $agent            to read/write
-     * @param string                    $command          to send
-     * @param int[]                     $codes            expected in response
-     * @param string[]                  $failedRecipients to collect failures
-     * @param bool                      $stop             to be set true  by-reference if the command is now sent
+     * @param Swift_Transport_SmtpAgent $agent to read/write
+     * @param string $command to send
+     * @param int[] $codes expected in response
+     * @param string[] $failedRecipients to collect failures
+     * @param bool $stop to be set true  by-reference if the command is now sent
      */
-    public function onCommand(Swift_Transport_SmtpAgent $agent, $command, $codes = array(), &$failedRecipients = null, &$stop = false);
+    public function onCommand(
+        Swift_Transport_SmtpAgent $agent,
+        $command,
+        $codes = array(),
+        &$failedRecipients = null,
+        &$stop = false
+    );
 
     /**
      * Returns +1, -1 or 0 according to the rules for usort().

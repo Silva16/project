@@ -19,12 +19,12 @@ abstract class BasicMatcher implements MatcherInterface
 {
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return mixed
      *
-     *   @throws FailureException
+     * @throws FailureException
      */
     final public function positiveMatch($name, $subject, array $arguments)
     {
@@ -37,8 +37,8 @@ abstract class BasicMatcher implements MatcherInterface
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return mixed
      *
@@ -71,8 +71,8 @@ abstract class BasicMatcher implements MatcherInterface
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */
@@ -80,8 +80,8 @@ abstract class BasicMatcher implements MatcherInterface
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */

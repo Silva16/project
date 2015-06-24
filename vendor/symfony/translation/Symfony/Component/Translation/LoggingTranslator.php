@@ -30,12 +30,13 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface
 
     /**
      * @param TranslatorInterface $translator The translator must implement TranslatorBagInterface
-     * @param LoggerInterface     $logger
+     * @param LoggerInterface $logger
      */
     public function __construct(TranslatorInterface $translator, LoggerInterface $logger)
     {
         if (!$translator instanceof TranslatorBagInterface) {
-            throw new \InvalidArgumentException(sprintf('The Translator "%s" must implement TranslatorInterface and TranslatorBagInterface.', get_class($translator)));
+            throw new \InvalidArgumentException(sprintf('The Translator "%s" must implement TranslatorInterface and TranslatorBagInterface.',
+                get_class($translator)));
         }
 
         $this->translator = $translator;
@@ -103,7 +104,7 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface
     /**
      * Logs for missing translations.
      *
-     * @param string      $id
+     * @param string $id
      * @param string|null $domain
      * @param string|null $locale
      */
@@ -113,16 +114,18 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface
             $domain = 'messages';
         }
 
-        $id = (string) $id;
+        $id = (string)$id;
         $catalogue = $this->translator->getCatalogue($locale);
         if ($catalogue->defines($id, $domain)) {
             return;
         }
 
         if ($catalogue->has($id, $domain)) {
-            $this->logger->debug('Translation use fallback catalogue.', array('id' => $id, 'domain' => $domain, 'locale' => $catalogue->getLocale()));
+            $this->logger->debug('Translation use fallback catalogue.',
+                array('id' => $id, 'domain' => $domain, 'locale' => $catalogue->getLocale()));
         } else {
-            $this->logger->warning('Translation not found.', array('id' => $id, 'domain' => $domain, 'locale' => $catalogue->getLocale()));
+            $this->logger->warning('Translation not found.',
+                array('id' => $id, 'domain' => $domain, 'locale' => $catalogue->getLocale()));
         }
     }
 }

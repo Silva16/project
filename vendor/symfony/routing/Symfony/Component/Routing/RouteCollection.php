@@ -71,8 +71,8 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Adds a route.
      *
-     * @param string $name  The route name
-     * @param Route  $route A Route instance
+     * @param string $name The route name
+     * @param Route $route A Route instance
      *
      * @api
      */
@@ -112,7 +112,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
      */
     public function remove($name)
     {
-        foreach ((array) $name as $n) {
+        foreach ((array)$name as $n) {
             unset($this->routes[$n]);
         }
     }
@@ -140,9 +140,9 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Adds a prefix to the path of all child routes.
      *
-     * @param string $prefix       An optional prefix to add before each pattern of the route collection
-     * @param array  $defaults     An array of default values
-     * @param array  $requirements An array of requirements
+     * @param string $prefix An optional prefix to add before each pattern of the route collection
+     * @param array $defaults An array of default values
+     * @param array $requirements An array of requirements
      *
      * @api
      */
@@ -155,7 +155,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
         }
 
         foreach ($this->routes as $route) {
-            $route->setPath('/'.$prefix.$route->getPath());
+            $route->setPath('/' . $prefix . $route->getPath());
             $route->addDefaults($defaults);
             $route->addRequirements($requirements);
         }
@@ -164,9 +164,9 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Sets the host pattern on all routes.
      *
-     * @param string $pattern      The pattern
-     * @param array  $defaults     An array of default values
-     * @param array  $requirements An array of requirements
+     * @param string $pattern The pattern
+     * @param array $defaults An array of default values
+     * @param array $requirements An array of requirements
      */
     public function setHost($pattern, array $defaults = array(), array $requirements = array())
     {

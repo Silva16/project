@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class ScalarMatcher implements MatcherInterface
 {
@@ -35,8 +35,8 @@ class ScalarMatcher implements MatcherInterface
      * Checks if matcher supports provided subject and matcher name.
      *
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return Boolean
      */
@@ -51,8 +51,8 @@ class ScalarMatcher implements MatcherInterface
      * Evaluates positive match.
      *
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @throws \PhpSpec\Exception\Example\FailureException
      * @return boolean
@@ -78,8 +78,8 @@ class ScalarMatcher implements MatcherInterface
      * Evaluates negative match.
      *
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @throws \PhpSpec\Exception\Example\FailureException
      * @return boolean
@@ -127,6 +127,6 @@ class ScalarMatcher implements MatcherInterface
             return 'is_bool';
         }
 
-        return 'is_'.$expected;
+        return 'is_' . $expected;
     }
 }

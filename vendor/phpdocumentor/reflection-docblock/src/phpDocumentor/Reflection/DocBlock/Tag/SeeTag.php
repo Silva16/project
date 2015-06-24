@@ -34,6 +34,7 @@ class SeeTag extends Tag
         if (null === $this->content) {
             $this->content = "{$this->refers} {$this->description}";
         }
+
         return $this->content;
     }
 
@@ -51,6 +52,7 @@ class SeeTag extends Tag
         $this->setDescription(isset($parts[1]) ? $parts[1] : '');
 
         $this->content = $content;
+
         return $this;
     }
 
@@ -66,9 +68,9 @@ class SeeTag extends Tag
 
     /**
      * Sets the structural element this tag refers to.
-     * 
+     *
      * @param string $refers The new type this tag refers to.
-     * 
+     *
      * @return $this
      */
     public function setReference($refers)
@@ -76,6 +78,7 @@ class SeeTag extends Tag
         $this->refers = $refers;
 
         $this->content = null;
+
         return $this;
     }
 }

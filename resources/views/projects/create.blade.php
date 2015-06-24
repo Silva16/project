@@ -1,6 +1,6 @@
 @extends('header')
 @section('title')
-    Criar conta de utilizador
+    Criar Projeto
 @endsection
 @section('content')
 

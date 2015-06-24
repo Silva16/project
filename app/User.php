@@ -1,78 +1,96 @@
 <?php namespace App;
 
-use Illuminate\Auth\Authenticatable;
-
+//use App\Commands\SortableTrait;
 use Auth;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+{
+    use Authenticatable, CanResetPassword;//, SortableTrait;
 
-	use Authenticatable, CanResetPassword;
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'password'];
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = ['name', 'email', 'password'];
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = ['password', 'remember_token'];
+    public function isAdministrator()
+    {
 
-    public function isAdministrator(){
-
-        if (Auth::user()->role == 4){
+        if (Auth::user()->role == 4) {
             return true;
         }
 
         return false;
     }
 
-    public function isAuthorOrEditor(){
+    public function isAuthor()
+    {
 
-        if (Auth::user()->role == 1 || Auth::user()->role == 2){
+        if (Auth::user()->role == 1) {
             return true;
         }
 
         return false;
     }
 
-    public function projects(){
+    public function isEditor()
+    {
+
+        if (Auth::user()->role == 2) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function projects()
+    {
         return $this->belongsToMany('App\Project');
 
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany('App\Comment');
     }
 
-    public function media(){
+    public function media()
+    {
         return $this->hasMany('App\Media');
     }
 
-    public function institution(){
+    public function institution()
+    {
         return $this->belongsTo('App\Institution');
     }
 
-    public static function get_roles(){
+    public static function get_roles()
+    {
         return ['1' => 'Autor', '2' => 'Editor', '4' => 'Administrador'];
     }
 
-    public static function get_status(){
+    public static function get_status()
+    {
         return ['0' => 'Desactivo', '1' => 'Activo'];
     }
 

@@ -27,7 +27,7 @@ class Collaborator implements WrapperInterface
      */
     public function __construct(ObjectProphecy $prophecy)
     {
-        $this->prophecy  = $prophecy;
+        $this->prophecy = $prophecy;
     }
 
     /**
@@ -60,7 +60,7 @@ class Collaborator implements WrapperInterface
 
     /**
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return mixed
      */
@@ -71,7 +71,7 @@ class Collaborator implements WrapperInterface
 
     /**
      * @param string $parameter
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function __set($parameter, $value)
     {

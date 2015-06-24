@@ -50,11 +50,11 @@ class AnonymousAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function getSupportedToken($key)
     {
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', array('getKey'), array(), '', false);
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', array('getKey'),
+            array(), '', false);
         $token->expects($this->any())
-              ->method('getKey')
-              ->will($this->returnValue($key))
-        ;
+            ->method('getKey')
+            ->will($this->returnValue($key));
 
         return $token;
     }

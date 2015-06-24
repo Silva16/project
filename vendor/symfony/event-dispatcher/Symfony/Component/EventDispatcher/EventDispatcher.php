@@ -82,7 +82,7 @@ class EventDispatcher implements EventDispatcherInterface
      */
     public function hasListeners($eventName = null)
     {
-        return (bool) count($this->getListeners($eventName));
+        return (bool)count($this->getListeners($eventName));
     }
 
     /**
@@ -126,7 +126,8 @@ class EventDispatcher implements EventDispatcherInterface
                 $this->addListener($eventName, array($subscriber, $params[0]), isset($params[1]) ? $params[1] : 0);
             } else {
                 foreach ($params as $listener) {
-                    $this->addListener($eventName, array($subscriber, $listener[0]), isset($listener[1]) ? $listener[1] : 0);
+                    $this->addListener($eventName, array($subscriber, $listener[0]),
+                        isset($listener[1]) ? $listener[1] : 0);
                 }
             }
         }
@@ -155,8 +156,8 @@ class EventDispatcher implements EventDispatcherInterface
      * for each listener.
      *
      * @param callable[] $listeners The event listeners.
-     * @param string     $eventName The name of the event to dispatch.
-     * @param Event      $event     The event object to pass to the event handlers/listeners.
+     * @param string $eventName The name of the event to dispatch.
+     * @param Event $event The event object to pass to the event handlers/listeners.
      */
     protected function doDispatch($listeners, $eventName, Event $event)
     {

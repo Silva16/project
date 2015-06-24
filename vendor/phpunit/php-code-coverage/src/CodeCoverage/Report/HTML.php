@@ -46,13 +46,13 @@ class PHP_CodeCoverage_Report_HTML
      *
      * @param integer $lowUpperBound
      * @param integer $highLowerBound
-     * @param string  $generator
+     * @param string $generator
      */
     public function __construct($lowUpperBound = 50, $highLowerBound = 90, $generator = '')
     {
-        $this->generator      = $generator;
+        $this->generator = $generator;
         $this->highLowerBound = $highLowerBound;
-        $this->lowUpperBound  = $lowUpperBound;
+        $this->lowUpperBound = $lowUpperBound;
 
         $this->templatePath = sprintf(
             '%s%sHTML%sRenderer%sTemplate%s',
@@ -66,7 +66,7 @@ class PHP_CodeCoverage_Report_HTML
 
     /**
      * @param PHP_CodeCoverage $coverage
-     * @param string           $target
+     * @param string $target
      */
     public function process(PHP_CodeCoverage $coverage, $target)
     {
@@ -145,8 +145,10 @@ class PHP_CodeCoverage_Report_HTML
         copy($this->templatePath . 'fonts/glyphicons-halflings-regular.eot', $dir . 'glyphicons-halflings-regular.eot');
         copy($this->templatePath . 'fonts/glyphicons-halflings-regular.svg', $dir . 'glyphicons-halflings-regular.svg');
         copy($this->templatePath . 'fonts/glyphicons-halflings-regular.ttf', $dir . 'glyphicons-halflings-regular.ttf');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff', $dir . 'glyphicons-halflings-regular.woff');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff2', $dir . 'glyphicons-halflings-regular.woff2');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff',
+            $dir . 'glyphicons-halflings-regular.woff');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff2',
+            $dir . 'glyphicons-halflings-regular.woff2');
 
         $dir = $this->getDirectory($target . 'js');
         copy($this->templatePath . 'js/bootstrap.min.js', $dir . 'bootstrap.min.js');
@@ -159,7 +161,7 @@ class PHP_CodeCoverage_Report_HTML
     }
 
     /**
-     * @param  string                     $directory
+     * @param  string $directory
      * @return string
      * @throws PHP_CodeCoverage_Exception
      * @since  Method available since Release 1.2.0

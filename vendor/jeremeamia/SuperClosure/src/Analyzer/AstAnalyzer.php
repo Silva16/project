@@ -1,15 +1,15 @@
 <?php namespace SuperClosure\Analyzer;
 
-use SuperClosure\Analyzer\Visitor\ThisDetectorVisitor;
-use SuperClosure\Exception\ClosureAnalysisException;
-use SuperClosure\Analyzer\Visitor\ClosureLocatorVisitor;
-use SuperClosure\Analyzer\Visitor\MagicConstantVisitor;
-use PhpParser\NodeTraverser;
-use PhpParser\PrettyPrinter\Standard as NodePrinter;
 use PhpParser\Error as ParserError;
+use PhpParser\Lexer\Emulative as EmulativeLexer;
+use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser as CodeParser;
-use PhpParser\Lexer\Emulative as EmulativeLexer;
+use PhpParser\PrettyPrinter\Standard as NodePrinter;
+use SuperClosure\Analyzer\Visitor\ClosureLocatorVisitor;
+use SuperClosure\Analyzer\Visitor\MagicConstantVisitor;
+use SuperClosure\Analyzer\Visitor\ThisDetectorVisitor;
+use SuperClosure\Exception\ClosureAnalysisException;
 
 /**
  * This is the AST based analyzer.
@@ -91,6 +91,7 @@ class AstAnalyzer extends ClosureAnalyzer
             if ($node->byRef) {
                 $refs++;
             }
+
             return $node->var;
         }, $data['ast']->uses);
         $data['hasRefs'] = ($refs > 0);

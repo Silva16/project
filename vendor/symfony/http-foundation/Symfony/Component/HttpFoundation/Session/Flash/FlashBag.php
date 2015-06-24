@@ -123,7 +123,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
      */
     public function set($type, $messages)
     {
-        $this->flashes[$type] = (array) $messages;
+        $this->flashes[$type] = (array)$messages;
     }
 
     /**

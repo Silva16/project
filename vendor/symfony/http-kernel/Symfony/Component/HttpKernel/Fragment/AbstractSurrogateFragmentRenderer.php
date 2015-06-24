@@ -34,12 +34,15 @@ abstract class AbstractSurrogateFragmentRenderer extends RoutableFragmentRendere
      * The "fallback" strategy when surrogate is not available should always be an
      * instance of InlineFragmentRenderer.
      *
-     * @param SurrogateInterface        $surrogate      An Surrogate instance
+     * @param SurrogateInterface $surrogate An Surrogate instance
      * @param FragmentRendererInterface $inlineStrategy The inline strategy to use when the surrogate is not supported
-     * @param UriSigner                 $signer
+     * @param UriSigner $signer
      */
-    public function __construct(SurrogateInterface $surrogate = null, FragmentRendererInterface $inlineStrategy, UriSigner $signer = null)
-    {
+    public function __construct(
+        SurrogateInterface $surrogate = null,
+        FragmentRendererInterface $inlineStrategy,
+        UriSigner $signer = null
+    ) {
         $this->surrogate = $surrogate;
         $this->inlineStrategy = $inlineStrategy;
         $this->signer = $signer;
@@ -76,7 +79,9 @@ abstract class AbstractSurrogateFragmentRenderer extends RoutableFragmentRendere
             $alt = $this->generateSignedFragmentUri($alt, $request);
         }
 
-        $tag = $this->surrogate->renderIncludeTag($uri, $alt, isset($options['ignore_errors']) ? $options['ignore_errors'] : false, isset($options['comment']) ? $options['comment'] : '');
+        $tag = $this->surrogate->renderIncludeTag($uri, $alt,
+            isset($options['ignore_errors']) ? $options['ignore_errors'] : false,
+            isset($options['comment']) ? $options['comment'] : '');
 
         return new Response($tag);
     }

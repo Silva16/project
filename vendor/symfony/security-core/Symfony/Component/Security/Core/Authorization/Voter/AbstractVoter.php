@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Security\Core\Authorization\Voter;
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Abstract Voter implementation that reduces boilerplate code required to create a custom Voter
@@ -50,9 +50,9 @@ abstract class AbstractVoter implements VoterInterface
      * If at least one attribute is supported, but access not granted, then ACCESS_DENIED is returned
      * Otherwise it will return ACCESS_ABSTAIN
      *
-     * @param TokenInterface $token      A TokenInterface instance
-     * @param object         $object     The object to secure
-     * @param array          $attributes An array of attributes associated with the method being invoked
+     * @param TokenInterface $token A TokenInterface instance
+     * @param object $object The object to secure
+     * @param array $attributes An array of attributes associated with the method being invoked
      *
      * @return int either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
      */
@@ -103,8 +103,8 @@ abstract class AbstractVoter implements VoterInterface
      *   a UserInterface object (fully authenticated user)
      *   a string               (anonymously authenticated user)
      *
-     * @param string               $attribute
-     * @param object               $object
+     * @param string $attribute
+     * @param object $object
      * @param UserInterface|string $user
      *
      * @return bool

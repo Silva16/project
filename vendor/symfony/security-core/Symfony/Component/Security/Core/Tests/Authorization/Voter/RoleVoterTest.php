@@ -53,8 +53,8 @@ class RoleVoterTest extends \PHPUnit_Framework_TestCase
         }
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $token->expects($this->once())
-              ->method('getRoles')
-              ->will($this->returnValue($roles));
+            ->method('getRoles')
+            ->will($this->returnValue($roles));
 
         return $token;
     }

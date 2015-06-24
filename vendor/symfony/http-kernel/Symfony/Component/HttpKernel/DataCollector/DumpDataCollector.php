@@ -18,8 +18,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\VarDumper\Cloner\Data;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -36,8 +36,12 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
     private $charset;
     private $dumper;
 
-    public function __construct(Stopwatch $stopwatch = null, $fileLinkFormat = null, $charset = null, RequestStack $requestStack = null)
-    {
+    public function __construct(
+        Stopwatch $stopwatch = null,
+        $fileLinkFormat = null,
+        $charset = null,
+        RequestStack $requestStack = null
+    ) {
         $this->stopwatch = $stopwatch;
         $this->fileLinkFormat = $fileLinkFormat ?: ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format');
         $this->charset = $charset ?: ini_get('php.output_encoding') ?: ini_get('default_charset') ?: 'UTF-8';
@@ -87,7 +91,9 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
                 $line = $trace[$i]['line'];
 
                 while (++$i < 7) {
-                    if (isset($trace[$i]['function'], $trace[$i]['file']) && empty($trace[$i]['class']) && 0 !== strpos($trace[$i]['function'], 'call_user_func')) {
+                    if (isset($trace[$i]['function'], $trace[$i]['file']) && empty($trace[$i]['class']) && 0 !== strpos($trace[$i]['function'],
+                            'call_user_func')
+                    ) {
                         $file = $trace[$i]['file'];
                         $line = $trace[$i]['line'];
 
@@ -97,17 +103,18 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
                         $name = $info->getTemplateName();
                         $src = $info->getEnvironment()->getLoader()->getSource($name);
                         $info = $info->getDebugInfo();
-                        if (isset($info[$trace[$i-1]['line']])) {
+                        if (isset($info[$trace[$i - 1]['line']])) {
                             $file = false;
-                            $line = $info[$trace[$i-1]['line']];
+                            $line = $info[$trace[$i - 1]['line']];
                             $src = explode("\n", $src);
                             $fileExcerpt = array();
 
                             for ($i = max($line - 3, 1), $max = min($line + 3, count($src)); $i <= $max; ++$i) {
-                                $fileExcerpt[] = '<li'.($i === $line ? ' class="selected"' : '').'><code>'.$this->htmlEncode($src[$i - 1]).'</code></li>';
+                                $fileExcerpt[] = '<li' . ($i === $line ? ' class="selected"' : '') . '><code>' . $this->htmlEncode($src[$i - 1]) . '</code></li>';
                             }
 
-                            $fileExcerpt = '<ol start="'.max($line - 3, 1).'">'.implode("\n", $fileExcerpt).'</ol>';
+                            $fileExcerpt = '<ol start="' . max($line - 3, 1) . '">' . implode("\n",
+                                    $fileExcerpt) . '</ol>';
                         }
                         break;
                     }
@@ -144,11 +151,14 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
             || $request->isXmlHttpRequest()
             || !$response->headers->has('X-Debug-Token')
             || $response->isRedirection()
-            || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'html'))
+            || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'),
+                    'html'))
             || 'html' !== $request->getRequestFormat()
             || false === strripos($response->getContent(), '</body>')
         ) {
-            if ($response->headers->has('Content-Type') && false !== strpos($response->headers->get('Content-Type'), 'html')) {
+            if ($response->headers->has('Content-Type') && false !== strpos($response->headers->get('Content-Type'),
+                    'html')
+            ) {
                 $this->dumper = new HtmlDumper('php://output', $this->charset);
             } else {
                 $this->dumper = new CliDumper('php://output', $this->charset);
@@ -227,7 +237,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
             $h = headers_list();
             $i = count($h);
-            array_unshift($h, 'Content-Type: '.ini_get('default_mimetype'));
+            array_unshift($h, 'Content-Type: ' . ini_get('default_mimetype'));
             while (0 !== stripos($h[$i], 'Content-Type:')) {
                 --$i;
             }
@@ -272,7 +282,9 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
     {
         $html = '';
 
-        $dumper = new HtmlDumper(function ($line) use (&$html) {$html .= $line;}, $this->charset);
+        $dumper = new HtmlDumper(function ($line) use (&$html) {
+            $html .= $line;
+        }, $this->charset);
         $dumper->setDumpHeader('');
         $dumper->setDumpBoundaries('', '');
 

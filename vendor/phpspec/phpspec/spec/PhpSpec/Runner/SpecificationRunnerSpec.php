@@ -2,14 +2,12 @@
 
 namespace spec\PhpSpec\Runner;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use PhpSpec\Runner\ExampleRunner;
-use PhpSpec\Loader\Node\SpecificationNode;
 use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\Loader\Node\SpecificationNode;
+use PhpSpec\ObjectBehavior;
+use PhpSpec\Runner\ExampleRunner;
+use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SpecificationRunnerSpec extends ObjectBehavior
 {
@@ -19,7 +17,9 @@ class SpecificationRunnerSpec extends ObjectBehavior
     }
 
     function it_passes_each_specification_example_to_ExampleRunner(
-        SpecificationNode $specification, ExampleNode $ex1, ExampleNode $ex2,
+        SpecificationNode $specification,
+        ExampleNode $ex1,
+        ExampleNode $ex2,
         ExampleRunner $exampleRunner
     ) {
         $specification->getExamples()->willReturn(array($ex1, $ex2));
@@ -31,7 +31,9 @@ class SpecificationRunnerSpec extends ObjectBehavior
     }
 
     function it_returns_examples_max_resultCode(
-        SpecificationNode $specification, ExampleNode $ex1, ExampleNode $ex2,
+        SpecificationNode $specification,
+        ExampleNode $ex1,
+        ExampleNode $ex2,
         ExampleRunner $exampleRunner
     ) {
         $specification->getExamples()->willReturn(array($ex1, $ex2));
@@ -50,7 +52,8 @@ class SpecificationRunnerSpec extends ObjectBehavior
     }
 
     function it_dispatches_SpecificationEvent_before_and_after_examples_run(
-        EventDispatcherInterface $dispatcher, SpecificationNode $specification
+        EventDispatcherInterface $dispatcher,
+        SpecificationNode $specification
     ) {
         $specification->getExamples()->willReturn(array());
 

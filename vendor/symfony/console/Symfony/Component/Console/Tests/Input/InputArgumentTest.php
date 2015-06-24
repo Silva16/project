@@ -67,7 +67,8 @@ class InputArgumentTest extends \PHPUnit_Framework_TestCase
     public function testGetDescription()
     {
         $argument = new InputArgument('foo', null, 'Some description');
-        $this->assertEquals('Some description', $argument->getDescription(), '->getDescription() return the message description');
+        $this->assertEquals('Some description', $argument->getDescription(),
+            '->getDescription() return the message description');
     }
 
     public function testGetDefault()

@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\TestCase;
 use Monolog\Logger;
+use Monolog\TestCase;
 
 class NewRelicHandlerTest extends TestCase
 {
@@ -147,7 +147,8 @@ class NewRelicHandlerTest extends TestCase
     public function testTheTransactionNameCanBeOverriddenFromEachLog()
     {
         $handler = new StubNewRelicHandler(Logger::DEBUG, false, null, false, 'myTransaction');
-        $handler->handle($this->getRecord(Logger::ERROR, 'log message', array('transaction_name' => 'logTransactName')));
+        $handler->handle($this->getRecord(Logger::ERROR, 'log message',
+            array('transaction_name' => 'logTransactName')));
 
         $this->assertEquals('logTransactName', self::$transactionName);
     }

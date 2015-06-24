@@ -37,7 +37,8 @@ class TranslatorListenerTest extends \PHPUnit_Framework_TestCase
             ->method('setLocale')
             ->with($this->equalTo('fr'));
 
-        $event = new GetResponseEvent($this->createHttpKernel(), $this->createRequest('fr'), HttpKernelInterface::MASTER_REQUEST);
+        $event = new GetResponseEvent($this->createHttpKernel(), $this->createRequest('fr'),
+            HttpKernelInterface::MASTER_REQUEST);
         $this->listener->onKernelRequest($event);
     }
 
@@ -52,7 +53,8 @@ class TranslatorListenerTest extends \PHPUnit_Framework_TestCase
             ->method('setLocale')
             ->with($this->equalTo('en'));
 
-        $event = new GetResponseEvent($this->createHttpKernel(), $this->createRequest('fr'), HttpKernelInterface::MASTER_REQUEST);
+        $event = new GetResponseEvent($this->createHttpKernel(), $this->createRequest('fr'),
+            HttpKernelInterface::MASTER_REQUEST);
         $this->listener->onKernelRequest($event);
     }
 
@@ -64,7 +66,8 @@ class TranslatorListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('fr'));
 
         $this->setMasterRequest($this->createRequest('fr'));
-        $event = new FinishRequestEvent($this->createHttpKernel(), $this->createRequest('de'), HttpKernelInterface::SUB_REQUEST);
+        $event = new FinishRequestEvent($this->createHttpKernel(), $this->createRequest('de'),
+            HttpKernelInterface::SUB_REQUEST);
         $this->listener->onKernelFinishRequest($event);
     }
 
@@ -74,7 +77,8 @@ class TranslatorListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('setLocale');
 
-        $event = new FinishRequestEvent($this->createHttpKernel(), $this->createRequest('de'), HttpKernelInterface::SUB_REQUEST);
+        $event = new FinishRequestEvent($this->createHttpKernel(), $this->createRequest('de'),
+            HttpKernelInterface::SUB_REQUEST);
         $this->listener->onKernelFinishRequest($event);
     }
 
@@ -90,7 +94,8 @@ class TranslatorListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('en'));
 
         $this->setMasterRequest($this->createRequest('fr'));
-        $event = new FinishRequestEvent($this->createHttpKernel(), $this->createRequest('de'), HttpKernelInterface::SUB_REQUEST);
+        $event = new FinishRequestEvent($this->createHttpKernel(), $this->createRequest('de'),
+            HttpKernelInterface::SUB_REQUEST);
         $this->listener->onKernelFinishRequest($event);
     }
 

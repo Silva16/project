@@ -87,7 +87,8 @@ class HeaderBagTest extends \PHPUnit_Framework_TestCase
         $bag = new HeaderBag(array('foo' => 'bar'));
 
         $bag->replace(array('NOPE' => 'BAR'));
-        $this->assertEquals(array('nope' => array('BAR')), $bag->all(), '->replace() replaces the input with the argument');
+        $this->assertEquals(array('nope' => array('BAR')), $bag->all(),
+            '->replace() replaces the input with the argument');
         $this->assertFalse($bag->has('foo'), '->replace() overrides previously set the input');
     }
 
@@ -104,7 +105,8 @@ class HeaderBagTest extends \PHPUnit_Framework_TestCase
         // defaults
         $this->assertNull($bag->get('none'), '->get unknown values returns null');
         $this->assertEquals('default', $bag->get('none', 'default'), '->get unknown values returns default');
-        $this->assertEquals(array('default'), $bag->get('none', 'default', false), '->get unknown values returns default as array');
+        $this->assertEquals(array('default'), $bag->get('none', 'default', false),
+            '->get unknown values returns default as array');
 
         $bag->set('foo', 'bor', false);
         $this->assertEquals('bar', $bag->get('foo'), '->get return first value');
@@ -116,7 +118,8 @@ class HeaderBagTest extends \PHPUnit_Framework_TestCase
         $bag = new HeaderBag();
         $bag->set('foo', array('bad-assoc-index' => 'value'));
         $this->assertSame('value', $bag->get('foo'));
-        $this->assertEquals(array('value'), $bag->get('foo', 'nope', false), 'assoc indices of multi-valued headers are ignored');
+        $this->assertEquals(array('value'), $bag->get('foo', 'nope', false),
+            'assoc indices of multi-valued headers are ignored');
     }
 
     /**

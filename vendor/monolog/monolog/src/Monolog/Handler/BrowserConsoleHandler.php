@@ -117,7 +117,8 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
             $args[] = '"font-weight: normal"';
 
             $pos = $match[0][1];
-            $format = substr($format, 0, $pos) . '%c' . $match[1][0] . '%c' . substr($format, $pos + strlen($match[0][0]));
+            $format = substr($format, 0, $pos) . '%c' . $match[1][0] . '%c' . substr($format,
+                    $pos + strlen($match[0][0]));
         }
 
         array_unshift($args, self::quote($format));

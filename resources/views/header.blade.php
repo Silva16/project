@@ -35,87 +35,88 @@
 
 
 <body>
-    <div class="main">
-        <header>
-            <ul>
+<div class="main">
+    <header>
+        <ul>
+            <li>
+                <a href="http:\\10.10.10.10\project\">Página Principal</a>
+            </li>
+            <li>
+                {!! HTML::linkRoute('projects.index', 'Projectos') !!}
+            </li>
+            <li>
+                {!! HTML::linkRoute('users.index', 'Utilizadores') !!}
+            </li>
+            @if (Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 2))
                 <li>
-                    <a href="http:\\10.10.10.10\project\">Página Principal</a>
+                    {!! HTML::linkRoute('dashboard.index', 'Dashboard') !!}
                 </li>
+            @endif
+            @if (Auth::check() && Auth::user()->role == 4)
                 <li>
-                    {!! HTML::linkRoute('projects.index', 'Projectos') !!}
+                    {!! HTML::linkRoute('users.admin', 'Gestão de Utilizadores') !!}
                 </li>
+            @endif
+            <div class="pull-right">
+                {!! Form::open(['method' => 'GET', 'action' => ['ProjectsController@index']]) !!}
                 <li>
-                    <a href="resources/views/projects/list">Autores</a>
-                </li>
-                {{--<li>
-                    <input type="button" class="button1" value="Login" onclick="window.location='{{ url("auth/login") }}'">
-                </li>--}}
-                @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
-                    <li >
-                        {!! HTML::linkRoute('dashboard.index', 'Dashboard') !!}
-                    </li>
-                @endif
-                @if (Auth::check() && Auth::user()->role == 4)
-                    <li >
-                        {!! HTML::linkRoute('users.index', 'Gestão de Utilizadores') !!}
-                    </li>
-                @endif
-                <div class="pull-right">
-                <li>
-                    {!! Form::open(['method' => 'GET' , 'action' => ['ProjectsController@search']]) !!}
-                    <input type="text" style="margin-top: -4px" class="search-query" name="find" placeholder="Search">
-                    <input type="submit" >
-                    {!! Form::close() !!}
+
+                    <input type="text" style="margin-top: -4px" class="search-query" placeholder="Search" name="search">
+
                 </li>
                 @if (Auth::guest())
-                <li>
-                    <a href="{{ url('/auth/login') }}">Login</a>
-                </li>
+                    <li>
+                        <a href="{{ url('/auth/login') }}">Login</a>
+                    </li>
                 @endif
                 @if (Auth::user())
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 @endif
-                </div>
-            </ul>
-            <div class="logo">
-                <img  id="logo" alt="logo" src="http:\\10.10.10.10\project\css\imagens\logo.png" />
+                {!! Form::close() !!}
             </div>
-            <div id="barra">
+        </ul>
+        <div class="logo">
+            <img id="logo" alt="logo" src="http:\\10.10.10.10\project\css\imagens\logo.png"/>
+        </div>
+        <div id="barra">
 
-            </div>
-        </header>
-@yield('content')
+        </div>
+    </header>
+    @yield('content')
 
-<footer>
+    <footer>
+
         <div class="content" style="background-color:#404040">
-        <div class="col-md-4 ">
+            <div class="col-md-4 ">
 
-                <img id="footerlogo" src="http:\\10.10.10.10\project\css\imagens\logoipl.png" alt="logoipl" />
-        </div>
-        <div class="col-md-4 vcenter">
-                <ul><li class="footercenter">Rua General Norton de Matos,</li>
-                <li class="footercenter"> Apartado 4133,</li>
-                <li class="footercenter">2411-901 Leiria – Portugal</li>
-                    </ul>
-        </div>
-        <div class="col-md-4 align">
+                <img id="footerlogo" src="http:\\10.10.10.10\project\css\imagens\logoipl.png" alt="logoipl"/>
+            </div>
+            <div class="col-md-4 vcenter ">
                 <ul>
-                    <li class="footerinfo" ><span class="bold">GPS: </span>39°44’15.1″N 8°48’40.8″W</li>
+                    <li class="footercenter">Rua General Norton de Matos,</li>
+                    <li class="footercenter"> Apartado 4133,</li>
+                    <li class="footercenter">2411-901 Leiria – Portugal</li>
+                </ul>
+            </div>
+            <div class="col-md-4 align">
+                <ul>
+                    <li class="footerinfo"><span class="bold">GPS: </span>39°44’15.1″N 8°48’40.8″W</li>
                     <li class="footerinfo"><span class="bold">Telefone: </span> (+351) 244830010</li>
                     <li class="footerinfo"><span class="bold">E-mail: </span>ipleiria@ipleiria.pt</li>
-               </ul>
+                </ul>
+            </div>
         </div>
-        </div>
-    <div class="endfooter">
-        <a  href="http://www.ipleiria.pt/" >©2014-2015 Politécnico de Leiria mahala amhjala</a>
+        <div class="endfooter">
+            <a href="http://www.ipleiria.pt/">©2014-2015 Politécnico de Leiria</a>
 
-    </div>
-</footer>
+        </div>
+    </footer>
 </div>
 </body>
 </html>

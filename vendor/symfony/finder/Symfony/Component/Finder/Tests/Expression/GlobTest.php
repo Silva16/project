@@ -21,11 +21,13 @@ class GlobTest extends \PHPUnit_Framework_TestCase
     public function testGlobToRegex($glob, $match, $noMatch)
     {
         foreach ($match as $m) {
-            $this->assertRegExp(Expression::create($glob)->getRegex()->render(), $m, '::toRegex() converts a glob to a regexp');
+            $this->assertRegExp(Expression::create($glob)->getRegex()->render(), $m,
+                '::toRegex() converts a glob to a regexp');
         }
 
         foreach ($noMatch as $m) {
-            $this->assertNotRegExp(Expression::create($glob)->getRegex()->render(), $m, '::toRegex() converts a glob to a regexp');
+            $this->assertNotRegExp(Expression::create($glob)->getRegex()->render(), $m,
+                '::toRegex() converts a glob to a regexp');
         }
     }
 

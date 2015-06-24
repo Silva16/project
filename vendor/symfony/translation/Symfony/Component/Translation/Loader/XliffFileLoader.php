@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\Translation\Loader;
 
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Config\Util\XmlUtils;
-use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * XliffFileLoader loads translations from XLIFF files.
@@ -55,27 +55,27 @@ class XliffFileLoader implements LoaderInterface
             $source = isset($attributes['resname']) && $attributes['resname'] ? $attributes['resname'] : $translation->source;
             // If the xlf file has another encoding specified, try to convert it because
             // simple_xml will always return utf-8 encoded values
-            $target = $this->utf8ToCharset((string) $translation->target, $encoding);
+            $target = $this->utf8ToCharset((string)$translation->target, $encoding);
 
-            $catalogue->set((string) $source, $target, $domain);
+            $catalogue->set((string)$source, $target, $domain);
 
             if (isset($translation->note)) {
                 $notes = array();
                 foreach ($translation->note as $xmlNote) {
                     $noteAttributes = $xmlNote->attributes();
-                    $note = array('content' => $this->utf8ToCharset((string) $xmlNote, $encoding));
+                    $note = array('content' => $this->utf8ToCharset((string)$xmlNote, $encoding));
                     if (isset($noteAttributes['priority'])) {
-                        $note['priority'] = (int) $noteAttributes['priority'];
+                        $note['priority'] = (int)$noteAttributes['priority'];
                     }
 
                     if (isset($noteAttributes['from'])) {
-                        $note['from'] = (string) $noteAttributes['from'];
+                        $note['from'] = (string)$noteAttributes['from'];
                     }
 
                     $notes[] = $note;
                 }
 
-                $catalogue->setMetadata((string) $source, array('notes' => $notes), $domain);
+                $catalogue->setMetadata((string)$source, array('notes' => $notes), $domain);
             }
         }
 
@@ -89,7 +89,7 @@ class XliffFileLoader implements LoaderInterface
     /**
      * Convert a UTF8 string to the specified encoding.
      *
-     * @param string $content  String to decode
+     * @param string $content String to decode
      * @param string $encoding Target encoding
      *
      * @return string
@@ -127,12 +127,13 @@ class XliffFileLoader implements LoaderInterface
         try {
             $dom = XmlUtils::loadFile($file);
         } catch (\InvalidArgumentException $e) {
-            throw new InvalidResourceException(sprintf('Unable to load "%s": %s', $file, $e->getMessage()), $e->getCode(), $e);
+            throw new InvalidResourceException(sprintf('Unable to load "%s": %s', $file, $e->getMessage()),
+                $e->getCode(), $e);
         }
 
         $internalErrors = libxml_use_internal_errors(true);
 
-        $location = str_replace('\\', '/', __DIR__).'/schema/dic/xliff-core/xml.xsd';
+        $location = str_replace('\\', '/', __DIR__) . '/schema/dic/xliff-core/xml.xsd';
         $parts = explode('/', $location);
         if (0 === stripos($location, 'phar://')) {
             $tmpfile = tempnam(sys_get_temp_dir(), 'sf2');
@@ -141,10 +142,10 @@ class XliffFileLoader implements LoaderInterface
                 $parts = explode('/', str_replace('\\', '/', $tmpfile));
             }
         }
-        $drive = '\\' === DIRECTORY_SEPARATOR ? array_shift($parts).'/' : '';
-        $location = 'file:///'.$drive.implode('/', array_map('rawurlencode', $parts));
+        $drive = '\\' === DIRECTORY_SEPARATOR ? array_shift($parts) . '/' : '';
+        $location = 'file:///' . $drive . implode('/', array_map('rawurlencode', $parts));
 
-        $source = file_get_contents(__DIR__.'/schema/dic/xliff-core/xliff-core-1.2-strict.xsd');
+        $source = file_get_contents(__DIR__ . '/schema/dic/xliff-core/xliff-core-1.2-strict.xsd');
         $source = str_replace('http://www.w3.org/2001/xml.xsd', $location, $source);
 
         if (!@$dom->schemaValidateSource($source)) {

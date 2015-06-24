@@ -67,7 +67,7 @@ class PHPUnit_Util_Blacklist
     }
 
     /**
-     * @param  string  $file
+     * @param  string $file
      * @return boolean
      */
     public function isBlacklisted($file)

@@ -45,7 +45,7 @@ class ServiceContainer
      * Sets a param in the container
      *
      * @param string $id
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function setParam($id, $value)
     {
@@ -56,7 +56,7 @@ class ServiceContainer
      * Gets a param from the container or a default value.
      *
      * @param string $id
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -69,7 +69,7 @@ class ServiceContainer
      * Sets a object or a callable for the object creation. A callable will be invoked
      * every time get is called.
      *
-     * @param string          $id
+     * @param string $id
      * @param object|callable $value
      *
      * @throws \InvalidArgumentException if service is not an object or callable
@@ -99,7 +99,7 @@ class ServiceContainer
      * Sets a callable for the object creation. The same object will
      * be returned every time
      *
-     * @param string   $id
+     * @param string $id
      * @param callable $callable
      *
      * @throws \InvalidArgumentException if service is not a callable
@@ -240,7 +240,7 @@ class ServiceContainer
             return array(null, $id);
         }
 
-        $sid    = array_pop($parts);
+        $sid = array_pop($parts);
         $prefix = implode('.', $parts);
 
         return array($prefix, $sid);

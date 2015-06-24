@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Security\Core\User;
 
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
  * InMemoryUserProvider is a simple non persistent user provider.
@@ -76,8 +76,9 @@ class InMemoryUserProvider implements UserProviderInterface
 
         $user = $this->users[strtolower($username)];
 
-        return new User($user->getUsername(), $user->getPassword(), $user->getRoles(), $user->isEnabled(), $user->isAccountNonExpired(),
-                $user->isCredentialsNonExpired(), $user->isAccountNonLocked());
+        return new User($user->getUsername(), $user->getPassword(), $user->getRoles(), $user->isEnabled(),
+            $user->isAccountNonExpired(),
+            $user->isCredentialsNonExpired(), $user->isAccountNonLocked());
     }
 
     /**

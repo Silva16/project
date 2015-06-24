@@ -40,17 +40,23 @@ class ArrayComparator extends Comparator
      * @param  mixed $actual The second value to compare
      * @param  float $delta The allowed numerical distance between two values to
      *                      consider them equal
-     * @param  bool  $canonicalize If set to TRUE, arrays are sorted before
+     * @param  bool $canonicalize If set to TRUE, arrays are sorted before
      *                             comparison
-     * @param  bool  $ignoreCase If set to TRUE, upper- and lowercasing is
+     * @param  bool $ignoreCase If set to TRUE, upper- and lowercasing is
      *                           ignored when comparing string values
      * @param  array $processed
      * @throws ComparisonFailure Thrown when the comparison
      *                           fails. Contains information about the
      *                           specific errors that lead to the failure.
      */
-    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false, array &$processed = array())
-    {
+    public function assertEquals(
+        $expected,
+        $actual,
+        $delta = 0.0,
+        $canonicalize = false,
+        $ignoreCase = false,
+        array &$processed = array()
+    ) {
         if ($canonicalize) {
             sort($expected);
             sort($actual);
@@ -58,7 +64,7 @@ class ArrayComparator extends Comparator
 
         $remaining = $actual;
         $expString = $actString = "Array (\n";
-        $equal     = true;
+        $equal = true;
 
         foreach ($expected as $key => $value) {
             unset($remaining[$key]);
@@ -94,16 +100,16 @@ class ArrayComparator extends Comparator
                     "    %s => %s\n",
                     $this->exporter->export($key),
                     $e->getExpectedAsString()
-                    ? $this->indent($e->getExpectedAsString())
-                    : $this->exporter->shortenedExport($e->getExpected())
+                        ? $this->indent($e->getExpectedAsString())
+                        : $this->exporter->shortenedExport($e->getExpected())
                 );
 
                 $actString .= sprintf(
                     "    %s => %s\n",
                     $this->exporter->export($key),
                     $e->getActualAsString()
-                    ? $this->indent($e->getActualAsString())
-                    : $this->exporter->shortenedExport($e->getActual())
+                        ? $this->indent($e->getActualAsString())
+                        : $this->exporter->shortenedExport($e->getActual())
                 );
 
                 $equal = false;

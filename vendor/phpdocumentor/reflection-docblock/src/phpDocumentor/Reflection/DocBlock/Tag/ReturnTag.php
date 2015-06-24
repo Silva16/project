@@ -26,7 +26,7 @@ class ReturnTag extends Tag
 {
     /** @var string The raw type component. */
     protected $type = '';
-    
+
     /** @var Collection The parsed type component. */
     protected $types = null;
 
@@ -58,6 +58,7 @@ class ReturnTag extends Tag
         $this->setDescription(isset($parts[1]) ? $parts[1] : '');
 
         $this->content = $content;
+
         return $this;
     }
 
@@ -78,12 +79,12 @@ class ReturnTag extends Tag
      */
     public function getType()
     {
-        return (string) $this->getTypesCollection();
+        return (string)$this->getTypesCollection();
     }
 
     /**
      * Returns the type collection.
-     * 
+     *
      * @return void
      */
     protected function getTypesCollection()
@@ -94,6 +95,7 @@ class ReturnTag extends Tag
                 $this->docblock ? $this->docblock->getContext() : null
             );
         }
+
         return $this->types;
     }
 }

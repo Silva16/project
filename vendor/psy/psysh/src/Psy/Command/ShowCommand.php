@@ -32,7 +32,8 @@ class ShowCommand extends ReflectingCommand
         $this
             ->setName('show')
             ->setDefinition(array(
-                new InputArgument('value', InputArgument::REQUIRED, 'Function, class, instance, constant, method or property to show.'),
+                new InputArgument('value', InputArgument::REQUIRED,
+                    'Function, class, instance, constant, method or property to show.'),
             ))
             ->setDescription('Show the code for an object, class, constant, method or property.')
             ->setHelp(

@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Yaml\Tests;
 
-use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 
 class DumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,7 +39,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
     {
         $this->parser = new Parser();
         $this->dumper = new Dumper();
-        $this->path = __DIR__.'/Fixtures';
+        $this->path = __DIR__ . '/Fixtures';
     }
 
     protected function tearDown()
@@ -78,9 +78,9 @@ EOF;
 
     public function testSpecifications()
     {
-        $files = $this->parser->parse(file_get_contents($this->path.'/index.yml'));
+        $files = $this->parser->parse(file_get_contents($this->path . '/index.yml'));
         foreach ($files as $file) {
-            $yamls = file_get_contents($this->path.'/'.$file.'.yml');
+            $yamls = file_get_contents($this->path . '/' . $file . '.yml');
 
             // split YAMLs documents
             foreach (preg_split('/^---( %YAML\:1\.0)?/m', $yamls) as $yaml) {
@@ -94,8 +94,9 @@ EOF;
                 } elseif (isset($test['todo']) && $test['todo']) {
                     // TODO
                 } else {
-                    eval('$expected = '.trim($test['php']).';');
-                    $this->assertSame($expected, $this->parser->parse($this->dumper->dump($expected, 10)), $test['test']);
+                    eval('$expected = ' . trim($test['php']) . ';');
+                    $this->assertSame($expected, $this->parser->parse($this->dumper->dump($expected, 10)),
+                        $test['test']);
                 }
             }
         }
@@ -106,7 +107,8 @@ EOF;
         $expected = <<<EOF
 { '': bar, foo: '#bar', 'foo''bar': {  }, bar: [1, foo], foobar: { foo: bar, bar: [1, foo], foobar: { foo: bar, bar: [1, foo] } } }
 EOF;
-        $this->assertEquals($expected, $this->dumper->dump($this->array, -10), '->dump() takes an inline level argument');
+        $this->assertEquals($expected, $this->dumper->dump($this->array, -10),
+            '->dump() takes an inline level argument');
         $this->assertEquals($expected, $this->dumper->dump($this->array, 0), '->dump() takes an inline level argument');
 
         $expected = <<<EOF
@@ -173,14 +175,16 @@ foobar:
 
 EOF;
         $this->assertEquals($expected, $this->dumper->dump($this->array, 4), '->dump() takes an inline level argument');
-        $this->assertEquals($expected, $this->dumper->dump($this->array, 10), '->dump() takes an inline level argument');
+        $this->assertEquals($expected, $this->dumper->dump($this->array, 10),
+            '->dump() takes an inline level argument');
     }
 
     public function testObjectSupportEnabled()
     {
         $dump = $this->dumper->dump(array('foo' => new A(), 'bar' => 1), 0, 0, false, true);
 
-        $this->assertEquals('{ foo: !!php/object:O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}, bar: 1 }', $dump, '->dump() is able to dump objects');
+        $this->assertEquals('{ foo: !!php/object:O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}, bar: 1 }',
+            $dump, '->dump() is able to dump objects');
     }
 
     public function testObjectSupportDisabledButNoExceptions()

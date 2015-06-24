@@ -13,7 +13,7 @@ class RevealerSpec extends ObjectBehavior
 
     /**
      * @param \Prophecy\Prophecy\ProphecyInterface $prophecy
-     * @param \stdClass                            $object
+     * @param \stdClass $object
      */
     function it_reveals_single_instance_of_ProphecyInterface($prophecy, $object)
     {
@@ -25,13 +25,15 @@ class RevealerSpec extends ObjectBehavior
     /**
      * @param \Prophecy\Prophecy\ProphecyInterface $prophecy1
      * @param \Prophecy\Prophecy\ProphecyInterface $prophecy2
-     * @param \stdClass                            $object1
-     * @param \stdClass                            $object2
+     * @param \stdClass $object1
+     * @param \stdClass $object2
      */
     function it_reveals_instances_of_ProphecyInterface_inside_array(
-        $prophecy1, $prophecy2, $object1, $object2
-    )
-    {
+        $prophecy1,
+        $prophecy2,
+        $object1,
+        $object2
+    ) {
         $prophecy1->reveal()->willReturn($object1);
         $prophecy2->reveal()->willReturn($object2);
 

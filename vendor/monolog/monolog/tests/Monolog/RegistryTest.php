@@ -21,7 +21,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider hasLoggerProvider
-     * @covers Monolog\Registry::hasLogger
+     * @covers       Monolog\Registry::hasLogger
      */
     public function testHasLogger(array $loggersToAdd, array $loggersToCheck, array $expectedResult)
     {

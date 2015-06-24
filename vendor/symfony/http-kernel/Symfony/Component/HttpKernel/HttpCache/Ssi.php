@@ -34,8 +34,9 @@ class Ssi implements SurrogateInterface
      * @param array $contentTypes An array of content-type that should be parsed for SSI information.
      *                            (default: text/html, text/xml, application/xhtml+xml, and application/xml)
      */
-    public function __construct(array $contentTypes = array('text/html', 'text/xml', 'application/xhtml+xml', 'application/xml'))
-    {
+    public function __construct(
+        array $contentTypes = array('text/html', 'text/xml', 'application/xhtml+xml', 'application/xml')
+    ) {
         $this->contentTypes = $contentTypes;
     }
 
@@ -75,7 +76,7 @@ class Ssi implements SurrogateInterface
         $current = $request->headers->get('Surrogate-Capability');
         $new = 'symfony2="SSI/1.0"';
 
-        $request->headers->set('Surrogate-Capability', $current ? $current.', '.$new : $new);
+        $request->headers->set('Surrogate-Capability', $current ? $current . ', ' . $new : $new);
     }
 
     /**
@@ -97,7 +98,7 @@ class Ssi implements SurrogateInterface
             return false;
         }
 
-        return (bool) preg_match('#content="[^"]*SSI/1.0[^"]*"#', $control);
+        return (bool)preg_match('#content="[^"]*SSI/1.0[^"]*"#', $control);
     }
 
     /**
@@ -142,7 +143,7 @@ class Ssi implements SurrogateInterface
                 throw new \RuntimeException('Unable to process an SSI tag without a "virtual" attribute.');
             }
 
-            $chunks[$i] = sprintf('<?php echo $this->surrogate->handle($this, %s, \'\', false) ?>'."\n",
+            $chunks[$i] = sprintf('<?php echo $this->surrogate->handle($this, %s, \'\', false) ?>' . "\n",
                 var_export($options['virtual'], true)
             );
             ++$i;
@@ -172,13 +173,15 @@ class Ssi implements SurrogateInterface
      */
     public function handle(HttpCache $cache, $uri, $alt, $ignoreErrors)
     {
-        $subRequest = Request::create($uri, 'get', array(), $cache->getRequest()->cookies->all(), array(), $cache->getRequest()->server->all());
+        $subRequest = Request::create($uri, 'get', array(), $cache->getRequest()->cookies->all(), array(),
+            $cache->getRequest()->server->all());
 
         try {
             $response = $cache->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
 
             if (!$response->isSuccessful()) {
-                throw new \RuntimeException(sprintf('Error when rendering "%s" (Status code is %s).', $subRequest->getUri(), $response->getStatusCode()));
+                throw new \RuntimeException(sprintf('Error when rendering "%s" (Status code is %s).',
+                    $subRequest->getUri(), $response->getStatusCode()));
             }
 
             return $response->getContent();

@@ -35,9 +35,27 @@ class Collection extends \ArrayObject
 
     /** @var string[] List of recognized keywords */
     protected static $keywords = array(
-        'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
-        'object', 'mixed', 'array', 'resource', 'void', 'null', 'scalar',
-        'callback', 'callable', 'false', 'true', 'self', '$this', 'static'
+        'string',
+        'int',
+        'integer',
+        'bool',
+        'boolean',
+        'float',
+        'double',
+        'object',
+        'mixed',
+        'array',
+        'resource',
+        'void',
+        'null',
+        'scalar',
+        'callback',
+        'callable',
+        'false',
+        'true',
+        'self',
+        '$this',
+        'static'
     );
 
     /**
@@ -54,9 +72,9 @@ class Collection extends \ArrayObject
      * Registers the namespace and aliases; uses that to add and expand the
      * given types.
      *
-     * @param string[] $types    Array containing a list of types to add to this
+     * @param string[] $types Array containing a list of types to add to this
      *     container.
-     * @param Context  $location The current invoking location.
+     * @param Context $location The current invoking location.
      */
     public function __construct(
         array $types = array(),
@@ -101,7 +119,7 @@ class Collection extends \ArrayObject
         if (!is_string($type)) {
             throw new \InvalidArgumentException(
                 'A type should be represented by a string, received: '
-                .var_export($type, true)
+                . var_export($type, true)
             );
         }
 
@@ -114,10 +132,10 @@ class Collection extends \ArrayObject
             }
         }
     }
-    
+
     /**
      * Returns a string representation of the collection.
-     * 
+     *
      * @return string The resolved types across the collection, separated with
      *     {@link self::OPERATOR_OR}.
      */
@@ -166,6 +184,7 @@ class Collection extends \ArrayObject
                 if ('' !== $namespace) {
                     $namespace .= self::OPERATOR_NAMESPACE;
                 }
+
                 return self::OPERATOR_NAMESPACE . $namespace . $type;
             }
 
@@ -216,6 +235,6 @@ class Collection extends \ArrayObject
     protected function isRelativeType($type)
     {
         return ($type[0] !== self::OPERATOR_NAMESPACE)
-            || $this->isTypeAKeyword($type);
+        || $this->isTypeAKeyword($type);
     }
 }

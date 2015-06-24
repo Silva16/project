@@ -21,7 +21,8 @@ class SortableIteratorTest extends RealIteratorTestCase
             new SortableIterator(new Iterator(array()), 'foobar');
             $this->fail('__construct() throws an \InvalidArgumentException exception if the mode is not valid');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e, '__construct() throws an \InvalidArgumentException exception if the mode is not valid');
+            $this->assertInstanceOf('InvalidArgumentException', $e,
+                '__construct() throws an \InvalidArgumentException exception if the mode is not valid');
         }
     }
 
@@ -56,7 +57,8 @@ class SortableIteratorTest extends RealIteratorTestCase
 
         if ($mode === SortableIterator::SORT_BY_ACCESSED_TIME
             || $mode === SortableIterator::SORT_BY_CHANGED_TIME
-            || $mode === SortableIterator::SORT_BY_MODIFIED_TIME) {
+            || $mode === SortableIterator::SORT_BY_MODIFIED_TIME
+        ) {
             $this->assertOrderedIteratorForGroups($expected, $iterator);
         } else {
             $this->assertOrderedIterator($expected, $iterator);
@@ -163,7 +165,12 @@ class SortableIteratorTest extends RealIteratorTestCase
             array(SortableIterator::SORT_BY_ACCESSED_TIME, $this->toAbsolute($sortByAccessedTime)),
             array(SortableIterator::SORT_BY_CHANGED_TIME, $this->toAbsolute($sortByChangedTime)),
             array(SortableIterator::SORT_BY_MODIFIED_TIME, $this->toAbsolute($sortByModifiedTime)),
-            array(function (\SplFileInfo $a, \SplFileInfo $b) { return strcmp($a->getRealpath(), $b->getRealpath()); }, $this->toAbsolute($customComparison)),
+            array(
+                function (\SplFileInfo $a, \SplFileInfo $b) {
+                    return strcmp($a->getRealpath(), $b->getRealpath());
+                },
+                $this->toAbsolute($customComparison)
+            ),
         );
     }
 }

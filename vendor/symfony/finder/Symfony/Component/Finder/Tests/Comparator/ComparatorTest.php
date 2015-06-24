@@ -22,7 +22,8 @@ class ComparatorTest extends \PHPUnit_Framework_TestCase
             $comparator->setOperator('foo');
             $this->fail('->setOperator() throws an \InvalidArgumentException if the operator is not valid.');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e, '->setOperator() throws an \InvalidArgumentException if the operator is not valid.');
+            $this->assertInstanceOf('InvalidArgumentException', $e,
+                '->setOperator() throws an \InvalidArgumentException if the operator is not valid.');
         }
 
         $comparator = new Comparator();

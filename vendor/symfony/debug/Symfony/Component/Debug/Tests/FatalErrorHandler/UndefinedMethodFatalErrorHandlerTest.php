@@ -22,7 +22,8 @@ class UndefinedMethodFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function testUndefinedMethod($error, $translatedMessage)
     {
         $handler = new UndefinedMethodFatalErrorHandler();
-        $exception = $handler->handleError($error, new FatalErrorException('', 0, $error['type'], $error['file'], $error['line']));
+        $exception = $handler->handleError($error,
+            new FatalErrorException('', 0, $error['type'], $error['file'], $error['line']));
 
         $this->assertInstanceof('Symfony\Component\Debug\Exception\UndefinedMethodException', $exception);
         $this->assertSame($translatedMessage, $exception->getMessage());

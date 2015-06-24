@@ -21,12 +21,29 @@ namespace Psy\TabCompletion\Matcher;
 class KeywordsMatcher extends AbstractMatcher
 {
     protected $keywords = array(
-        'array', 'clone', 'declare', 'die', 'echo', 'empty', 'eval', 'exit', 'include',
-        'include_once', 'isset', 'list', 'print',  'require', 'require_once', 'unset',
+        'array',
+        'clone',
+        'declare',
+        'die',
+        'echo',
+        'empty',
+        'eval',
+        'exit',
+        'include',
+        'include_once',
+        'isset',
+        'list',
+        'print',
+        'require',
+        'require_once',
+        'unset',
     );
 
     protected $mandatoryStartKeywords = array(
-        'die', 'echo', 'print', 'unset',
+        'die',
+        'echo',
+        'print',
+        'unset',
     );
 
     /**

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -55,8 +55,15 @@ class TestFixture extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Carbon\Carbon', $d);
     }
 
-    protected function assertCarbonInterval(CarbonInterval $ci, $years, $months = null, $days = null, $hours = null, $minutes = null, $seconds = null)
-    {
+    protected function assertCarbonInterval(
+        CarbonInterval $ci,
+        $years,
+        $months = null,
+        $days = null,
+        $hours = null,
+        $minutes = null,
+        $seconds = null
+    ) {
         $this->assertSame($years, $ci->years, 'CarbonInterval->years');
 
         if ($months !== null) {

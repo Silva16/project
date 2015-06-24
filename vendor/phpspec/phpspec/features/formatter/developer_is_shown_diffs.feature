@@ -5,7 +5,7 @@ Feature: Developer is shown diffs
 
   Scenario: String diffing
     Given the spec file "spec/Diffs/DiffExample1/ClassWithStringsSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample1;
@@ -23,7 +23,7 @@ Feature: Developer is shown diffs
 
       """
     And the class file "src/Diffs/DiffExample1/ClassWithStrings.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample1;
@@ -39,7 +39,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
        @@ -1,1 +1,1 @@
             -foo
             +bar
@@ -47,7 +47,7 @@ Feature: Developer is shown diffs
 
   Scenario: Array diffing
     Given the spec file "spec/Diffs/DiffExample2/ClassWithArraysSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample2;
@@ -68,7 +68,7 @@ Feature: Developer is shown diffs
 
       """
     And the class file "src/Diffs/DiffExample2/ClassWithArrays.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample2;
@@ -87,7 +87,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             @@ -1,4 +1,4 @@
                [
             -    int => 1,
@@ -99,7 +99,7 @@ Feature: Developer is shown diffs
 
   Scenario: Object diffing
     Given the spec file "spec/Diffs/DiffExample3/ClassWithObjectsSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample3;
@@ -121,7 +121,7 @@ Feature: Developer is shown diffs
 
       """
     And the class file "src/Diffs/DiffExample3/ClassWithObjects.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample3;
@@ -141,12 +141,12 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             -    'i' => 1
             -    's' => 'foo'
       """
     And I should see:
-      """
+    """
             +    'i' => 2
             +    's' => 'bar'
       """
@@ -154,7 +154,7 @@ Feature: Developer is shown diffs
 
   Scenario: Unexpected method arguments call arguments string diffing
     Given the spec file "spec/Diffs/DiffExample4/ClassUnderSpecificationSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample4;
@@ -173,7 +173,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample4/ClassUnderSpecification.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample4;
@@ -187,7 +187,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample4/ClassBeingMocked.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample4;
@@ -201,7 +201,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             @@ -1,1 +1,1 @@
             -some really really long string, and even more, and more!
             +some really really long string, and even more, and more
@@ -210,7 +210,7 @@ Feature: Developer is shown diffs
 
   Scenario: Unexpected method arguments call arguments array diffing
     Given the spec file "spec/Diffs/DiffExample5/ClassUnderSpecificationSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample5;
@@ -232,7 +232,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample5/ClassUnderSpecification.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample5;
@@ -249,7 +249,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample5/ClassBeingMocked.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample5;
@@ -263,7 +263,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             @@ -1,4 +1,4 @@
                [
                  key1 => ""val1"...",
@@ -274,7 +274,7 @@ Feature: Developer is shown diffs
 
   Scenario: Unexpected method arguments call with multiple arguments icluding null diffing
     Given the spec file "spec/Diffs/DiffExample6/ClassUnderSpecificationSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample6;
@@ -295,7 +295,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample6/ClassUnderSpecification.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample6;
@@ -311,7 +311,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample6/ClassBeingMocked.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample6;
@@ -325,7 +325,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             @@ -1,3 +1,3 @@
                [
             -    key => ""value"...",
@@ -333,7 +333,7 @@ Feature: Developer is shown diffs
                ]
       """
     And I should see:
-      """
+    """
             @@ -1,1 +1,1 @@
             -null
             +bar
@@ -341,7 +341,7 @@ Feature: Developer is shown diffs
 
   Scenario: Unexpected method call
     Given the spec file "spec/Diffs/DiffExample7/ClassUnderSpecificationSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample7;
@@ -360,7 +360,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample7/ClassUnderSpecification.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample7;
@@ -374,7 +374,7 @@ Feature: Developer is shown diffs
       }
       """
     And the class file "src/Diffs/DiffExample7/ClassBeingMocked.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample7;
@@ -393,7 +393,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             method call:
               - methodTwo("value")
             on Double\Diffs\DiffExample7\ClassBeingMocked\P13 was not expected, expected calls were:

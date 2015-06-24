@@ -13,12 +13,12 @@
 
 namespace PhpSpec\Formatter;
 
-use PhpSpec\IO\IOInterface as IO;
-use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Listener\StatisticsCollector;
-use PhpSpec\Event\SuiteEvent;
-use PhpSpec\Event\SpecificationEvent;
 use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Event\SpecificationEvent;
+use PhpSpec\Event\SuiteEvent;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\IO\IOInterface as IO;
+use PhpSpec\Listener\StatisticsCollector;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 abstract class BasicFormatter implements EventSubscriberInterface
@@ -51,9 +51,12 @@ abstract class BasicFormatter implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         $events = array(
-            'beforeSuite', 'afterSuite',
-            'beforeExample', 'afterExample',
-            'beforeSpecification', 'afterSpecification'
+            'beforeSuite',
+            'afterSuite',
+            'beforeExample',
+            'afterExample',
+            'beforeSpecification',
+            'afterSpecification'
         );
 
         return array_combine($events, $events);

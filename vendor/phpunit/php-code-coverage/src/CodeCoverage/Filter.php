@@ -81,7 +81,7 @@ class PHP_CodeCoverage_Filter
     public function addDirectoryToBlacklist($directory, $suffix = '.php', $prefix = '')
     {
         $facade = new File_Iterator_Facade;
-        $files  = $facade->getFilesAsArray($directory, $suffix, $prefix);
+        $files = $facade->getFilesAsArray($directory, $suffix, $prefix);
 
         foreach ($files as $file) {
             $this->addFileToBlacklist($file);
@@ -120,7 +120,7 @@ class PHP_CodeCoverage_Filter
     public function removeDirectoryFromBlacklist($directory, $suffix = '.php', $prefix = '')
     {
         $facade = new File_Iterator_Facade;
-        $files  = $facade->getFilesAsArray($directory, $suffix, $prefix);
+        $files = $facade->getFilesAsArray($directory, $suffix, $prefix);
 
         foreach ($files as $file) {
             $this->removeFileFromBlacklist($file);
@@ -151,7 +151,7 @@ class PHP_CodeCoverage_Filter
     public function addDirectoryToWhitelist($directory, $suffix = '.php', $prefix = '')
     {
         $facade = new File_Iterator_Facade;
-        $files  = $facade->getFilesAsArray($directory, $suffix, $prefix);
+        $files = $facade->getFilesAsArray($directory, $suffix, $prefix);
 
         foreach ($files as $file) {
             $this->addFileToWhitelist($file);
@@ -190,7 +190,7 @@ class PHP_CodeCoverage_Filter
     public function removeDirectoryFromWhitelist($directory, $suffix = '.php', $prefix = '')
     {
         $facade = new File_Iterator_Facade;
-        $files  = $facade->getFilesAsArray($directory, $suffix, $prefix);
+        $files = $facade->getFilesAsArray($directory, $suffix, $prefix);
 
         foreach ($files as $file) {
             $this->removeFileFromWhitelist($file);
@@ -225,7 +225,8 @@ class PHP_CodeCoverage_Filter
             strpos($filename, 'runtime-created function') !== false ||
             strpos($filename, 'runkit created function') !== false ||
             strpos($filename, 'assert code') !== false ||
-            strpos($filename, 'regexp code') !== false) {
+            strpos($filename, 'regexp code') !== false
+        ) {
             return false;
         }
 
@@ -238,8 +239,8 @@ class PHP_CodeCoverage_Filter
      * When the whitelist is empty (default), blacklisting is used.
      * When the whitelist is not empty, whitelisting is used.
      *
-     * @param  string                     $filename
-     * @param  boolean                    $ignoreWhitelist
+     * @param  string $filename
+     * @param  boolean $ignoreWhitelist
      * @return boolean
      * @throws PHP_CodeCoverage_Exception
      */
@@ -310,7 +311,7 @@ class PHP_CodeCoverage_Filter
     }
 
     /**
-     * @param string  $className
+     * @param string $className
      * @param integer $parent
      * @since Method available since Release 1.2.3
      */

@@ -140,7 +140,8 @@ abstract class Command extends BaseCommand
             $messages[] = '<comment>Arguments:</comment>';
             foreach ($arguments as $argument) {
                 if (null !== $argument->getDefault() && (!is_array($argument->getDefault()) || count($argument->getDefault()))) {
-                    $default = sprintf('<comment> (default: %s)</comment>', $this->formatDefaultValue($argument->getDefault()));
+                    $default = sprintf('<comment> (default: %s)</comment>',
+                        $this->formatDefaultValue($argument->getDefault()));
                 } else {
                     $default = '';
                 }
@@ -172,7 +173,8 @@ abstract class Command extends BaseCommand
 
             foreach ($options as $option) {
                 if ($option->acceptValue() && null !== $option->getDefault() && (!is_array($option->getDefault()) || count($option->getDefault()))) {
-                    $default = sprintf('<comment> (default: %s)</comment>', $this->formatDefaultValue($option->getDefault()));
+                    $default = sprintf('<comment> (default: %s)</comment>',
+                        $this->formatDefaultValue($option->getDefault()));
                 } else {
                     $default = '';
                 }

@@ -25,7 +25,8 @@ class MysqlProfilerStorage extends PdoProfilerStorage
     {
         if (null === $this->db) {
             if (0 !== strpos($this->dsn, 'mysql')) {
-                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Mysql with an invalid dsn "%s". The expected format is "mysql:dbname=database_name;host=host_name".', $this->dsn));
+                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Mysql with an invalid dsn "%s". The expected format is "mysql:dbname=database_name;host=host_name".',
+                    $this->dsn));
             }
 
             if (!class_exists('PDO') || !in_array('mysql', \PDO::getAvailableDrivers(), true)) {
@@ -51,12 +52,12 @@ class MysqlProfilerStorage extends PdoProfilerStorage
 
         if ($ip = preg_replace('/[^\d\.]/', '', $ip)) {
             $criteria[] = 'ip LIKE :ip';
-            $args[':ip'] = '%'.$ip.'%';
+            $args[':ip'] = '%' . $ip . '%';
         }
 
         if ($url) {
             $criteria[] = 'url LIKE :url';
-            $args[':url'] = '%'.addcslashes($url, '%_\\').'%';
+            $args[':url'] = '%' . addcslashes($url, '%_\\') . '%';
         }
 
         if ($method) {

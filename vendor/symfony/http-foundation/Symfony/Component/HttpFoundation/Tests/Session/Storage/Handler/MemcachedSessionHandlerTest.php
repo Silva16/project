@@ -63,8 +63,7 @@ class MemcachedSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcached
             ->expects($this->once())
             ->method('get')
-            ->with(self::PREFIX.'id')
-        ;
+            ->with(self::PREFIX . 'id');
 
         $this->assertEquals('', $this->storage->read('id'));
     }
@@ -74,9 +73,8 @@ class MemcachedSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcached
             ->expects($this->once())
             ->method('set')
-            ->with(self::PREFIX.'id', 'data', $this->equalTo(time() + self::TTL, 2))
-            ->will($this->returnValue(true))
-        ;
+            ->with(self::PREFIX . 'id', 'data', $this->equalTo(time() + self::TTL, 2))
+            ->will($this->returnValue(true));
 
         $this->assertTrue($this->storage->write('id', 'data'));
     }
@@ -86,9 +84,8 @@ class MemcachedSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcached
             ->expects($this->once())
             ->method('delete')
-            ->with(self::PREFIX.'id')
-            ->will($this->returnValue(true))
-        ;
+            ->with(self::PREFIX . 'id')
+            ->will($this->returnValue(true));
 
         $this->assertTrue($this->storage->destroy('id'));
     }

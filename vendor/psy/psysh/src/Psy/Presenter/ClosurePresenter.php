@@ -16,7 +16,7 @@ namespace Psy\Presenter;
  */
 class ClosurePresenter implements Presenter, PresenterManagerAware
 {
-    const FMT     = '<keyword>function</keyword> (%s)%s { <comment>...</comment> }';
+    const FMT = '<keyword>function</keyword> (%s)%s { <comment>...</comment> }';
     const USE_FMT = ' use (%s)';
 
     protected $manager;
@@ -63,8 +63,8 @@ class ClosurePresenter implements Presenter, PresenterManagerAware
      * Present the Closure.
      *
      * @param \Closure $value
-     * @param int      $depth   (default:null)
-     * @param int      $options One of Presenter constants
+     * @param int $depth (default:null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */

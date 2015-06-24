@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dotenv
  *
@@ -82,13 +83,13 @@ class Dotenv
      * You can also pass through an set of allowed values for the environment variable.
      *
      * @throws \RuntimeException
-     * @param  mixed             $environmentVariables the name of the environment variable or an array of names
-     * @param  string[]          $allowedValues
+     * @param  mixed $environmentVariables the name of the environment variable or an array of names
+     * @param  string[] $allowedValues
      * @return true              (or throws exception on error)
      */
     public static function required($environmentVariables, array $allowedValues = array())
     {
-        $environmentVariables = (array) $environmentVariables;
+        $environmentVariables = (array)$environmentVariables;
         $missingEnvironmentVariables = array();
 
         foreach ($environmentVariables as $environmentVariable) {
@@ -129,7 +130,7 @@ class Dotenv
     protected static function normaliseEnvironmentVariable($name, $value)
     {
         list($name, $value) = static::splitCompoundStringIntoParts($name, $value);
-        $name  = static::sanitiseVariableName($name);
+        $name = static::sanitiseVariableName($name);
         $value = static::sanitiseVariableValue($value);
         $value = static::resolveNestedVariables($value);
 
@@ -161,7 +162,9 @@ class Dotenv
     protected static function sanitiseVariableValue($value)
     {
         $value = trim($value);
-        if (!$value) return '';
+        if (!$value) {
+            return '';
+        }
         if (strpbrk($value[0], '"\'') !== false) { // value starts with a quote
             $quote = $value[0];
             $regexPattern = sprintf('/^
@@ -183,6 +186,7 @@ class Dotenv
             $parts = explode(' #', $value, 2);
             $value = $parts[0];
         }
+
         return trim($value);
     }
 
@@ -214,7 +218,7 @@ class Dotenv
                     if (is_null($nestedVariable)) {
                         return $matchedPatterns[0];
                     } else {
-                        return  $nestedVariable;
+                        return $nestedVariable;
                     }
                 },
                 $value

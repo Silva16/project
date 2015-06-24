@@ -229,30 +229,35 @@ class ResponseTest extends ResponseTestCase
 
     public function testIsValidateable()
     {
-        $response = new Response('', 200, array('Last-Modified' => $this->createDateTimeOneHourAgo()->format(DATE_RFC2822)));
+        $response = new Response('', 200,
+            array('Last-Modified' => $this->createDateTimeOneHourAgo()->format(DATE_RFC2822)));
         $this->assertTrue($response->isValidateable(), '->isValidateable() returns true if Last-Modified is present');
 
         $response = new Response('', 200, array('ETag' => '"12345"'));
         $this->assertTrue($response->isValidateable(), '->isValidateable() returns true if ETag is present');
 
         $response = new Response();
-        $this->assertFalse($response->isValidateable(), '->isValidateable() returns false when no validator is present');
+        $this->assertFalse($response->isValidateable(),
+            '->isValidateable() returns false when no validator is present');
     }
 
     public function testGetDate()
     {
         $oneHourAgo = $this->createDateTimeOneHourAgo();
         $response = new Response('', 200, array('Date' => $oneHourAgo->format(DATE_RFC2822)));
-        $this->assertEquals(0, $oneHourAgo->diff($response->getDate())->format('%s'), '->getDate() returns the Date header if present');
+        $this->assertEquals(0, $oneHourAgo->diff($response->getDate())->format('%s'),
+            '->getDate() returns the Date header if present');
 
         $response = new Response();
         $date = $response->getDate();
-        $this->assertLessThan(1, $date->diff(new \DateTime(), true)->format('%s'), '->getDate() returns the current Date if no Date header present');
+        $this->assertLessThan(1, $date->diff(new \DateTime(), true)->format('%s'),
+            '->getDate() returns the current Date if no Date header present');
 
         $response = new Response('', 200, array('Date' => $this->createDateTimeOneHourAgo()->format(DATE_RFC2822)));
         $now = $this->createDateTimeNow();
         $response->headers->set('Date', $now->format(DATE_RFC2822));
-        $this->assertLessThanOrEqual(1, $now->diff($response->getDate())->format('%s'), '->getDate() returns the date when the header has been modified');
+        $this->assertLessThanOrEqual(1, $now->diff($response->getDate())->format('%s'),
+            '->getDate() returns the date when the header has been modified');
 
         $response = new Response('', 200);
         $response->headers->remove('Date');
@@ -263,16 +268,19 @@ class ResponseTest extends ResponseTestCase
     {
         $response = new Response();
         $response->headers->set('Cache-Control', 's-maxage=600, max-age=0');
-        $this->assertEquals(600, $response->getMaxAge(), '->getMaxAge() uses s-maxage cache control directive when present');
+        $this->assertEquals(600, $response->getMaxAge(),
+            '->getMaxAge() uses s-maxage cache control directive when present');
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'max-age=600');
-        $this->assertEquals(600, $response->getMaxAge(), '->getMaxAge() falls back to max-age when no s-maxage directive present');
+        $this->assertEquals(600, $response->getMaxAge(),
+            '->getMaxAge() falls back to max-age when no s-maxage directive present');
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'must-revalidate');
         $response->headers->set('Expires', $this->createDateTimeOneHourLater()->format(DATE_RFC2822));
-        $this->assertLessThanOrEqual(1, $response->getMaxAge() - 3600, '->getMaxAge() falls back to Expires when no max-age or s-maxage directive present');
+        $this->assertLessThanOrEqual(1, $response->getMaxAge() - 3600,
+            '->getMaxAge() falls back to Expires when no max-age or s-maxage directive present');
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'must-revalidate');
@@ -297,15 +305,20 @@ class ResponseTest extends ResponseTestCase
         $response = new Response();
         $response->headers->set('Cache-Control', 'max-age=100');
         $response->setPrivate();
-        $this->assertEquals(100, $response->headers->getCacheControlDirective('max-age'), '->isPrivate() adds the private Cache-Control directive when set to true');
-        $this->assertTrue($response->headers->getCacheControlDirective('private'), '->isPrivate() adds the private Cache-Control directive when set to true');
+        $this->assertEquals(100, $response->headers->getCacheControlDirective('max-age'),
+            '->isPrivate() adds the private Cache-Control directive when set to true');
+        $this->assertTrue($response->headers->getCacheControlDirective('private'),
+            '->isPrivate() adds the private Cache-Control directive when set to true');
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'public, max-age=100');
         $response->setPrivate();
-        $this->assertEquals(100, $response->headers->getCacheControlDirective('max-age'), '->isPrivate() adds the private Cache-Control directive when set to true');
-        $this->assertTrue($response->headers->getCacheControlDirective('private'), '->isPrivate() adds the private Cache-Control directive when set to true');
-        $this->assertFalse($response->headers->hasCacheControlDirective('public'), '->isPrivate() removes the public Cache-Control directive');
+        $this->assertEquals(100, $response->headers->getCacheControlDirective('max-age'),
+            '->isPrivate() adds the private Cache-Control directive when set to true');
+        $this->assertTrue($response->headers->getCacheControlDirective('private'),
+            '->isPrivate() adds the private Cache-Control directive when set to true');
+        $this->assertFalse($response->headers->hasCacheControlDirective('public'),
+            '->isPrivate() removes the public Cache-Control directive');
     }
 
     public function testExpire()
@@ -318,32 +331,38 @@ class ResponseTest extends ResponseTestCase
         $response = new Response();
         $response->headers->set('Cache-Control', 'max-age=100, s-maxage=500');
         $response->expire();
-        $this->assertEquals(500, $response->headers->get('Age'), '->expire() sets the Age to s-maxage when both max-age and s-maxage are present');
+        $this->assertEquals(500, $response->headers->get('Age'),
+            '->expire() sets the Age to s-maxage when both max-age and s-maxage are present');
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'max-age=5, s-maxage=500');
         $response->headers->set('Age', '1000');
         $response->expire();
-        $this->assertEquals(1000, $response->headers->get('Age'), '->expire() does nothing when the response is already stale/expired');
+        $this->assertEquals(1000, $response->headers->get('Age'),
+            '->expire() does nothing when the response is already stale/expired');
 
         $response = new Response();
         $response->expire();
-        $this->assertFalse($response->headers->has('Age'), '->expire() does nothing when the response does not include freshness information');
+        $this->assertFalse($response->headers->has('Age'),
+            '->expire() does nothing when the response does not include freshness information');
 
         $response = new Response();
         $response->headers->set('Expires', -1);
         $response->expire();
-        $this->assertNull($response->headers->get('Age'), '->expire() does not set the Age when the response is expired');
+        $this->assertNull($response->headers->get('Age'),
+            '->expire() does not set the Age when the response is expired');
     }
 
     public function testGetTtl()
     {
         $response = new Response();
-        $this->assertNull($response->getTtl(), '->getTtl() returns null when no Expires or Cache-Control headers are present');
+        $this->assertNull($response->getTtl(),
+            '->getTtl() returns null when no Expires or Cache-Control headers are present');
 
         $response = new Response();
         $response->headers->set('Expires', $this->createDateTimeOneHourLater()->format(DATE_RFC2822));
-        $this->assertLessThanOrEqual(1, 3600 - $response->getTtl(), '->getTtl() uses the Expires header when no max-age is present');
+        $this->assertLessThanOrEqual(1, 3600 - $response->getTtl(),
+            '->getTtl() uses the Expires header when no max-age is present');
 
         $response = new Response();
         $response->headers->set('Expires', $this->createDateTimeOneHourAgo()->format(DATE_RFC2822));
@@ -381,19 +400,23 @@ class ResponseTest extends ResponseTestCase
     public function testGetVary()
     {
         $response = new Response();
-        $this->assertEquals(array(), $response->getVary(), '->getVary() returns an empty array if no Vary header is present');
+        $this->assertEquals(array(), $response->getVary(),
+            '->getVary() returns an empty array if no Vary header is present');
 
         $response = new Response();
         $response->headers->set('Vary', 'Accept-Language');
-        $this->assertEquals(array('Accept-Language'), $response->getVary(), '->getVary() parses a single header name value');
+        $this->assertEquals(array('Accept-Language'), $response->getVary(),
+            '->getVary() parses a single header name value');
 
         $response = new Response();
         $response->headers->set('Vary', 'Accept-Language User-Agent    X-Foo');
-        $this->assertEquals(array('Accept-Language', 'User-Agent', 'X-Foo'), $response->getVary(), '->getVary() parses multiple header name values separated by spaces');
+        $this->assertEquals(array('Accept-Language', 'User-Agent', 'X-Foo'), $response->getVary(),
+            '->getVary() parses multiple header name values separated by spaces');
 
         $response = new Response();
         $response->headers->set('Vary', 'Accept-Language,User-Agent,    X-Foo');
-        $this->assertEquals(array('Accept-Language', 'User-Agent', 'X-Foo'), $response->getVary(), '->getVary() parses multiple header name values separated by commas');
+        $this->assertEquals(array('Accept-Language', 'User-Agent', 'X-Foo'), $response->getVary(),
+            '->getVary() parses multiple header name values separated by commas');
 
         $vary = array('Accept-Language', 'User-Agent', 'X-foo');
 
@@ -413,10 +436,12 @@ class ResponseTest extends ResponseTestCase
         $this->assertEquals(array('Accept-Language'), $response->getVary());
 
         $response->setVary('Accept-Language, User-Agent');
-        $this->assertEquals(array('Accept-Language', 'User-Agent'), $response->getVary(), '->setVary() replace the vary header by default');
+        $this->assertEquals(array('Accept-Language', 'User-Agent'), $response->getVary(),
+            '->setVary() replace the vary header by default');
 
         $response->setVary('X-Foo', false);
-        $this->assertEquals(array('Accept-Language', 'User-Agent', 'X-Foo'), $response->getVary(), '->setVary() doesn\'t wipe out earlier Vary headers if replace is set to false');
+        $this->assertEquals(array('Accept-Language', 'User-Agent', 'X-Foo'), $response->getVary(),
+            '->setVary() doesn\'t wipe out earlier Vary headers if replace is set to false');
     }
 
     public function testDefaultContentType()
@@ -486,7 +511,8 @@ class ResponseTest extends ResponseTestCase
         $response->prepare($request);
 
         $this->assertEquals('', $response->getContent());
-        $this->assertEquals($length, $response->headers->get('Content-Length'), 'Content-Length should be as if it was GET; see RFC2616 14.13');
+        $this->assertEquals($length, $response->headers->get('Content-Length'),
+            'Content-Length should be as if it was GET; see RFC2616 14.13');
     }
 
     public function testPrepareRemovesContentForInformationalResponse()
@@ -548,7 +574,8 @@ class ResponseTest extends ResponseTestCase
             $response->setCache(array('wrong option' => 'value'));
             $this->fail('->setCache() throws an InvalidArgumentException if an option is not supported');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e, '->setCache() throws an InvalidArgumentException if an option is not supported');
+            $this->assertInstanceOf('InvalidArgumentException', $e,
+                '->setCache() throws an InvalidArgumentException if an option is not supported');
             $this->assertContains('"wrong option"', $e->getMessage());
         }
 
@@ -787,7 +814,7 @@ class ResponseTest extends ResponseTestCase
     {
         $response = new Response();
         $response->setContent($content);
-        $this->assertEquals((string) $content, $response->getContent());
+        $this->assertEquals((string)$content, $response->getContent());
     }
 
     /**

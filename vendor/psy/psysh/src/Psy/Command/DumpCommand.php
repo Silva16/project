@@ -49,7 +49,8 @@ class DumpCommand extends ReflectingCommand implements PresenterManagerAware
             ->setDefinition(array(
                 new InputArgument('target', InputArgument::REQUIRED, 'A target object or primitive to dump.', null),
                 new InputOption('depth', '', InputOption::VALUE_REQUIRED, 'Depth to parse', 10),
-                new InputOption('all', 'a', InputOption::VALUE_NONE, 'Include private and protected methods and properties.'),
+                new InputOption('all', 'a', InputOption::VALUE_NONE,
+                    'Include private and protected methods and properties.'),
             ))
             ->setDescription('Dump an object or primitive.')
             ->setHelp(
@@ -70,9 +71,10 @@ HELP
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $depth  = $input->getOption('depth');
+        $depth = $input->getOption('depth');
         $target = $this->resolveTarget($input->getArgument('target'));
-        $output->page($this->presenterManager->present($target, $depth, $input->getOption('all') ? Presenter::VERBOSE : 0));
+        $output->page($this->presenterManager->present($target, $depth,
+            $input->getOption('all') ? Presenter::VERBOSE : 0));
     }
 
     /**

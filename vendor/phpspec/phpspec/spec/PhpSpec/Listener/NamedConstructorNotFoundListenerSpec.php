@@ -13,9 +13,13 @@ use Prophecy\Argument;
 
 class NamedConstructorNotFoundListenerSpec extends ObjectBehavior
 {
-    function let(IO $io, ResourceManager $resourceManager, GeneratorManager $generatorManager,
-                 SuiteEvent $suiteEvent, ExampleEvent $exampleEvent)
-    {
+    function let(
+        IO $io,
+        ResourceManager $resourceManager,
+        GeneratorManager $generatorManager,
+        SuiteEvent $suiteEvent,
+        ExampleEvent $exampleEvent
+    ) {
         $io->writeln(Argument::any())->willReturn();
         $io->askConfirmation(Argument::any())->willReturn();
 
@@ -32,8 +36,12 @@ class NamedConstructorNotFoundListenerSpec extends ObjectBehavior
         $io->askConfirmation(Argument::any())->shouldNotBeenCalled();
     }
 
-    function it_does_not_prompt_for_method_generation_if_non_namedconstructornotfoundexception_was_thrown($exampleEvent, $suiteEvent, $io, \InvalidArgumentException $exception)
-    {
+    function it_does_not_prompt_for_method_generation_if_non_namedconstructornotfoundexception_was_thrown(
+        $exampleEvent,
+        $suiteEvent,
+        $io,
+        \InvalidArgumentException $exception
+    ) {
         $exampleEvent->getException()->willReturn($exception);
         $io->isCodeGenerationEnabled()->willReturn(true);
 
@@ -43,8 +51,12 @@ class NamedConstructorNotFoundListenerSpec extends ObjectBehavior
         $io->askConfirmation(Argument::any())->shouldNotBeenCalled();
     }
 
-    function it_prompts_for_method_generation_if_namedconstructornotfoundexception_was_thrown_and_input_is_interactive($exampleEvent, $suiteEvent, $io, NamedConstructorNotFoundException $exception)
-    {
+    function it_prompts_for_method_generation_if_namedconstructornotfoundexception_was_thrown_and_input_is_interactive(
+        $exampleEvent,
+        $suiteEvent,
+        $io,
+        NamedConstructorNotFoundException $exception
+    ) {
         $exampleEvent->getException()->willReturn($exception);
         $io->isCodeGenerationEnabled()->willReturn(true);
 
@@ -54,8 +66,12 @@ class NamedConstructorNotFoundListenerSpec extends ObjectBehavior
         $io->askConfirmation(Argument::any())->shouldHaveBeenCalled();
     }
 
-    function it_does_not_prompt_for_method_generation_if_input_is_not_interactive($exampleEvent, $suiteEvent, $io, NamedConstructorNotFoundException $exception)
-    {
+    function it_does_not_prompt_for_method_generation_if_input_is_not_interactive(
+        $exampleEvent,
+        $suiteEvent,
+        $io,
+        NamedConstructorNotFoundException $exception
+    ) {
         $exampleEvent->getException()->willReturn($exception);
         $io->isCodeGenerationEnabled()->willReturn(false);
 

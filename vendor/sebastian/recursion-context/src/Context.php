@@ -37,14 +37,14 @@ final class Context
      */
     public function __construct()
     {
-        $this->arrays  = array();
+        $this->arrays = array();
         $this->objects = new \SplObjectStorage;
     }
 
     /**
      * Adds a value to the context.
      *
-     * @param  array|object $value      The value to add.
+     * @param  array|object $value The value to add.
      * @return integer|string           The ID of the stored value, either as
      *                                  a string or integer.
      * @throws InvalidArgumentException Thrown if $value is not an array or
@@ -54,10 +54,10 @@ final class Context
     {
         if (is_array($value)) {
             return $this->addArray($value);
-        }
-
-        else if (is_object($value)) {
-            return $this->addObject($value);
+        } else {
+            if (is_object($value)) {
+                return $this->addObject($value);
+            }
         }
 
         throw new InvalidArgumentException(
@@ -68,7 +68,7 @@ final class Context
     /**
      * Checks if the given value exists within the context.
      *
-     * @param  array|object $value  The value to check.
+     * @param  array|object $value The value to check.
      * @return integer|string|false The string or integer ID of the stored
      *                              value if it has already been seen, or
      *                              false if the value is not stored.
@@ -79,10 +79,10 @@ final class Context
     {
         if (is_array($value)) {
             return $this->containsArray($value);
-        }
-
-        else if (is_object($value)) {
-            return $this->containsObject($value);
+        } else {
+            if (is_object($value)) {
+                return $this->containsObject($value);
+            }
         }
 
         throw new InvalidArgumentException(
@@ -134,6 +134,7 @@ final class Context
 
             if (isset($array[$hash]) && $array[$hash] === $hash) {
                 unset($this->arrays[$key][$hash]);
+
                 return $key;
             }
 

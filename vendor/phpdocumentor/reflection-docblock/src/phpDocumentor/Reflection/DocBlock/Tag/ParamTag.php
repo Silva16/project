@@ -38,8 +38,10 @@ class ParamTag extends ReturnTag
             $this->content
                 = "{$this->type} {$this->variableName} {$this->description}";
         }
+
         return $this->content;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -79,6 +81,7 @@ class ParamTag extends ReturnTag
         $this->setDescription(implode('', $parts));
 
         $this->content = $content;
+
         return $this;
     }
 
@@ -104,6 +107,7 @@ class ParamTag extends ReturnTag
         $this->variableName = $name;
 
         $this->content = null;
+
         return $this;
     }
 

@@ -25,7 +25,8 @@ class ResourcePresenterTest extends \PHPUnit_Framework_TestCase
     public function testPresent()
     {
         $resource = fopen('php://stdin', 'r');
-        $this->assertStringMatchesFormat('<resource>\<STDIO stream <strong>resource #%d</strong>></resource>', $this->presenter->present($resource));
+        $this->assertStringMatchesFormat('<resource>\<STDIO stream <strong>resource #%d</strong>></resource>',
+            $this->presenter->present($resource));
         fclose($resource);
     }
 }

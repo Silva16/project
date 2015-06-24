@@ -19,7 +19,7 @@ class FunctionReturnInWriteContextPassTest extends CodeCleanerTestCase
 {
     public function setUp()
     {
-        $this->pass      = new FunctionReturnInWriteContextPass();
+        $this->pass = new FunctionReturnInWriteContextPass();
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor($this->pass);
     }
@@ -53,7 +53,8 @@ class FunctionReturnInWriteContextPassTest extends CodeCleanerTestCase
             $this->fail();
         } catch (FatalErrorException $e) {
             if (version_compare(PHP_VERSION, '5.5', '>=')) {
-                $this->assertContains('Cannot use isset() on the result of a function call (you can use "null !== func()" instead)', $e->getMessage());
+                $this->assertContains('Cannot use isset() on the result of a function call (you can use "null !== func()" instead)',
+                    $e->getMessage());
             } else {
                 $this->assertContains("Can't use function return value in write context", $e->getMessage());
             }

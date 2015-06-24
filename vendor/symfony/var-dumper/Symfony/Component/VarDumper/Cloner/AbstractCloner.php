@@ -23,15 +23,12 @@ abstract class AbstractCloner implements ClonerInterface
     public static $defaultCasters = array(
         'Symfony\Component\VarDumper\Caster\CutStub' => 'Symfony\Component\VarDumper\Caster\StubCaster::castStub',
         'Symfony\Component\VarDumper\Caster\ConstStub' => 'Symfony\Component\VarDumper\Caster\StubCaster::castStub',
-
         'Closure' => 'Symfony\Component\VarDumper\Caster\ReflectionCaster::castClosure',
         'Reflector' => 'Symfony\Component\VarDumper\Caster\ReflectionCaster::castReflector',
-
         'Doctrine\Common\Persistence\ObjectManager' => 'Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
         'Doctrine\Common\Proxy\Proxy' => 'Symfony\Component\VarDumper\Caster\DoctrineCaster::castCommonProxy',
         'Doctrine\ORM\Proxy\Proxy' => 'Symfony\Component\VarDumper\Caster\DoctrineCaster::castOrmProxy',
         'Doctrine\ORM\PersistentCollection' => 'Symfony\Component\VarDumper\Caster\DoctrineCaster::castPersistentCollection',
-
         'DOMException' => 'Symfony\Component\VarDumper\Caster\DOMCaster::castException',
         'DOMStringList' => 'Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
         'DOMNameList' => 'Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
@@ -54,22 +51,18 @@ abstract class AbstractCloner implements ClonerInterface
         'DOMEntity' => 'Symfony\Component\VarDumper\Caster\DOMCaster::castEntity',
         'DOMProcessingInstruction' => 'Symfony\Component\VarDumper\Caster\DOMCaster::castProcessingInstruction',
         'DOMXPath' => 'Symfony\Component\VarDumper\Caster\DOMCaster::castXPath',
-
         'ErrorException' => 'Symfony\Component\VarDumper\Caster\ExceptionCaster::castErrorException',
         'Exception' => 'Symfony\Component\VarDumper\Caster\ExceptionCaster::castException',
         'Symfony\Component\DependencyInjection\ContainerInterface' => 'Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
         'Symfony\Component\VarDumper\Exception\ThrowingCasterException' => 'Symfony\Component\VarDumper\Caster\ExceptionCaster::castThrowingCasterException',
-
         'PDO' => 'Symfony\Component\VarDumper\Caster\PdoCaster::castPdo',
         'PDOStatement' => 'Symfony\Component\VarDumper\Caster\PdoCaster::castPdoStatement',
-
         'ArrayObject' => 'Symfony\Component\VarDumper\Caster\SplCaster::castArrayObject',
         'SplDoublyLinkedList' => 'Symfony\Component\VarDumper\Caster\SplCaster::castDoublyLinkedList',
         'SplFixedArray' => 'Symfony\Component\VarDumper\Caster\SplCaster::castFixedArray',
         'SplHeap' => 'Symfony\Component\VarDumper\Caster\SplCaster::castHeap',
         'SplObjectStorage' => 'Symfony\Component\VarDumper\Caster\SplCaster::castObjectStorage',
         'SplPriorityQueue' => 'Symfony\Component\VarDumper\Caster\SplCaster::castHeap',
-
         ':curl' => 'Symfony\Component\VarDumper\Caster\ResourceCaster::castCurl',
         ':dba' => 'Symfony\Component\VarDumper\Caster\ResourceCaster::castDba',
         ':dba persistent' => 'Symfony\Component\VarDumper\Caster\ResourceCaster::castDba',
@@ -126,7 +119,7 @@ abstract class AbstractCloner implements ClonerInterface
      */
     public function setMaxItems($maxItems)
     {
-        $this->maxItems = (int) $maxItems;
+        $this->maxItems = (int)$maxItems;
     }
 
     /**
@@ -136,7 +129,7 @@ abstract class AbstractCloner implements ClonerInterface
      */
     public function setMaxString($maxString)
     {
-        $this->maxString = (int) $maxString;
+        $this->maxString = (int)$maxString;
     }
 
     /**
@@ -174,7 +167,7 @@ abstract class AbstractCloner implements ClonerInterface
     /**
      * Casts an object to an array representation.
      *
-     * @param Stub $stub     The Stub for the casted object.
+     * @param Stub $stub The Stub for the casted object.
      * @param bool $isNested True if the object is nested in the dumped structure.
      *
      * @return array The object casted as array.
@@ -199,16 +192,18 @@ abstract class AbstractCloner implements ClonerInterface
         }
 
         if ($classInfo[1]) {
-            $a = $this->callCaster(function ($obj) {return $obj->__debugInfo();}, $obj, array(), null, $isNested);
+            $a = $this->callCaster(function ($obj) {
+                return $obj->__debugInfo();
+            }, $obj, array(), null, $isNested);
         } else {
-            $a = (array) $obj;
+            $a = (array)$obj;
         }
 
         if ($a) {
             $p = array_keys($a);
             foreach ($p as $i => $k) {
                 if (!isset($k[0]) || ("\0" !== $k[0] && !$classInfo[2]->hasProperty($k))) {
-                    $p[$i] = "\0+\0".$k;
+                    $p[$i] = "\0+\0" . $k;
                 }
             }
             $a = array_combine($p, $a);
@@ -228,7 +223,7 @@ abstract class AbstractCloner implements ClonerInterface
     /**
      * Casts a resource to an array representation.
      *
-     * @param Stub $stub     The Stub for the casted resource.
+     * @param Stub $stub The Stub for the casted resource.
      * @param bool $isNested True if the object is nested in the dumped structure.
      *
      * @return array The resource casted as array.
@@ -239,8 +234,8 @@ abstract class AbstractCloner implements ClonerInterface
         $res = $stub->value;
         $type = $stub->class;
 
-        if (!empty($this->casters[':'.$type])) {
-            foreach ($this->casters[':'.$type] as $c) {
+        if (!empty($this->casters[':' . $type])) {
+            foreach ($this->casters[':' . $type] as $c) {
                 $a = $this->callCaster($c, $res, $a, $stub, $isNested);
             }
         }
@@ -251,11 +246,11 @@ abstract class AbstractCloner implements ClonerInterface
     /**
      * Calls a custom caster.
      *
-     * @param callable        $callback The caster.
-     * @param object|resource $obj      The object/resource being casted.
-     * @param array           $a        The result of the previous cast for chained casters.
-     * @param Stub            $stub     The Stub for the casted object/resource.
-     * @param bool            $isNested True if $obj is nested in the dumped structure.
+     * @param callable $callback The caster.
+     * @param object|resource $obj The object/resource being casted.
+     * @param array $a The result of the previous cast for chained casters.
+     * @param Stub $stub The Stub for the casted object/resource.
+     * @param bool $isNested True if $obj is nested in the dumped structure.
      *
      * @return array The casted object/resource.
      */
@@ -268,7 +263,7 @@ abstract class AbstractCloner implements ClonerInterface
                 $a = $cast;
             }
         } catch (\Exception $e) {
-            $a[(Stub::TYPE_OBJECT === $stub->type ? "\0~\0" : '').'⚠'] = new ThrowingCasterException($callback, $e);
+            $a[(Stub::TYPE_OBJECT === $stub->type ? "\0~\0" : '') . '⚠'] = new ThrowingCasterException($callback, $e);
         }
 
         return $a;

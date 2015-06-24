@@ -46,8 +46,8 @@ class ObjectPresenter extends RecursivePresenter
      * Present the object.
      *
      * @param object $value
-     * @param int    $depth   (default: null)
-     * @param int    $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
@@ -86,7 +86,7 @@ class ObjectPresenter extends RecursivePresenter
         }
 
         $template = sprintf('{%s%s%%s%s}', PHP_EOL, self::INDENT, PHP_EOL);
-        $glue     = sprintf(',%s%s', PHP_EOL, self::INDENT);
+        $glue = sprintf(',%s%s', PHP_EOL, self::INDENT);
 
         return sprintf($template, implode($glue, $formatted));
     }
@@ -94,9 +94,9 @@ class ObjectPresenter extends RecursivePresenter
     /**
      * Get an array of object properties.
      *
-     * @param object           $value
+     * @param object $value
      * @param \ReflectionClass $class
-     * @param int              $propertyFilter One of \ReflectionProperty constants
+     * @param int $propertyFilter One of \ReflectionProperty constants
      *
      * @return array
      */

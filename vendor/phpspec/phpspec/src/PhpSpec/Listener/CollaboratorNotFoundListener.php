@@ -63,7 +63,7 @@ class CollaboratorNotFoundListener implements EventSubscriberInterface
     {
         return array(
             'afterExample' => array('afterExample', 10),
-            'afterSuite'   => array('afterSuite', -10)
+            'afterSuite' => array('afterSuite', -10)
         );
     }
 
@@ -73,7 +73,8 @@ class CollaboratorNotFoundListener implements EventSubscriberInterface
     public function afterExample(ExampleEvent $event)
     {
         if (($exception = $event->getException()) &&
-            ($exception instanceof CollaboratorNotFoundException)) {
+            ($exception instanceof CollaboratorNotFoundException)
+        ) {
             $this->exceptions[$exception->getCollaboratorName()] = $exception;
         }
     }
@@ -96,7 +97,8 @@ class CollaboratorNotFoundListener implements EventSubscriberInterface
 
             if ($this->io->askConfirmation(
                 sprintf('Would you like me to generate an interface `%s` for you?', $exception->getCollaboratorName())
-            )) {
+            )
+            ) {
                 $this->generator->generate($resource, 'interface');
                 $event->markAsWorthRerunning();
             }

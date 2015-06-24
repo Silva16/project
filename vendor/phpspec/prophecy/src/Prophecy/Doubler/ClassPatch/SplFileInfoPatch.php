@@ -36,8 +36,7 @@ class SplFileInfoPatch implements ClassPatchInterface
         }
 
         return 'SplFileInfo' === $node->getParentClass()
-            || is_subclass_of($node->getParentClass(), 'SplFileInfo')
-        ;
+        || is_subclass_of($node->getParentClass(), 'SplFileInfo');
     }
 
     /**
@@ -56,6 +55,7 @@ class SplFileInfoPatch implements ClassPatchInterface
 
         if ($this->nodeIsDirectoryIterator($node)) {
             $constructor->setCode('return parent::__construct("' . __DIR__ . '");');
+
             return;
         }
 
@@ -79,7 +79,8 @@ class SplFileInfoPatch implements ClassPatchInterface
     private function nodeIsDirectoryIterator(ClassNode $node)
     {
         $parent = $node->getParentClass();
+
         return 'DirectoryIterator' === $parent
-            || is_subclass_of($parent, 'DirectoryIterator');
+        || is_subclass_of($parent, 'DirectoryIterator');
     }
 }

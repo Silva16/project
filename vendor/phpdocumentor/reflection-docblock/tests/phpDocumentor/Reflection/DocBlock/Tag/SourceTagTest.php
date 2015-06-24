@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Source Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Vasil Rangelov <boen.robot@gmail.com>
@@ -32,7 +32,7 @@ class SourceTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exStartingLine
      * @param string $exLineCount
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SourceTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\SourceTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

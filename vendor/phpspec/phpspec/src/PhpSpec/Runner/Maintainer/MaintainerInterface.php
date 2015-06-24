@@ -14,9 +14,9 @@
 namespace PhpSpec\Runner\Maintainer;
 
 use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\SpecificationInterface;
-use PhpSpec\Runner\MatcherManager;
 use PhpSpec\Runner\CollaboratorManager;
+use PhpSpec\Runner\MatcherManager;
+use PhpSpec\SpecificationInterface;
 
 interface MaintainerInterface
 {
@@ -28,10 +28,10 @@ interface MaintainerInterface
     public function supports(ExampleNode $example);
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function prepare(
         ExampleNode $example,
@@ -41,10 +41,10 @@ interface MaintainerInterface
     );
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function teardown(
         ExampleNode $example,

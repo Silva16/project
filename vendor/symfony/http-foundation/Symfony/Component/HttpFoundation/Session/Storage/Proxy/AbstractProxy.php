@@ -97,7 +97,7 @@ abstract class AbstractProxy
             throw new \LogicException('This method is disabled in PHP 5.4.0+');
         }
 
-        $this->active = (bool) $flag;
+        $this->active = (bool)$flag;
     }
 
     /**

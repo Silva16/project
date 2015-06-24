@@ -27,9 +27,9 @@ class DebugFormatterHelper extends Helper
     /**
      * Starts a debug formatting session
      *
-     * @param string $id      The id of the formatting session
+     * @param string $id The id of the formatting session
      * @param string $message The message to display
-     * @param string $prefix  The prefix to use
+     * @param string $prefix The prefix to use
      *
      * @return string
      */
@@ -43,10 +43,10 @@ class DebugFormatterHelper extends Helper
     /**
      * Adds progress to a formatting session
      *
-     * @param string $id          The id of the formatting session
-     * @param string $buffer      The message to display
-     * @param bool   $error       Whether to consider the buffer as error
-     * @param string $prefix      The prefix for output
+     * @param string $id The id of the formatting session
+     * @param string $buffer The message to display
+     * @param bool $error Whether to consider the buffer as error
+     * @param string $prefix The prefix for output
      * @param string $errorPrefix The prefix for error output
      *
      * @return string
@@ -65,7 +65,8 @@ class DebugFormatterHelper extends Helper
                 $this->started[$id]['err'] = true;
             }
 
-            $message .= str_replace("\n", sprintf("\n%s<bg=red;fg=white> %s </> ", $this->getBorder($id), $errorPrefix), $buffer);
+            $message .= str_replace("\n", sprintf("\n%s<bg=red;fg=white> %s </> ", $this->getBorder($id), $errorPrefix),
+                $buffer);
         } else {
             if (isset($this->started[$id]['err'])) {
                 $message .= "\n";
@@ -76,7 +77,8 @@ class DebugFormatterHelper extends Helper
                 $this->started[$id]['out'] = true;
             }
 
-            $message .= str_replace("\n", sprintf("\n%s<bg=green;fg=white> %s </> ", $this->getBorder($id), $prefix), $buffer);
+            $message .= str_replace("\n", sprintf("\n%s<bg=green;fg=white> %s </> ", $this->getBorder($id), $prefix),
+                $buffer);
         }
 
         return $message;
@@ -85,10 +87,10 @@ class DebugFormatterHelper extends Helper
     /**
      * Stops a formatting session
      *
-     * @param string $id         The id of the formatting session
-     * @param string $message    The message to display
-     * @param bool   $successful Whether to consider the result as success
-     * @param string $prefix     The prefix for the end output
+     * @param string $id The id of the formatting session
+     * @param string $message The message to display
+     * @param bool $successful Whether to consider the result as success
+     * @param string $prefix The prefix for the end output
      *
      * @return string
      */
@@ -97,10 +99,12 @@ class DebugFormatterHelper extends Helper
         $trailingEOL = isset($this->started[$id]['out']) || isset($this->started[$id]['err']) ? "\n" : '';
 
         if ($successful) {
-            return sprintf("%s%s<bg=green;fg=white> %s </> <fg=green>%s</>\n", $trailingEOL, $this->getBorder($id), $prefix, $message);
+            return sprintf("%s%s<bg=green;fg=white> %s </> <fg=green>%s</>\n", $trailingEOL, $this->getBorder($id),
+                $prefix, $message);
         }
 
-        $message = sprintf("%s%s<bg=red;fg=white> %s </> <fg=red>%s</>\n", $trailingEOL, $this->getBorder($id), $prefix, $message);
+        $message = sprintf("%s%s<bg=red;fg=white> %s </> <fg=red>%s</>\n", $trailingEOL, $this->getBorder($id), $prefix,
+            $message);
 
         unset($this->started[$id]['out'], $this->started[$id]['err']);
 

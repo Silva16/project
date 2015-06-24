@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Security\Core\Tests\Encoder;
 
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -21,10 +21,12 @@ class EncoderFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetEncoderWithMessageDigestEncoder()
     {
-        $factory = new EncoderFactory(array('Symfony\Component\Security\Core\User\UserInterface' => array(
-            'class' => 'Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder',
-            'arguments' => array('sha512', true, 5),
-        )));
+        $factory = new EncoderFactory(array(
+            'Symfony\Component\Security\Core\User\UserInterface' => array(
+                'class' => 'Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder',
+                'arguments' => array('sha512', true, 5),
+            )
+        ));
 
         $encoder = $factory->getEncoder($this->getMock('Symfony\Component\Security\Core\User\UserInterface'));
         $expectedEncoder = new MessageDigestPasswordEncoder('sha512', true, 5);
@@ -139,15 +141,19 @@ class SomeUser implements UserInterface
     public function getRoles()
     {
     }
+
     public function getPassword()
     {
     }
+
     public function getSalt()
     {
     }
+
     public function getUsername()
     {
     }
+
     public function eraseCredentials()
     {
     }

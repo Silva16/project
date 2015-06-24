@@ -22,7 +22,8 @@ class UndefinedFunctionFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function testUndefinedFunction($error, $translatedMessage)
     {
         $handler = new UndefinedFunctionFatalErrorHandler();
-        $exception = $handler->handleError($error, new FatalErrorException('', 0, $error['type'], $error['file'], $error['line']));
+        $exception = $handler->handleError($error,
+            new FatalErrorException('', 0, $error['type'], $error['file'], $error['line']));
 
         $this->assertInstanceof('Symfony\Component\Debug\Exception\UndefinedFunctionException', $exception);
         // class names are case insensitive and PHP/HHVM do not return the same

@@ -84,17 +84,19 @@ class StatisticsCollectorSpec extends ObjectBehavior
 
         $this->getCountsHash()->shouldReturn(
             array(
-                'passed'  => 1,
+                'passed' => 1,
                 'pending' => 0,
                 'skipped' => 0,
-                'failed'  => 1,
-                'broken'  => 0,
+                'failed' => 1,
+                'broken' => 0,
             )
         );
     }
 
-    function it_returns_the_worst_result_as_the_global_result(ExampleEvent $failingExample, ExampleEvent $passingExample)
-    {
+    function it_returns_the_worst_result_as_the_global_result(
+        ExampleEvent $failingExample,
+        ExampleEvent $passingExample
+    ) {
         $this->afterExample($passingExample);
         $this->afterExample($failingExample);
 

@@ -26,13 +26,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $tmpfile = tmpfile();
 
         return array(
-            array(NULL, NULL, 'SebastianBergmann\\Comparator\\ScalarComparator'),
-            array(NULL, TRUE, 'SebastianBergmann\\Comparator\\ScalarComparator'),
-            array(TRUE, NULL, 'SebastianBergmann\\Comparator\\ScalarComparator'),
-            array(TRUE, TRUE, 'SebastianBergmann\\Comparator\\ScalarComparator'),
-            array(FALSE, FALSE, 'SebastianBergmann\\Comparator\\ScalarComparator'),
-            array(TRUE, FALSE, 'SebastianBergmann\\Comparator\\ScalarComparator'),
-            array(FALSE, TRUE, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(null, null, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(null, true, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(true, null, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(true, true, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(false, false, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(true, false, 'SebastianBergmann\\Comparator\\ScalarComparator'),
+            array(false, true, 'SebastianBergmann\\Comparator\\ScalarComparator'),
             array('', '', 'SebastianBergmann\\Comparator\\ScalarComparator'),
             array('0', '0', 'SebastianBergmann\\Comparator\\ScalarComparator'),
             array('0', 0, 'SebastianBergmann\\Comparator\\NumericComparator'),
@@ -45,7 +45,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             array($tmpfile, $tmpfile, 'SebastianBergmann\\Comparator\\ResourceComparator'),
             array(new \stdClass, new \stdClass, 'SebastianBergmann\\Comparator\\ObjectComparator'),
             array(new \DateTime, new \DateTime, 'SebastianBergmann\\Comparator\\DateTimeComparator'),
-            array(new \SplObjectStorage, new \SplObjectStorage, 'SebastianBergmann\\Comparator\\SplObjectStorageComparator'),
+            array(
+                new \SplObjectStorage,
+                new \SplObjectStorage,
+                'SebastianBergmann\\Comparator\\SplObjectStorageComparator'
+            ),
             array(new \Exception, new \Exception, 'SebastianBergmann\\Comparator\\ExceptionComparator'),
             array(new \DOMDocument, new \DOMDocument, 'SebastianBergmann\\Comparator\\DOMNodeComparator'),
             // mixed types

@@ -20,7 +20,8 @@ class DepthRangeFilterIteratorTest extends RealIteratorTestCase
      */
     public function testAccept($minDepth, $maxDepth, $expected)
     {
-        $inner = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->toAbsolute(), \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
+        $inner = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->toAbsolute(),
+            \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator = new DepthRangeFilterIterator($inner, $minDepth, $maxDepth);
 

@@ -13,9 +13,9 @@ namespace Symfony\Component\HttpKernel\Fragment;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Implements the Hinclude rendering strategy.
@@ -32,13 +32,17 @@ class HIncludeFragmentRenderer extends RoutableFragmentRenderer
     /**
      * Constructor.
      *
-     * @param EngineInterface|\Twig_Environment $templating            An EngineInterface or a \Twig_Environment instance
-     * @param UriSigner                         $signer                A UriSigner instance
-     * @param string                            $globalDefaultTemplate The global default content (it can be a template name or the content)
-     * @param string                            $charset
+     * @param EngineInterface|\Twig_Environment $templating An EngineInterface or a \Twig_Environment instance
+     * @param UriSigner $signer A UriSigner instance
+     * @param string $globalDefaultTemplate The global default content (it can be a template name or the content)
+     * @param string $charset
      */
-    public function __construct($templating = null, UriSigner $signer = null, $globalDefaultTemplate = null, $charset = 'utf-8')
-    {
+    public function __construct(
+        $templating = null,
+        UriSigner $signer = null,
+        $globalDefaultTemplate = null,
+        $charset = 'utf-8'
+    ) {
         $this->setTemplating($templating);
         $this->globalDefaultTemplate = $globalDefaultTemplate;
         $this->signer = $signer;
@@ -88,7 +92,8 @@ class HIncludeFragmentRenderer extends RoutableFragmentRenderer
             }
 
             // we need to sign the absolute URI, but want to return the path only.
-            $uri = substr($this->signer->sign($this->generateFragmentUri($uri, $request, true)), strlen($request->getSchemeAndHttpHost()));
+            $uri = substr($this->signer->sign($this->generateFragmentUri($uri, $request, true)),
+                strlen($request->getSchemeAndHttpHost()));
         }
 
         // We need to replace ampersands in the URI with the encoded form in order to return valid html/xml content.

@@ -2,15 +2,15 @@
 
 namespace spec\PhpSpec\Formatter;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Console\IO;
-use PhpSpec\Listener\StatisticsCollector;
-use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Event\ExampleEvent;
-use PhpSpec\ObjectBehavior;
+use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Exception\Example\PendingException;
-use PhpSpec\Loader\Node\SpecificationNode;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Listener\StatisticsCollector;
 use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\Loader\Node\SpecificationNode;
+use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use ReflectionFunctionAbstract;
 
@@ -126,11 +126,11 @@ class DotFormatterSpec extends ObjectBehavior
         $stats->getTotalSpecs()->willReturn(1);
 
         $stats->getCountsHash()->willReturn(array(
-            'passed'  => 0,
+            'passed' => 0,
             'pending' => 1,
             'skipped' => 0,
-            'failed'  => 0,
-            'broken'  => 0,
+            'failed' => 0,
+            'broken' => 0,
         ));
 
         $this->afterSuite($event);
@@ -153,11 +153,11 @@ class DotFormatterSpec extends ObjectBehavior
         $event->getTime()->willReturn(12.345);
 
         $stats->getCountsHash()->willReturn(array(
-            'passed'  => 1,
+            'passed' => 1,
             'pending' => 0,
             'skipped' => 0,
-            'failed'  => 2,
-            'broken'  => 0,
+            'failed' => 2,
+            'broken' => 0,
         ));
 
         $this->afterSuite($event);

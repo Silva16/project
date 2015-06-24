@@ -4,10 +4,10 @@
 @endsection
 @section('content')
 
-{!! Form::open(['method' => 'POST', 'action' => ['MediaController@store', $id], 'files' => true]) !!}
+    {!! Form::open(['method' => 'POST', 'action' => ['MediaController@store', $id], 'files' => true]) !!}
 
-   @include('media.form', ['submitButton' => 'Adicionar Media'])
+    @include('media.form', ['submitButton' => 'Adicionar Media'])
 
-{!! Form::close() !!}
+    {!! Form::close() !!}
 
 @endsection

@@ -29,7 +29,8 @@ class FlattenException
     public static function __callStatic($method, $args)
     {
         if (!method_exists('Symfony\Component\Debug\Exception\FlattenException', $method)) {
-            throw new \BadMethodCallException(sprintf('Call to undefined method %s::%s()', get_called_class(), $method));
+            throw new \BadMethodCallException(sprintf('Call to undefined method %s::%s()', get_called_class(),
+                $method));
         }
 
         return call_user_func_array(array('Symfony\Component\Debug\Exception\FlattenException', $method), $args);
@@ -276,7 +277,7 @@ class FlattenException extends LegacyFlattenException
                 // Special case of object, is_object will return false
                 $result[$key] = array('incomplete-object', $this->getClassNameFromIncomplete($value));
             } else {
-                $result[$key] = array('string', (string) $value);
+                $result[$key] = array('string', (string)$value);
             }
         }
 

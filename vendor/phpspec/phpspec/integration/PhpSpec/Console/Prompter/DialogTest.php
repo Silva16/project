@@ -28,7 +28,7 @@ class DialogTest extends \PHPUnit_Framework_TestCase
     {
         $this->output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
         $this->dialogHelper = $this->getMockBuilder('Symfony\Component\Console\Helper\DialogHelper')
-                                   ->disableOriginalConstructor()->getMock();
+            ->disableOriginalConstructor()->getMock();
 
         $this->prompter = new Dialog($this->output, $this->dialogHelper);
     }
@@ -47,9 +47,9 @@ class DialogTest extends \PHPUnit_Framework_TestCase
     function it_can_ask_a_question_and_return_the_result()
     {
         $this->dialogHelper->expects($this->once())
-                           ->method('askConfirmation')
-                           ->with($this->identicalTo($this->output), 'Are you sure?', true)
-                           ->willReturn(true);
+            ->method('askConfirmation')
+            ->with($this->identicalTo($this->output), 'Are you sure?', true)
+            ->willReturn(true);
 
         $result = $this->prompter->askConfirmation('Are you sure?');
 

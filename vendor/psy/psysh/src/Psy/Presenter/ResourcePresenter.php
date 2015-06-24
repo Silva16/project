@@ -45,7 +45,7 @@ class ResourcePresenter extends RecursivePresenter
             $type = sprintf('%s stream', $meta['stream_type']);
         }
 
-        $id = str_replace('Resource id #', '', (string) $value);
+        $id = str_replace('Resource id #', '', (string)$value);
 
         return sprintf(self::FMT, $type, $id);
     }
@@ -54,8 +54,8 @@ class ResourcePresenter extends RecursivePresenter
      * Present the resource.
      *
      * @param resource $value
-     * @param int      $depth   (default: null)
-     * @param int      $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
@@ -90,10 +90,10 @@ class ResourcePresenter extends RecursivePresenter
 
             case 'xml':
                 $props = array(
-                    'current_byte_index'    => xml_get_current_byte_index($value),
+                    'current_byte_index' => xml_get_current_byte_index($value),
                     'current_column_number' => xml_get_current_column_number($value),
-                    'current_line_number'   => xml_get_current_line_number($value),
-                    'error_code'            => xml_get_error_code($value),
+                    'current_line_number' => xml_get_current_line_number($value),
+                    'error_code' => xml_get_error_code($value),
                 );
                 break;
         }
@@ -108,7 +108,7 @@ class ResourcePresenter extends RecursivePresenter
         }
 
         $template = sprintf('{%s%s%%s%s}', PHP_EOL, self::INDENT, PHP_EOL);
-        $glue     = sprintf(',%s%s', PHP_EOL, self::INDENT);
+        $glue = sprintf(',%s%s', PHP_EOL, self::INDENT);
 
         return sprintf($template, implode($glue, $formatted));
     }

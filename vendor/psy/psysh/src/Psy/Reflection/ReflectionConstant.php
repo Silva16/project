@@ -25,17 +25,17 @@ class ReflectionConstant implements \Reflector
     /**
      * Construct a ReflectionConstant object.
      *
-     * @param mixed  $class
+     * @param mixed $class
      * @param string $name
      */
     public function __construct($class, $name)
     {
-        if (! $class instanceof \ReflectionClass) {
+        if (!$class instanceof \ReflectionClass) {
             $class = new \ReflectionClass($class);
         }
 
         $this->class = $class;
-        $this->name  = $name;
+        $this->name = $name;
 
         $constants = $class->getConstants();
         if (!array_key_exists($name, $constants)) {

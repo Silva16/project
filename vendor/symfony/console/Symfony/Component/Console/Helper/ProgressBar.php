@@ -50,7 +50,7 @@ class ProgressBar
      * Constructor.
      *
      * @param OutputInterface $output An OutputInterface instance
-     * @param int             $max    Maximum steps (0 if unknown)
+     * @param int $max Maximum steps (0 if unknown)
      */
     public function __construct(OutputInterface $output, $max = 0)
     {
@@ -77,7 +77,7 @@ class ProgressBar
      *
      * This method also allow you to override an existing placeholder.
      *
-     * @param string   $name     The placeholder name (including the delimiter char like %)
+     * @param string $name The placeholder name (including the delimiter char like %)
      * @param callable $callable A PHP callable
      */
     public static function setPlaceholderFormatterDefinition($name, $callable)
@@ -110,7 +110,7 @@ class ProgressBar
      *
      * This method also allow you to override an existing format.
      *
-     * @param string $name   The format name
+     * @param string $name The format name
      * @param string $format A format string
      */
     public static function setFormatDefinition($name, $format)
@@ -219,7 +219,7 @@ class ProgressBar
      */
     public function setBarWidth($size)
     {
-        $this->barWidth = (int) $size;
+        $this->barWidth = (int)$size;
     }
 
     /**
@@ -304,8 +304,8 @@ class ProgressBar
     public function setFormat($format)
     {
         // try to use the _nomax variant if available
-        if (!$this->max && null !== self::getFormatDefinition($format.'_nomax')) {
-            $this->format = self::getFormatDefinition($format.'_nomax');
+        if (!$this->max && null !== self::getFormatDefinition($format . '_nomax')) {
+            $this->format = self::getFormatDefinition($format . '_nomax');
         } elseif (null !== self::getFormatDefinition($format)) {
             $this->format = self::getFormatDefinition($format);
         } else {
@@ -322,7 +322,7 @@ class ProgressBar
      */
     public function setRedrawFrequency($freq)
     {
-        $this->redrawFreq = (int) $freq;
+        $this->redrawFreq = (int)$freq;
     }
 
     /**
@@ -376,7 +376,7 @@ class ProgressBar
      */
     public function setOverwrite($overwrite)
     {
-        $this->overwrite = (bool) $overwrite;
+        $this->overwrite = (bool)$overwrite;
     }
 
     /**
@@ -388,7 +388,7 @@ class ProgressBar
      */
     public function setProgress($step)
     {
-        $step = (int) $step;
+        $step = (int)$step;
         if ($step < $this->step) {
             throw new \LogicException('You can\'t regress the progress bar.');
         }
@@ -400,7 +400,7 @@ class ProgressBar
         $prevPeriod = intval($this->step / $this->redrawFreq);
         $currPeriod = intval($step / $this->redrawFreq);
         $this->step = $step;
-        $this->percent = $this->max ? (float) $this->step / $this->max : 0;
+        $this->percent = $this->max ? (float)$this->step / $this->max : 0;
         if ($prevPeriod !== $currPeriod || $this->max === $step) {
             $this->display();
         }
@@ -436,21 +436,22 @@ class ProgressBar
         $self = $this;
         $output = $this->output;
         $messages = $this->messages;
-        $this->overwrite(preg_replace_callback("{%([a-z\-_]+)(?:\:([^%]+))?%}i", function ($matches) use ($self, $output, $messages) {
-            if ($formatter = $self::getPlaceholderFormatterDefinition($matches[1])) {
-                $text = call_user_func($formatter, $self, $output);
-            } elseif (isset($messages[$matches[1]])) {
-                $text = $messages[$matches[1]];
-            } else {
-                return $matches[0];
-            }
+        $this->overwrite(preg_replace_callback("{%([a-z\-_]+)(?:\:([^%]+))?%}i",
+            function ($matches) use ($self, $output, $messages) {
+                if ($formatter = $self::getPlaceholderFormatterDefinition($matches[1])) {
+                    $text = call_user_func($formatter, $self, $output);
+                } elseif (isset($messages[$matches[1]])) {
+                    $text = $messages[$matches[1]];
+                } else {
+                    return $matches[0];
+                }
 
-            if (isset($matches[2])) {
-                $text = sprintf('%'.$matches[2], $text);
-            }
+                if (isset($matches[2])) {
+                    $text = sprintf('%' . $matches[2], $text);
+                }
 
-            return $text;
-        }, $this->format));
+                return $text;
+            }, $this->format));
     }
 
     /**
@@ -476,7 +477,7 @@ class ProgressBar
      */
     private function setMaxSteps($max)
     {
-        $this->max = max(0, (int) $max);
+        $this->max = max(0, (int)$max);
         $this->stepWidth = $this->max ? Helper::strlen($this->max) : 4;
     }
 
@@ -542,8 +543,9 @@ class ProgressBar
                 $completeBars = floor($bar->getMaxSteps() > 0 ? $bar->getProgressPercent() * $bar->getBarWidth() : $bar->getProgress() % $bar->getBarWidth());
                 $display = str_repeat($bar->getBarCharacter(), $completeBars);
                 if ($completeBars < $bar->getBarWidth()) {
-                    $emptyBars = $bar->getBarWidth() - $completeBars - Helper::strlenWithoutDecoration($output->getFormatter(), $bar->getProgressCharacter());
-                    $display .= $bar->getProgressCharacter().str_repeat($bar->getEmptyBarCharacter(), $emptyBars);
+                    $emptyBars = $bar->getBarWidth() - $completeBars - Helper::strlenWithoutDecoration($output->getFormatter(),
+                            $bar->getProgressCharacter());
+                    $display .= $bar->getProgressCharacter() . str_repeat($bar->getEmptyBarCharacter(), $emptyBars);
                 }
 
                 return $display;
@@ -597,13 +599,10 @@ class ProgressBar
         return array(
             'normal' => ' %current%/%max% [%bar%] %percent:3s%%',
             'normal_nomax' => ' %current% [%bar%]',
-
             'verbose' => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%',
             'verbose_nomax' => ' %current% [%bar%] %elapsed:6s%',
-
             'very_verbose' => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s%',
             'very_verbose_nomax' => ' %current% [%bar%] %elapsed:6s%',
-
             'debug' => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%',
             'debug_nomax' => ' %current% [%bar%] %elapsed:6s% %memory:6s%',
         );

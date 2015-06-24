@@ -38,12 +38,15 @@ PHP
         $f = new PhpExecutableFinder();
         $commandLine = $f->find();
 
-        $this->assertSame($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP before start');
+        $this->assertSame($commandLine, $process->getCommandLine(),
+            '::getCommandLine() returns the command line of PHP before start');
 
         $process->start();
-        $this->assertSame($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP after start');
+        $this->assertSame($commandLine, $process->getCommandLine(),
+            '::getCommandLine() returns the command line of PHP after start');
 
         $process->wait();
-        $this->assertSame($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP after wait');
+        $this->assertSame($commandLine, $process->getCommandLine(),
+            '::getCommandLine() returns the command line of PHP after wait');
     }
 }

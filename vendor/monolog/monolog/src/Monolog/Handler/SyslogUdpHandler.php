@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Logger;
 use Monolog\Handler\SyslogUdp\UdpSocket;
+use Monolog\Logger;
 
 /**
  * A Handler for logging to a remote syslogd server.
@@ -22,11 +22,11 @@ use Monolog\Handler\SyslogUdp\UdpSocket;
 class SyslogUdpHandler extends AbstractSyslogHandler
 {
     /**
-     * @param string  $host
-     * @param int     $port
-     * @param mixed   $facility
-     * @param integer $level    The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble   Whether the messages that are handled can bubble up the stack or not
+     * @param string $host
+     * @param int $port
+     * @param mixed $facility
+     * @param integer $level The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($host, $port = 514, $facility = LOG_USER, $level = Logger::DEBUG, $bubble = true)
     {

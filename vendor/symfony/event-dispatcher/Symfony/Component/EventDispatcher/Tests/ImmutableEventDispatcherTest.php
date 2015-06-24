@@ -72,7 +72,9 @@ class ImmutableEventDispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddListenerDisallowed()
     {
-        $this->dispatcher->addListener('event', function () { return 'foo'; });
+        $this->dispatcher->addListener('event', function () {
+            return 'foo';
+        });
     }
 
     /**
@@ -90,7 +92,9 @@ class ImmutableEventDispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveListenerDisallowed()
     {
-        $this->dispatcher->removeListener('event', function () { return 'foo'; });
+        $this->dispatcher->removeListener('event', function () {
+            return 'foo';
+        });
     }
 
     /**

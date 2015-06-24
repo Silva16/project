@@ -170,7 +170,8 @@ class JsonResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new JsonResponse();
 
-        $this->assertEquals(JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT, $response->getEncodingOptions());
+        $this->assertEquals(JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT,
+            $response->getEncodingOptions());
     }
 
     public function testSetEncodingOptions()

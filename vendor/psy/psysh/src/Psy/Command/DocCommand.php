@@ -31,7 +31,8 @@ class DocCommand extends ReflectingCommand
             ->setName('doc')
             ->setAliases(array('rtfm', 'man'))
             ->setDefinition(array(
-                new InputArgument('value', InputArgument::REQUIRED, 'Function, class, instance, constant, method or property to document.'),
+                new InputArgument('value', InputArgument::REQUIRED,
+                    'Function, class, instance, constant, method or property to document.'),
             ))
             ->setDescription('Read the documentation for an object, class, constant, method or property.')
             ->setHelp(
@@ -58,7 +59,7 @@ HELP
         list($value, $reflector) = $this->getTargetAndReflector($input->getArgument('value'));
 
         $doc = $this->getManualDoc($reflector) ?: DocblockFormatter::format($reflector);
-        $db  = $this->getApplication()->getManualDb();
+        $db = $this->getApplication()->getManualDb();
 
         $output->page(function ($output) use ($reflector, $doc, $db) {
             $output->writeln(SignatureFormatter::format($reflector));

@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\EventListener;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * TestSessionListener.
@@ -62,7 +62,9 @@ abstract class TestSessionListener implements EventSubscriberInterface
         if ($session && $session->isStarted()) {
             $session->save();
             $params = session_get_cookie_params();
-            $event->getResponse()->headers->setCookie(new Cookie($session->getName(), $session->getId(), 0 === $params['lifetime'] ? 0 : time() + $params['lifetime'], $params['path'], $params['domain'], $params['secure'], $params['httponly']));
+            $event->getResponse()->headers->setCookie(new Cookie($session->getName(), $session->getId(),
+                0 === $params['lifetime'] ? 0 : time() + $params['lifetime'], $params['path'], $params['domain'],
+                $params['secure'], $params['httponly']));
         }
     }
 

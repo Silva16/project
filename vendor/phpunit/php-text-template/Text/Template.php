@@ -86,7 +86,7 @@ class Text_Template
     public function __construct($file = '', $openDelimiter = '{', $closeDelimiter = '}')
     {
         $this->setFile($file);
-        $this->openDelimiter  = $openDelimiter;
+        $this->openDelimiter = $openDelimiter;
         $this->closeDelimiter = $closeDelimiter;
     }
 
@@ -102,26 +102,24 @@ class Text_Template
 
         if (file_exists($file)) {
             $this->template = file_get_contents($file);
-        }
-
-        else if (file_exists($distFile)) {
-            $this->template = file_get_contents($distFile);
-        }
-
-        else {
-            throw new InvalidArgumentException(
-              'Template file could not be loaded.'
-            );
+        } else {
+            if (file_exists($distFile)) {
+                $this->template = file_get_contents($distFile);
+            } else {
+                throw new InvalidArgumentException(
+                    'Template file could not be loaded.'
+                );
+            }
         }
     }
 
     /**
      * Sets one or more template variables.
      *
-     * @param  array   $values
+     * @param  array $values
      * @param  boolean $merge
      */
-    public function setVar(array $values, $merge = TRUE)
+    public function setVar(array $values, $merge = true)
     {
         if (!$merge || empty($this->values)) {
             $this->values = $values;
@@ -162,14 +160,14 @@ class Text_Template
             $error = error_get_last();
 
             throw new RuntimeException(
-              sprintf(
-                'Could not write to %s: %s',
-                $target,
-                substr(
-                  $error['message'],
-                  strpos($error['message'], ':') + 2
+                sprintf(
+                    'Could not write to %s: %s',
+                    $target,
+                    substr(
+                        $error['message'],
+                        strpos($error['message'], ':') + 2
+                    )
                 )
-              )
             );
         }
     }

@@ -24,7 +24,12 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
             'channel' => 'meh',
             'message' => 'foo',
             'datetime' => new \DateTime,
-            'extra' => array('foo' => new TestFooNorm, 'bar' => new TestBarNorm, 'baz' => array(), 'res' => fopen('php://memory', 'rb')),
+            'extra' => array(
+                'foo' => new TestFooNorm,
+                'bar' => new TestBarNorm,
+                'baz' => array(),
+                'res' => fopen('php://memory', 'rb')
+            ),
             'context' => array(
                 'foo' => 'bar',
                 'baz' => 'qux',
@@ -70,10 +75,10 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(
             'exception' => array(
-                'class'   => get_class($e2),
+                'class' => get_class($e2),
                 'message' => $e2->getMessage(),
-                'code'    => $e2->getCode(),
-                'file'    => $e2->getFile().':'.$e2->getLine(),
+                'code' => $e2->getCode(),
+                'file' => $e2->getFile() . ':' . $e2->getLine(),
             )
         ), $formatted);
     }
@@ -248,6 +253,6 @@ class TestStreamFoo
     {
         fseek($this->resource, 0);
 
-        return $this->foo . ' - ' . (string) stream_get_contents($this->resource);
+        return $this->foo . ' - ' . (string)stream_get_contents($this->resource);
     }
 }

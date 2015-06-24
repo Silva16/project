@@ -62,7 +62,8 @@ class MergeOperationTest extends AbstractOperationTest
         $rightCatalogue->setMetadata('b', 'baz', 'messages');
         $rightCatalogue->setMetadata('c', 'qux', 'messages');
 
-        $mergedCatalogue = new MessageCatalogue('en', array('messages' => array('a' => 'old_a', 'b' => 'old_b', 'c' => 'new_c')));
+        $mergedCatalogue = new MessageCatalogue('en',
+            array('messages' => array('a' => 'old_a', 'b' => 'old_b', 'c' => 'new_c')));
         $mergedCatalogue->setMetadata('a', 'foo', 'messages');
         $mergedCatalogue->setMetadata('b', 'bar', 'messages');
         $mergedCatalogue->setMetadata('c', 'qux', 'messages');

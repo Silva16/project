@@ -13,11 +13,11 @@
 
 namespace PhpSpec\Runner\Maintainer;
 
-use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\SpecificationInterface;
-use PhpSpec\Runner\MatcherManager;
-use PhpSpec\Runner\CollaboratorManager;
 use PhpSpec\Exception\Example as ExampleException;
+use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\Runner\CollaboratorManager;
+use PhpSpec\Runner\MatcherManager;
+use PhpSpec\SpecificationInterface;
 
 class ErrorMaintainer implements MaintainerInterface
 {
@@ -49,10 +49,10 @@ class ErrorMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function prepare(
         ExampleNode $example,
@@ -64,10 +64,10 @@ class ErrorMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function teardown(
         ExampleNode $example,
@@ -96,8 +96,8 @@ class ErrorMaintainer implements MaintainerInterface
      * @see set_error_handler()
      *
      * @param integer $level
-     * @param string  $message
-     * @param string  $file
+     * @param string $message
+     * @param string $file
      * @param integer $line
      *
      * @return Boolean
@@ -107,7 +107,7 @@ class ErrorMaintainer implements MaintainerInterface
     final public function errorHandler($level, $message, $file, $line)
     {
         $regex = '/^Argument (\d)+ passed to (?:(?P<class>[\w\\\]+)::)?(\w+)\(\)' .
-                 ' must (?:be an instance of|implement interface) ([\w\\\]+),(?: instance of)? ([\w\\\]+) given/';
+            ' must (?:be an instance of|implement interface) ([\w\\\]+),(?: instance of)? ([\w\\\]+) given/';
 
         if (E_RECOVERABLE_ERROR === $level && preg_match($regex, $message, $matches)) {
             $class = $matches['class'];

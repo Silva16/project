@@ -13,9 +13,27 @@
 
 Route::get('/', 'WelcomeController@index');
 
+Route::get('comments/index/{id}', 'CommentsController@index');
+
+Route::get('comments/create/{id}', 'CommentsController@create');
+
+Route::post('comments/store/{id}', 'CommentsController@store');
+
+Route::post('comments/approve/{id}', 'CommentsController@approve');
+
+Route::get('comments/refuse/{id}', 'CommentsController@refuse');
+
+Route::patch('comments/refuseMsg/{id}', 'CommentsController@refuseMessage');
+
 Route::resource('dashboard', 'DashboardController');
 
+Route::post('project/approve/{id}', 'ProjectsController@approve');
+
+Route::post('project/refuse/{id}', 'ProjectsController@refuse');
+
 Route::resource('projects', 'ProjectsController');
+
+Route::get('users/admin', ['as' => 'users.admin', 'uses' => 'UsersController@admin']);
 
 Route::resource('users', 'UsersController');
 
@@ -39,7 +57,13 @@ Route::get('media/logos/{id}', 'MediaController@showLogo');
 
 Route::get('media/download/{id}', 'MediaController@download');
 
-Route::post('media/delete/{id}', 'MediaController@destroy');
+Route::delete('media/delete/{id}', 'MediaController@destroy');
+
+Route::post('media/approve/{id}', 'MediaController@approve');
+
+Route::get('media/refuse/{id}', 'MediaController@refuse');
+
+Route::patch('media/refuseMsg/{id}', 'MediaController@refuseMessage');
 
 
 /*Route::get('media/{id}', 'MediaController@index');
@@ -78,6 +102,6 @@ Route::get('users/list', ['as' => 'list_users', 'uses' => 'UsersController@show'
 
 Route::get('projects/search/{$request}', 'ProjectsController@search');
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);

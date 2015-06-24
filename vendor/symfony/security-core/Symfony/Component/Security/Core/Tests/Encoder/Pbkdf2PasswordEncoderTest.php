@@ -19,19 +19,23 @@ class Pbkdf2PasswordEncoderTest extends \PHPUnit_Framework_TestCase
     {
         $encoder = new Pbkdf2PasswordEncoder('sha256', false, 1, 40);
 
-        $this->assertTrue($encoder->isPasswordValid('c1232f10f62715fda06ae7c0a2037ca19b33cf103b727ba56d870c11f290a2ab106974c75607c8a3', 'password', ''));
+        $this->assertTrue($encoder->isPasswordValid('c1232f10f62715fda06ae7c0a2037ca19b33cf103b727ba56d870c11f290a2ab106974c75607c8a3',
+            'password', ''));
     }
 
     public function testEncodePassword()
     {
         $encoder = new Pbkdf2PasswordEncoder('sha256', false, 1, 40);
-        $this->assertSame('c1232f10f62715fda06ae7c0a2037ca19b33cf103b727ba56d870c11f290a2ab106974c75607c8a3', $encoder->encodePassword('password', ''));
+        $this->assertSame('c1232f10f62715fda06ae7c0a2037ca19b33cf103b727ba56d870c11f290a2ab106974c75607c8a3',
+            $encoder->encodePassword('password', ''));
 
         $encoder = new Pbkdf2PasswordEncoder('sha256', true, 1, 40);
-        $this->assertSame('wSMvEPYnFf2gaufAogN8oZszzxA7cnulbYcMEfKQoqsQaXTHVgfIow==', $encoder->encodePassword('password', ''));
+        $this->assertSame('wSMvEPYnFf2gaufAogN8oZszzxA7cnulbYcMEfKQoqsQaXTHVgfIow==',
+            $encoder->encodePassword('password', ''));
 
         $encoder = new Pbkdf2PasswordEncoder('sha256', false, 2, 40);
-        $this->assertSame('8bc2f9167a81cdcfad1235cd9047f1136271c1f978fcfcb35e22dbeafa4634f6fd2214218ed63ebb', $encoder->encodePassword('password', ''));
+        $this->assertSame('8bc2f9167a81cdcfad1235cd9047f1136271c1f978fcfcb35e22dbeafa4634f6fd2214218ed63ebb',
+            $encoder->encodePassword('password', ''));
     }
 
     /**

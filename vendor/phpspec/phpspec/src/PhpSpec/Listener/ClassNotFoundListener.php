@@ -13,14 +13,14 @@
 
 namespace PhpSpec\Listener;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use PhpSpec\Console\IO;
-use PhpSpec\Locator\ResourceManagerInterface;
 use PhpSpec\CodeGenerator\GeneratorManager;
+use PhpSpec\Console\IO;
 use PhpSpec\Event\ExampleEvent;
 use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Exception\Fracture\ClassNotFoundException as PhpSpecClassException;
+use PhpSpec\Locator\ResourceManagerInterface;
 use Prophecy\Exception\Doubler\ClassNotFoundException as ProphecyClassException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClassNotFoundListener implements EventSubscriberInterface
 {
@@ -36,7 +36,7 @@ class ClassNotFoundListener implements EventSubscriberInterface
      */
     public function __construct(IO $io, ResourceManagerInterface $resources, GeneratorManager $generator)
     {
-        $this->io        = $io;
+        $this->io = $io;
         $this->resources = $resources;
         $this->generator = $generator;
     }
@@ -48,7 +48,7 @@ class ClassNotFoundListener implements EventSubscriberInterface
     {
         return array(
             'afterExample' => array('afterExample', 10),
-            'afterSuite'   => array('afterSuite', -10),
+            'afterSuite' => array('afterSuite', -10),
         );
     }
 
@@ -62,7 +62,8 @@ class ClassNotFoundListener implements EventSubscriberInterface
         }
 
         if (!($exception instanceof PhpSpecClassException) &&
-            !($exception instanceof ProphecyClassException)) {
+            !($exception instanceof ProphecyClassException)
+        ) {
             return;
         }
 

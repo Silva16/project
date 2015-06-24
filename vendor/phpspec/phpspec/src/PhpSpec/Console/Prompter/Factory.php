@@ -35,9 +35,9 @@ final class Factory
     private $output;
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
-     * @param HelperSet       $helperSet
+     * @param HelperSet $helperSet
      */
     public function __construct(InputInterface $input, OutputInterface $output, HelperSet $helperSet)
     {

@@ -44,19 +44,18 @@ class HistoryCommand extends Command
             ->setName('history')
             ->setAliases(array('hist'))
             ->setDefinition(array(
-                new InputOption('show',        's', InputOption::VALUE_REQUIRED, 'Show the given range of lines'),
-                new InputOption('head',        'H', InputOption::VALUE_REQUIRED, 'Display the first N items.'),
-                new InputOption('tail',        'T', InputOption::VALUE_REQUIRED, 'Display the last N items.'),
-
-                new InputOption('grep',        'G', InputOption::VALUE_REQUIRED, 'Show lines matching the given pattern (string or regex).'),
-                new InputOption('insensitive', 'i', InputOption::VALUE_NONE,     'Case insensitive search (requires --grep).'),
-                new InputOption('invert',      'v', InputOption::VALUE_NONE,     'Inverted search (requires --grep).'),
-
-                new InputOption('no-numbers',  'N', InputOption::VALUE_NONE,     'Omit line numbers.'),
-
-                new InputOption('save',        '',  InputOption::VALUE_REQUIRED, 'Save history to a file.'),
-                new InputOption('replay',      '',  InputOption::VALUE_NONE,     'Replay'),
-                new InputOption('clear',       '',  InputOption::VALUE_NONE,     'Clear the history.'),
+                new InputOption('show', 's', InputOption::VALUE_REQUIRED, 'Show the given range of lines'),
+                new InputOption('head', 'H', InputOption::VALUE_REQUIRED, 'Display the first N items.'),
+                new InputOption('tail', 'T', InputOption::VALUE_REQUIRED, 'Display the last N items.'),
+                new InputOption('grep', 'G', InputOption::VALUE_REQUIRED,
+                    'Show lines matching the given pattern (string or regex).'),
+                new InputOption('insensitive', 'i', InputOption::VALUE_NONE,
+                    'Case insensitive search (requires --grep).'),
+                new InputOption('invert', 'v', InputOption::VALUE_NONE, 'Inverted search (requires --grep).'),
+                new InputOption('no-numbers', 'N', InputOption::VALUE_NONE, 'Omit line numbers.'),
+                new InputOption('save', '', InputOption::VALUE_REQUIRED, 'Save history to a file.'),
+                new InputOption('replay', '', InputOption::VALUE_NONE, 'Replay'),
+                new InputOption('clear', '', InputOption::VALUE_NONE, 'Clear the history.'),
             ))
             ->setDescription('Show the Psy Shell history.')
             ->setHelp(
@@ -87,7 +86,7 @@ HELP
         );
         $highlighted = false;
 
-        $invert      = $input->getOption('invert');
+        $invert = $input->getOption('invert');
         $insensitive = $input->getOption('insensitive');
         if ($pattern = $input->getOption('grep')) {
             if (substr($pattern, 0, 1) !== '/' || substr($pattern, -1) !== '/' || strlen($pattern) < 3) {
@@ -100,14 +99,14 @@ HELP
 
             $this->validateRegex($pattern);
 
-            $matches     = array();
+            $matches = array();
             $highlighted = array();
             foreach ($history as $i => $line) {
                 if (preg_match($pattern, $line, $matches) xor $invert) {
                     if (!$invert) {
                         $chunks = explode($matches[0], $history[$i]);
                         $chunks = array_map(array(__CLASS__, 'escape'), $chunks);
-                        $glue   = sprintf('<urgent>%s</urgent>', self::escape($matches[0]));
+                        $glue = sprintf('<urgent>%s</urgent>', self::escape($matches[0]));
 
                         $highlighted[$i] = implode($glue, $chunks);
                     }
@@ -162,7 +161,7 @@ HELP
         $matches = array();
         if ($range !== '..' && preg_match('/^(\d*)\.\.(\d*)$/', $range, $matches)) {
             $start = $matches[1] ? intval($matches[1]) : 0;
-            $end   = $matches[2] ? intval($matches[2]) + 1 : PHP_INT_MAX;
+            $end = $matches[2] ? intval($matches[2]) + 1 : PHP_INT_MAX;
 
             return array($start, $end);
         }
@@ -191,14 +190,14 @@ HELP
                 throw new \InvalidArgumentException('Please specify an integer argument for --head.');
             }
 
-            $start  = 0;
+            $start = 0;
             $length = intval($head);
         } elseif ($tail) {
             if (!preg_match('/^\d+$/', $tail)) {
                 throw new \InvalidArgumentException('Please specify an integer argument for --tail.');
             }
 
-            $start  = count($history) - $tail;
+            $start = count($history) - $tail;
             $length = intval($tail) + 1;
         } else {
             return $history;
@@ -220,7 +219,8 @@ HELP
         try {
             preg_match($pattern, '');
         } catch (ErrorException $e) {
-            throw new RuntimeException(str_replace('preg_match(): ', 'Invalid regular expression: ', $e->getRawMessage()));
+            throw new RuntimeException(str_replace('preg_match(): ', 'Invalid regular expression: ',
+                $e->getRawMessage()));
         }
         restore_error_handler();
     }
@@ -229,7 +229,7 @@ HELP
      * Validate that only one of the given $options is set.
      *
      * @param InputInterface $input
-     * @param array          $options
+     * @param array $options
      */
     private function validateOnlyOne(InputInterface $input, array $options)
     {

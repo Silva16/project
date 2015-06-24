@@ -81,15 +81,15 @@ class MountManager
     /**
      * Mount filesystems.
      *
-     * @param string              $prefix
+     * @param string $prefix
      * @param FilesystemInterface $filesystem
      *
      * @return $this
      */
     public function mountFilesystem($prefix, FilesystemInterface $filesystem)
     {
-        if (! is_string($prefix)) {
-            throw new InvalidArgumentException(__METHOD__.' expects argument #1 to be a string.');
+        if (!is_string($prefix)) {
+            throw new InvalidArgumentException(__METHOD__ . ' expects argument #1 to be a string.');
         }
 
         $this->filesystems[$prefix] = $filesystem;
@@ -108,8 +108,8 @@ class MountManager
      */
     public function getFilesystem($prefix)
     {
-        if (! isset($this->filesystems[$prefix])) {
-            throw new LogicException('No filesystem mounted with prefix '.$prefix);
+        if (!isset($this->filesystems[$prefix])) {
+            throw new LogicException('No filesystem mounted with prefix ' . $prefix);
         }
 
         return $this->filesystems[$prefix];
@@ -130,12 +130,12 @@ class MountManager
 
         $path = array_shift($arguments);
 
-        if (! is_string($path)) {
+        if (!is_string($path)) {
             throw new InvalidArgumentException('First argument should be a string');
         }
 
-        if (! preg_match('#^[a-zA-Z0-9]+\:\/\/.*#', $path)) {
-            throw new InvalidArgumentException('No prefix detected in for path: '.$path);
+        if (!preg_match('#^[a-zA-Z0-9]+\:\/\/.*#', $path)) {
+            throw new InvalidArgumentException('No prefix detected in for path: ' . $path);
         }
 
         list($prefix, $path) = explode('://', $path, 2);
@@ -146,7 +146,7 @@ class MountManager
 
     /**
      * @param string $directory
-     * @param bool   $recursive
+     * @param bool $recursive
      *
      * @return array
      */
@@ -168,7 +168,7 @@ class MountManager
      * Call forwarder.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return mixed
      */
@@ -199,7 +199,7 @@ class MountManager
         list($prefixTo, $arguments) = $this->filterPrefix([$to]);
 
         $fsTo = $this->getFilesystem($prefixTo);
-        $result =  call_user_func_array([$fsTo, 'writeStream'], array_merge($arguments, [$buffer]));
+        $result = call_user_func_array([$fsTo, 'writeStream'], array_merge($arguments, [$buffer]));
 
         if (is_resource($buffer)) {
             fclose($buffer);

@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Var Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
@@ -32,7 +32,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exVariable
      * @param string $exDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VarTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\VarTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

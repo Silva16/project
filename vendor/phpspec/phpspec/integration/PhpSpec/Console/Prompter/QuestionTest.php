@@ -53,13 +53,13 @@ class QuestionTest extends \PHPUnit_Framework_TestCase
     function it_can_ask_a_question_and_return_the_result()
     {
         $this->questionHelper->expects($this->once())
-                           ->method('ask')
-                           ->with(
-                               $this->identicalTo($this->input),
-                               $this->identicalTo($this->output),
-                               $this->equalTo(new ConfirmationQuestion('Are you sure?', true))
-                           )
-                           ->willReturn(true);
+            ->method('ask')
+            ->with(
+                $this->identicalTo($this->input),
+                $this->identicalTo($this->output),
+                $this->equalTo(new ConfirmationQuestion('Are you sure?', true))
+            )
+            ->willReturn(true);
 
         $result = $this->prompter->askConfirmation('Are you sure?');
 

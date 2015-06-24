@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
-use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Dumper\XliffFileDumper;
+use Symfony\Component\Translation\MessageCatalogue;
 
 class XliffFileDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +24,8 @@ class XliffFileDumperTest extends \PHPUnit_Framework_TestCase
             'key' => '',
             'key.with.cdata' => '<source> & <target>',
         ));
-        $catalogue->setMetadata('foo', array('notes' => array(array('priority' => 1, 'from' => 'bar', 'content' => 'baz'))));
+        $catalogue->setMetadata('foo',
+            array('notes' => array(array('priority' => 1, 'from' => 'bar', 'content' => 'baz'))));
         $catalogue->setMetadata('key', array('notes' => array(array('content' => 'baz'), array('content' => 'qux'))));
 
         $tempDir = sys_get_temp_dir();
@@ -32,10 +33,10 @@ class XliffFileDumperTest extends \PHPUnit_Framework_TestCase
         $dumper->dump($catalogue, array('path' => $tempDir, 'default_locale' => 'fr_FR'));
 
         $this->assertEquals(
-            file_get_contents(__DIR__.'/../fixtures/resources-clean.xlf'),
-            file_get_contents($tempDir.'/messages.en_US.xlf')
+            file_get_contents(__DIR__ . '/../fixtures/resources-clean.xlf'),
+            file_get_contents($tempDir . '/messages.en_US.xlf')
         );
 
-        unlink($tempDir.'/messages.en_US.xlf');
+        unlink($tempDir . '/messages.en_US.xlf');
     }
 }

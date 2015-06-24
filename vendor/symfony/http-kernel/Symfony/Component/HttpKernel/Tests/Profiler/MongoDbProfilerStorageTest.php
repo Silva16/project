@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Profiler;
 
-use Symfony\Component\HttpKernel\Profiler\MongoDbProfilerStorage;
-use Symfony\Component\HttpKernel\Profiler\Profile;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use Symfony\Component\HttpKernel\Profiler\MongoDbProfilerStorage;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class DummyMongoDbProfilerStorage extends MongoDbProfilerStorage
 {
@@ -54,7 +54,8 @@ class MongoDbProfilerStorageTest extends AbstractProfilerStorageTest
     public static function setUpBeforeClass()
     {
         if (extension_loaded('mongo')) {
-            self::$storage = new DummyMongoDbProfilerStorage('mongodb://localhost/symfony_tests/profiler_data', '', '', 86400);
+            self::$storage = new DummyMongoDbProfilerStorage('mongodb://localhost/symfony_tests/profiler_data', '', '',
+                86400);
             try {
                 self::$storage->getMongo();
             } catch (\MongoConnectionException $e) {
@@ -74,26 +75,38 @@ class MongoDbProfilerStorageTest extends AbstractProfilerStorageTest
     public function getDsns()
     {
         return array(
-            array('mongodb://localhost/symfony_tests/profiler_data', array(
-                'mongodb://localhost/symfony_tests',
-                'symfony_tests',
-                'profiler_data',
-            )),
-            array('mongodb://user:password@localhost/symfony_tests/profiler_data', array(
-                'mongodb://user:password@localhost/symfony_tests',
-                'symfony_tests',
-                'profiler_data',
-            )),
-            array('mongodb://user:password@localhost/admin/symfony_tests/profiler_data', array(
-                'mongodb://user:password@localhost/admin',
-                'symfony_tests',
-                'profiler_data',
-            )),
-            array('mongodb://user:password@localhost:27009,localhost:27010/?replicaSet=rs-name&authSource=admin/symfony_tests/profiler_data', array(
-                'mongodb://user:password@localhost:27009,localhost:27010/?replicaSet=rs-name&authSource=admin',
-                'symfony_tests',
-                'profiler_data',
-            )),
+            array(
+                'mongodb://localhost/symfony_tests/profiler_data',
+                array(
+                    'mongodb://localhost/symfony_tests',
+                    'symfony_tests',
+                    'profiler_data',
+                )
+            ),
+            array(
+                'mongodb://user:password@localhost/symfony_tests/profiler_data',
+                array(
+                    'mongodb://user:password@localhost/symfony_tests',
+                    'symfony_tests',
+                    'profiler_data',
+                )
+            ),
+            array(
+                'mongodb://user:password@localhost/admin/symfony_tests/profiler_data',
+                array(
+                    'mongodb://user:password@localhost/admin',
+                    'symfony_tests',
+                    'profiler_data',
+                )
+            ),
+            array(
+                'mongodb://user:password@localhost:27009,localhost:27010/?replicaSet=rs-name&authSource=admin/symfony_tests/profiler_data',
+                array(
+                    'mongodb://user:password@localhost:27009,localhost:27010/?replicaSet=rs-name&authSource=admin',
+                    'symfony_tests',
+                    'profiler_data',
+                )
+            ),
         );
     }
 
@@ -102,7 +115,7 @@ class MongoDbProfilerStorageTest extends AbstractProfilerStorageTest
         $dt = new \DateTime('-2 day');
         for ($i = 0; $i < 3; $i++) {
             $dt->modify('-1 day');
-            $profile = new Profile('time_'.$i);
+            $profile = new Profile('time_' . $i);
             $profile->setTime($dt->getTimestamp());
             $profile->setMethod('GET');
             self::$storage->write($profile);
@@ -143,7 +156,8 @@ class MongoDbProfilerStorageTest extends AbstractProfilerStorageTest
 
         $this->assertCount(1, $collectors);
         $this->assertArrayHasKey('test_data_collector', $collectors);
-        $this->assertEquals($nonUtf8Data, $collectors['test_data_collector']->getData(), 'Non-UTF8 data is properly encoded/decoded');
+        $this->assertEquals($nonUtf8Data, $collectors['test_data_collector']->getData(),
+            'Non-UTF8 data is properly encoded/decoded');
     }
 
     /**

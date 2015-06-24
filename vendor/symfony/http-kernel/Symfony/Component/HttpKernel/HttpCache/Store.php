@@ -73,7 +73,7 @@ class Store implements StoreInterface
      */
     public function lock(Request $request)
     {
-        $path = $this->getPath($this->getCacheKey($request).'.lck');
+        $path = $this->getPath($this->getCacheKey($request) . '.lck');
         if (!is_dir(dirname($path)) && false === @mkdir(dirname($path), 0777, true)) {
             return false;
         }
@@ -99,14 +99,14 @@ class Store implements StoreInterface
      */
     public function unlock(Request $request)
     {
-        $file = $this->getPath($this->getCacheKey($request).'.lck');
+        $file = $this->getPath($this->getCacheKey($request) . '.lck');
 
         return is_file($file) ? @unlink($file) : false;
     }
 
     public function isLocked(Request $request)
     {
-        return is_file($this->getPath($this->getCacheKey($request).'.lck'));
+        return is_file($this->getPath($this->getCacheKey($request) . '.lck'));
     }
 
     /**
@@ -127,7 +127,9 @@ class Store implements StoreInterface
         // find a cached entry that matches the request.
         $match = null;
         foreach ($entries as $entry) {
-            if ($this->requestsMatch(isset($entry[1]['vary'][0]) ? $entry[1]['vary'][0] : '', $request->headers->all(), $entry[0])) {
+            if ($this->requestsMatch(isset($entry[1]['vary'][0]) ? $entry[1]['vary'][0] : '', $request->headers->all(),
+                $entry[0])
+            ) {
                 $match = $entry;
 
                 break;
@@ -154,7 +156,7 @@ class Store implements StoreInterface
      * Existing entries are read and any that match the response are removed. This
      * method calls write with the new list of cache entries.
      *
-     * @param Request  $request  A Request instance
+     * @param Request $request A Request instance
      * @param Response $response A Response instance
      *
      * @return string The key under which the response is stored
@@ -215,7 +217,7 @@ class Store implements StoreInterface
      */
     protected function generateContentDigest(Response $response)
     {
-        return 'en'.hash('sha256', $response->getContent());
+        return 'en' . hash('sha256', $response->getContent());
     }
 
     /**
@@ -254,8 +256,8 @@ class Store implements StoreInterface
      * the vary response header value provided.
      *
      * @param string $vary A Response vary header
-     * @param array  $env1 A Request HTTP header array
-     * @param array  $env2 A Request HTTP header array
+     * @param array $env1 A Request HTTP header array
+     * @param array $env2 A Request HTTP header array
      *
      * @return bool true if the two environments match, false otherwise
      */
@@ -330,7 +332,7 @@ class Store implements StoreInterface
     /**
      * Save data for the given key.
      *
-     * @param string $key  The store key
+     * @param string $key The store key
      * @param string $data The data to store
      *
      * @return bool
@@ -362,7 +364,8 @@ class Store implements StoreInterface
 
     public function getPath($key)
     {
-        return $this->root.DIRECTORY_SEPARATOR.substr($key, 0, 2).DIRECTORY_SEPARATOR.substr($key, 2, 2).DIRECTORY_SEPARATOR.substr($key, 4, 2).DIRECTORY_SEPARATOR.substr($key, 6);
+        return $this->root . DIRECTORY_SEPARATOR . substr($key, 0, 2) . DIRECTORY_SEPARATOR . substr($key, 2,
+            2) . DIRECTORY_SEPARATOR . substr($key, 4, 2) . DIRECTORY_SEPARATOR . substr($key, 6);
     }
 
     /**
@@ -381,7 +384,7 @@ class Store implements StoreInterface
      */
     protected function generateCacheKey(Request $request)
     {
-        return 'md'.hash('sha256', $request->getUri());
+        return 'md' . hash('sha256', $request->getUri());
     }
 
     /**
@@ -430,8 +433,8 @@ class Store implements StoreInterface
     /**
      * Restores a Response from the HTTP headers and body.
      *
-     * @param array  $headers An array of HTTP headers for the Response
-     * @param string $body    The Response body
+     * @param array $headers An array of HTTP headers for the Response
+     * @param string $body The Response body
      *
      * @return Response
      */

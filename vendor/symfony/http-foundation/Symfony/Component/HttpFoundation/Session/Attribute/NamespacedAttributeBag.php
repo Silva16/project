@@ -29,7 +29,7 @@ class NamespacedAttributeBag extends AttributeBag
     /**
      * Constructor.
      *
-     * @param string $storageKey         Session storage key.
+     * @param string $storageKey Session storage key.
      * @param string $namespaceCharacter Namespace character to use in keys.
      */
     public function __construct($storageKey = '_sf2_attributes', $namespaceCharacter = '/')
@@ -101,8 +101,8 @@ class NamespacedAttributeBag extends AttributeBag
      *
      * This method allows structured namespacing of session attributes.
      *
-     * @param string $name         Key name
-     * @param bool   $writeContext Write context, default false
+     * @param string $name Key name
+     * @param bool $writeContext Write context, default false
      *
      * @return array
      */

@@ -20,7 +20,8 @@ class NativeMailerHandlerTest extends TestCase
      */
     public function testConstructorHeaderInjection()
     {
-        $mailer = new NativeMailerHandler('spammer@example.org', 'dear victim', "receiver@example.org\r\nFrom: faked@attacker.org");
+        $mailer = new NativeMailerHandler('spammer@example.org', 'dear victim',
+            "receiver@example.org\r\nFrom: faked@attacker.org");
     }
 
     /**

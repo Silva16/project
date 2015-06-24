@@ -25,10 +25,12 @@ class SqliteProfilerStorage extends PdoProfilerStorage
     {
         if (null === $this->db || $this->db instanceof \SQLite3) {
             if (0 !== strpos($this->dsn, 'sqlite')) {
-                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Sqlite with an invalid dsn "%s". The expected format is "sqlite:/path/to/the/db/file".', $this->dsn));
+                throw new \RuntimeException(sprintf('Please check your configuration. You are trying to use Sqlite with an invalid dsn "%s". The expected format is "sqlite:/path/to/the/db/file".',
+                    $this->dsn));
             }
             if (class_exists('SQLite3')) {
-                $db = new \SQLite3(substr($this->dsn, 7, strlen($this->dsn)), \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE);
+                $db = new \SQLite3(substr($this->dsn, 7, strlen($this->dsn)),
+                    \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE);
                 if (method_exists($db, 'busyTimeout')) {
                     // busyTimeout only exists for PHP >= 5.3.3
                     $db->busyTimeout(1000);
@@ -104,12 +106,12 @@ class SqliteProfilerStorage extends PdoProfilerStorage
 
         if ($ip = preg_replace('/[^\d\.]/', '', $ip)) {
             $criteria[] = 'ip LIKE :ip';
-            $args[':ip'] = '%'.$ip.'%';
+            $args[':ip'] = '%' . $ip . '%';
         }
 
         if ($url) {
             $criteria[] = 'url LIKE :url ESCAPE "\"';
-            $args[':url'] = '%'.addcslashes($url, '%_\\').'%';
+            $args[':url'] = '%' . addcslashes($url, '%_\\') . '%';
         }
 
         if ($method) {
