@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Input;
 class DashboardController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('author.editor.dashboard');
+    }
     /**
      * Display a listing of the resource.
      *

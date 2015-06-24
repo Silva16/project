@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Input;
 class UsersController extends Controller
 {
 
-    /*    public function __construct()
-        {
-            $this->middleware('admin');
-        }*/
+     public function __construct()
+     {
+         $this->middleware('admin', ['except' => 'index']);
+     }
 
     /**
      * Display a listing of the resource.
@@ -232,11 +232,6 @@ class UsersController extends Controller
         return redirect('users/admin');
     }
 
-    public function status()
-    {
-
-
-    }
 
     public function admin()
     {

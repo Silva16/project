@@ -8,7 +8,7 @@ spl_autoload_register(
         if ($classes === null) {
             $classes = array(
                 'sebastianbergmann\\comparator\\arraycomparatortest' => '/ArrayComparatorTest.php',
-                'sebastianbergmann\\comparator\\author' => '/_files/Author.php',
+                'sebastianbergmann\\comparator\\author' => '/_files/RedirectIfNotAuthorOrEditorOfProject.php',
                 'sebastianbergmann\\comparator\\book' => '/_files/Book.php',
                 'sebastianbergmann\\comparator\\classwithtostring' => '/_files/ClassWithToString.php',
                 'sebastianbergmann\\comparator\\datetimecomparatortest' => '/DateTimeComparatorTest.php',

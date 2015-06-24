@@ -97,7 +97,6 @@
                             <hr width="82%">
                         </td>
                     @endif
-                    @endif
                     <td>{{$project->name}}</td>
                     <td>{{$project->acronym}}</td>
                     <td>{{$project->type}}</td>

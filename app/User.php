@@ -43,10 +43,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return false;
     }
 
-    public function isAuthorOrEditor()
+    public function isAuthor()
     {
 
-        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+        if (Auth::user()->role == 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isEditor()
+    {
+
+        if (Auth::user()->role == 2) {
             return true;
         }
 

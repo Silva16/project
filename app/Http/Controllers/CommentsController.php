@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Input;
 
 class CommentsController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('author.editor.project');
+    }
     /**
      * Display a listing of the resource.
      *

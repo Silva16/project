@@ -12,7 +12,10 @@ use Symfony\Component\HttpFoundation\File;
 class MediaController extends Controller
 {
 
-    private $disk;
+    public function __construct()
+    {
+        $this->middleware('author.editor.project', ['except' => ['showProfile', 'showProject', 'showLogo']]);
+    }
 
 
     public function index($id)
