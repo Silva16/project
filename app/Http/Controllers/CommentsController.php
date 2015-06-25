@@ -11,7 +11,7 @@ class CommentsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('author.editor.project');
+        $this->middleware('author.editor.project', ['except' => ['create', 'store']]);
     }
     /**
      * Display a listing of the resource.
